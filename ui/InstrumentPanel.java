@@ -28,7 +28,7 @@ public class InstrumentPanel extends JPanel {
     public void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
-
+//
         g2d.setPaint(Constants.panel_bright);
         g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
 
