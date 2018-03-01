@@ -1,3 +1,4 @@
+import resources.Resources;
 import ui.MainWindow;
 
 /**
@@ -6,7 +7,10 @@ import ui.MainWindow;
 public class launcher {
 
     public static void main (String[] args) {
+
+        Resources.init();
         MainWindow window = new MainWindow();
+
     }
 
 }

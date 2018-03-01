@@ -4,6 +4,8 @@
 
 package ui;
 
+import resources.Constants;
+
 import javax.swing.*;
 
 public class MainWindow extends JFrame {
@@ -14,9 +16,17 @@ public class MainWindow extends JFrame {
     public MainWindow () {
 
         setSize(frame_width, frame_height);
+        setUndecorated(true);
+        setLayout(null);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        getContentPane().setBackground(Constants.background_grey);
 
-        
+        InstrumentPanel panel = new InstrumentPanel();
 
+        add(panel);
+
+        setVisible(true);
 
     }
 
