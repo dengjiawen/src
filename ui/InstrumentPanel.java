@@ -1,3 +1,7 @@
+/**
+ * Created by freddeng on 2018-03-01.
+ */
+
 package ui;
 
 import resources.Constants;
@@ -6,9 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-/**
- * Created by freddeng on 2018-03-01.
- */
 public class InstrumentPanel extends JPanel {
 
     public InstrumentPanel () {
