@@ -5,7 +5,7 @@ import ui.MainWindow;
  * Created by freddeng on 2018-03-01.
  */
 public class launcher {
-
+//Hello
     public static void main (String[] args) {
 
         Resources.init();
