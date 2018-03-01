@@ -11,6 +11,8 @@ public class launcher {
         Resources.init();
         MainWindow window = new MainWindow();
 
+        //comment
+
     }
 
 }
