@@ -17,6 +17,11 @@ public class InstrumentPanel extends JPanel {
 
         setBounds(20,20,350,605);
         setBackground(new Color(0,0,0,0));
+        setLayout(null);
+
+        ParkedPanel parked = new ParkedPanel();
+
+        add(parked);
 
     }
 

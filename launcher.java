@@ -8,7 +8,8 @@ public class launcher {
 //Hello
     public static void main (String[] args) {
 
-        Resources.init();
+        Resources.initFont();
+        Resources.initImage();
         MainWindow window = new MainWindow();
     }
 
