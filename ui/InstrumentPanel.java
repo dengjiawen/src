@@ -17,13 +17,18 @@ public class InstrumentPanel extends JPanel {
 
         setBounds(20,20,350,605);
         setBackground(new Color(0,0,0,0));
+        setLayout(null);
+
+        ParkedPanel parked = new ParkedPanel();
+
+        add(parked);
 
     }
 
     public void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
-//
+
         g2d.setPaint(Constants.panel_bright);
         g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
 
