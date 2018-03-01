@@ -9,12 +9,15 @@ import java.awt.geom.RoundRectangle2D;
 /**
  * Created by freddeng on 2018-03-01.
  */
-public class InstrumentPanel extends JPanel {
+public class ContainerSM extends JPanel {
 
-    public InstrumentPanel () {
+    private static final int panel_width = 725;
+    private static final int panel_height = 195;
+
+    public ContainerSM () {
         super();
 
-        setBounds(20,20,350,605);
+        setBounds(380,430, panel_width ,panel_height);
         setBackground(new Color(0,0,0,0));
 
     }
@@ -24,7 +27,7 @@ public class InstrumentPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setPaint(Constants.panel_bright);
-        g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
+        g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width, panel_height, Constants.roundness, Constants.roundness));
 
     }
 

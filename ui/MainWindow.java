@@ -25,9 +25,11 @@ public class MainWindow extends JFrame {
 
         InstrumentPanel panel = new InstrumentPanel();
         ContainerLG container_large = new ContainerLG();
+        ContainerSM container_small = new ContainerSM();
 
         add(panel);
         add(container_large);
+        add(container_small);
 
         setVisible(true);
 
