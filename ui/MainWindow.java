@@ -14,6 +14,7 @@ public class MainWindow extends JFrame {
     private final static int frame_height = 720;
 
     public MainWindow () {
+        super();
 
         setSize(frame_width, frame_height);
         setUndecorated(true);
@@ -23,8 +24,10 @@ public class MainWindow extends JFrame {
         getContentPane().setBackground(Constants.background_grey);
 
         InstrumentPanel panel = new InstrumentPanel();
+        ContainerLG container_large = new ContainerLG();
 
         add(panel);
+        add(container_large);
 
         setVisible(true);
 

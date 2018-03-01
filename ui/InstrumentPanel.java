@@ -12,8 +12,9 @@ import java.awt.geom.RoundRectangle2D;
 public class InstrumentPanel extends JPanel {
 
     public InstrumentPanel () {
+        super();
 
-        setBounds(0,0,370,625);
+        setBounds(20,20,350,605);
         setBackground(new Color(0,0,0,0));
 
     }
@@ -23,7 +24,7 @@ public class InstrumentPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setPaint(Constants.panel_bright);
-        g2d.fill(new RoundRectangle2D.Double(20, 20, 350, 605, 25, 25));
+        g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, 25, 25));
 
     }
 
