@@ -11,6 +11,7 @@ public class Constants {
 
     public static final Color background_grey = Color.decode("#141414");
     public static final Color panel_bright = Color.decode("#f0f0f0");
+    public static final Color button_bright = Color.decode("#d7d7d7");
 
     public static final int roundness = 15;
 
