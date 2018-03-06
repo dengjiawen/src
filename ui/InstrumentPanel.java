@@ -4,7 +4,6 @@
 
 package ui;
 
-import com.sun.awt.AWTUtilities;
 import resources.Constants;
 import resources.Resources;
 
@@ -20,7 +19,7 @@ public class InstrumentPanel extends JPanel {
     public InstrumentPanel () {
         super();
 
-        setBounds(-350,20,350,605);
+        setBounds(20,20,350,605);
         setBackground(new Color(0,0,0,0));
         setLayout(null);
 
@@ -51,13 +50,15 @@ public class InstrumentPanel extends JPanel {
     }
 
     public void init () {
-        slide_out_timer.start();
+        slide_out_timer.stop();
     }
 
     public void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
-//
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         g2d.setPaint(Constants.panel_bright);
         g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
 

@@ -25,7 +25,7 @@ public class MainWindow extends JFrame {
 
         InstrumentPanel panel = new InstrumentPanel();
         ContainerLG container_large = new ContainerLG();
-        ContainerSM container_small = new ContainerSM();
+        MusicPlayerPanelSM container_small = new MusicPlayerPanelSM();
 
         add(panel);
         add(container_large);

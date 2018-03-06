@@ -29,6 +29,8 @@ public class ContainerLG extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         g2d.setPaint(Constants.panel_bright);
         g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width_contracted, panel_height_contracted, Constants.roundness, Constants.roundness));
 
