@@ -13,9 +13,31 @@ import javax.swing.*;
 
 public class MusicController {
 
-    private static boolean isPaused = false;
+    public static boolean repeat = false;
+    public static boolean repeat_1 = false;
+    public static boolean shuffle = false;
 
+    private static boolean isPaused = false;
     private static Music current_playing;
+
+    private static SongList[] albums = new SongList[] {
+            new SongList(new int[]{0,1,2,3})
+    };
+
+    public static void setRepeat () {
+        if (repeat_1){
+            repeat_1 = false;
+        } else if (!repeat) {
+            repeat = true;
+        } else if (repeat) {
+            repeat = false;
+            repeat_1 = true;
+        }
+    }
+
+    public static void setShuffle () {
+        shuffle = !(shuffle);
+    }
 
     public static void init () {
         TinySound.init();
@@ -36,8 +58,15 @@ public class MusicController {
     }
 
     public static void play (Music music) {
+
+        if (!TinySound.isInitialized()) TinySound.init();
+
         music.play(false);
         current_playing = music;
+    }
+
+    public static void rewind () {
+        current_playing.rewind();
     }
 
 }

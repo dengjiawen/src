@@ -12,12 +12,12 @@ import java.awt.geom.RoundRectangle2D;
 public class ContainerSM extends JPanel {
 
     public static final int panel_width = 725;
-    public static final int panel_height = 195;
+    public static final int panel_height = 175;
 
     public ContainerSM () {
         super();
 
-        setBounds(380,430, panel_width ,panel_height);
+        setBounds(380,450, panel_width ,panel_height);
         setBackground(new Color(0,0,0,0));
 
     }

@@ -13,8 +13,8 @@ public class Constants {
     public static final Color panel_bright = Color.decode("#f0f0f0");
     public static final Color button_bright = Color.decode("#d7d7d7");
 
-    public static final Color music_progress_stop_0 = Color.decode("#005386");
-    public static final Color music_progress_stop_1 = Color.decode("#09f7ea");
+    public static final Color music_progress_stop_0 = Color.decode("#12b5de");
+    public static final Color music_progress_stop_1 = Color.decode("#d1dde0");
 
     public static final int roundness = 25;
 

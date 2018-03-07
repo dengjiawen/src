@@ -15,7 +15,7 @@ public class ContainerLG extends JPanel {
     private static final int panel_height_expanded = 605;
 
     private static final int panel_width_contracted = 725;
-    private static final int panel_height_contracted = 400;
+    private static final int panel_height_contracted = 420;
 
     public ContainerLG () {
         super();
@@ -25,7 +25,7 @@ public class ContainerLG extends JPanel {
 
     }
 
-    public void paintComponent (Graphics g) {
+    protected void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
 

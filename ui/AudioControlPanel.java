@@ -15,11 +15,11 @@ import java.awt.geom.AffineTransform;
  */
 public class AudioControlPanel extends JPanel {
 
-    private static int music_track_control_width = (int)(0.35 * Resources.music_rewind[0].getWidth());
-    private static int music_track_control_height = (int)(0.35 * Resources.music_rewind[0].getHeight());
+    private static int music_track_control_width = (int)(0.25 * Resources.music_rewind[0].getWidth());
+    private static int music_track_control_height = (int)(0.25 * Resources.music_rewind[0].getHeight());
 
-    private static int music_control_play_width = (int)(0.35 * Resources.music_control_play[0].getWidth());
-    private static int music_control_play_height = (int)(0.35 * Resources.music_control_play[0].getHeight());
+    private static int music_control_play_width = (int)(0.25 * Resources.music_control_play[0].getWidth());
+    private static int music_control_play_height = (int)(0.25 * Resources.music_control_play[0].getHeight());
 
     private GlowButton pause;
     private GlowButton rewind;
@@ -27,11 +27,11 @@ public class AudioControlPanel extends JPanel {
 
     public AudioControlPanel () {
 
-        setBounds(200, 95, 500, 100);
+        setBounds(194, 120, 500, 100);
         setOpaque(false);
         setLayout(null);
 
-        pause = new GlowButton(Resources.music_control_pause, 77, -18,
+        pause = new GlowButton(Resources.music_control_pause, 73, -12,
                 music_control_play_width, music_control_play_height);
         pause.addMouseListener(new MouseAdapter() {
             @Override
@@ -51,6 +51,17 @@ public class AudioControlPanel extends JPanel {
 
         rewind = new GlowButton(Resources.music_rewind, 0, 0,
                 music_track_control_width, music_track_control_height);
+        rewind.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                MusicController.rewind();
+                MusicPlayerPanelSM.music_progression = 0;
+
+                RenderingService.invokeRepaint();
+            }
+        });
+
         forward = new GlowButton(Resources.music_forward, 120, 0,
                 music_track_control_width, music_track_control_height);
 

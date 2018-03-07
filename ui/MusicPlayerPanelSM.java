@@ -1,6 +1,8 @@
 package ui;
 
+import javafx.scene.effect.BlendMode;
 import music.MusicController;
+import music.SongList;
 import resources.Constants;
 import resources.Resources;
 import sound.TinySound;
@@ -21,9 +23,17 @@ public class MusicPlayerPanelSM extends ContainerSM {
 
     private AudioControlPanel audio_control;
 
-    public static Timer progression_bar;
+    private ToggleButton shuffle;
+    private ToggleButton repeat;
 
-    private float music_progression;
+    public static Timer progression_bar;
+    public static float music_progression;
+
+    private JLabel duration_1;
+    private JLabel duration_2;
+    private JLabel duration_3;
+
+    public static SongList active_songlist;
 
     public MusicPlayerPanelSM () {
 
@@ -37,21 +47,19 @@ public class MusicPlayerPanelSM extends ContainerSM {
         song_name.setFont(Resources.music_title_font);
         song_name.setForeground(Color.white);
         song_name.setOpaque(false);
-        song_name.setBounds(230, 10, 500, 100);
+        song_name.setBounds(215, 25, 500, 50);
 
         album_artist_name = new JLabel();
-        album_artist_name.setText("Frozen | Kristen Bell");
-        album_artist_name.setFont(Resources.music_album_artist_font);
+        album_artist_name.setText("Frozen OST");
+        album_artist_name.setFont(Resources.music_album_font);
         album_artist_name.setForeground(Color.white);
         album_artist_name.setOpaque(false);
-        album_artist_name.setBounds(230, 30, 500, 100);
+        album_artist_name.setBounds(215, 8, 500, 50);
 
         music_progression = 0f;
 
-        TinySound.init();
-
         progression_bar = new Timer ((int)Math.floor(1000/(7250/(2 * 60 + 7.093))), e -> {
-            music_progression += 0.115f;
+            music_progression += 0.11f;
             if (music_progression == 725f) {
                 progression_bar.stop();
             }
@@ -59,13 +67,17 @@ public class MusicPlayerPanelSM extends ContainerSM {
         });
         progression_bar.start();
 
-        MusicController.play(music.Resources.love_is_an_open_door);
+        shuffle = new ToggleButton(Resources.frozen_shuffle, 2, 206, 68, (int)(0.8 * 93), (int)(0.8 * 24));
+        repeat = new ToggleButton(Resources.frozen_repeat, 3, 280, 68, (int)(0.8 * 93), (int)(0.8 * 24));
 
         audio_control = new AudioControlPanel();
 
         add(song_name);
         add(album_artist_name);
         add(audio_control);
+
+        add(shuffle);
+        add(repeat);
 
     }
 
@@ -81,10 +93,12 @@ public class MusicPlayerPanelSM extends ContainerSM {
         g2d.drawImage(Resources.frozen_music_backdrop_SM, 0, 0, ContainerSM.panel_width, ContainerSM.panel_height, null);
 
         GradientPaint primary = new GradientPaint(
-                0f, 0f, Constants.music_progress_stop_0, 725f, 0f, Constants.music_progress_stop_1);
+                0f, 0f, Constants.music_progress_stop_0, music_progression, 0f, Constants.music_progress_stop_1);
 
         g2d.setPaint(primary);
-        g2d.fill(new Rectangle2D.Float(0, 187, music_progression, 8));
+        g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, music_progression, 4));
+
+        g2d.drawImage(Resources.music_highlight, getWidth() - 225, 47, 225, 30, null);
     }
 
 }

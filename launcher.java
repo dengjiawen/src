@@ -1,5 +1,6 @@
 import music.MusicController;
 import resources.Resources;
+import sound.TinySound;
 import ui.MainWindow;
 import ui.RenderingService;
 
@@ -12,6 +13,7 @@ public class launcher {
     public static MainWindow window;
     public static void main (String[] args) {
 
+        TinySound.init();
         Resources.initFont();
         Resources.initImage();
         MusicController.init();
