@@ -26,6 +26,10 @@ public class Resources {
     public static Font music_title_font;
     public static Font music_album_font;
 
+    public static Font music_sub_title_font;
+    public static Font music_sub_artist_font;
+    public static Font music_sub_time_font;
+
     public static void initFont () {
 
         try{
@@ -38,6 +42,10 @@ public class Resources {
 
             music_title_font = system_bold.deriveFont(20f);
             music_album_font = system_regular.deriveFont(13f);
+
+            music_sub_title_font = system_regular.deriveFont(10f);
+            music_sub_artist_font = system_bold.deriveFont(10f);
+            music_sub_time_font = system_regular.deriveFont(8f);
 
         } catch (Exception e) {e.printStackTrace();}
 

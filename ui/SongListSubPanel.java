@@ -1,6 +1,7 @@
 package ui;
 
 import music.Music;
+import resources.Resources;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,19 @@ public class SongListSubPanel extends JPanel {
     }
 
     protected void paintComponent (Graphics g) {
-        
+
+        g.setColor(Color.white);
+
+        g.setFont(Resources.music_sub_artist_font);
+        g.drawString(music.getArtist(), 0, 18);
+
+        String music_name = "";
+        if (music.getName().length() > 25) music_name = music.getName().substring(0, 25) + "...";
+        else music_name = music.getName();
+
+        int padding = g.getFontMetrics(Resources.music_sub_artist_font).stringWidth(music.getArtist() + "  ");
+        g.setFont(Resources.music_sub_title_font);
+        g.drawString(music_name, padding, 18);
     }
 
 }

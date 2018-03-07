@@ -29,9 +29,10 @@ public class MusicPlayerPanelSM extends ContainerSM {
     public static Timer progression_bar;
     public static float music_progression;
 
-    private JLabel duration_1;
-    private JLabel duration_2;
-    private JLabel duration_3;
+    private SongListSubPanel song1;
+    private SongListSubPanel song2;
+    private SongListSubPanel song3;
+    private SongListSubPanel song4;
 
     public static SongList active_songlist;
 
@@ -56,6 +57,11 @@ public class MusicPlayerPanelSM extends ContainerSM {
         album_artist_name.setOpaque(false);
         album_artist_name.setBounds(215, 8, 500, 50);
 
+        song1 = new SongListSubPanel(getWidth() - 250, 40, music.Resources.music_with_metadata[0]);
+        song2 = new SongListSubPanel(getWidth() - 250, 40 + 30, music.Resources.music_with_metadata[1]);
+        song3 = new SongListSubPanel(getWidth() - 250, 40 + 60, music.Resources.music_with_metadata[2]);
+        song4 = new SongListSubPanel(getWidth() - 250, 40 + 90, music.Resources.music_with_metadata[3]);
+
         music_progression = 0f;
 
         progression_bar = new Timer ((int)Math.floor(1000/(7250/(2 * 60 + 7.093))), e -> {
@@ -79,6 +85,11 @@ public class MusicPlayerPanelSM extends ContainerSM {
         add(shuffle);
         add(repeat);
 
+        add(song1);
+        add(song2);
+        add(song3);
+        add(song4);
+
     }
 
     protected void paintComponent (Graphics g) {
@@ -98,7 +109,7 @@ public class MusicPlayerPanelSM extends ContainerSM {
         g2d.setPaint(primary);
         g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, music_progression, 4));
 
-        g2d.drawImage(Resources.music_highlight, getWidth() - 225, 47, 225, 30, null);
+        g2d.drawImage(Resources.music_highlight, getWidth() - 300, 40, 300, 30, null);
     }
 
 }

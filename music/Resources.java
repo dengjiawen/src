@@ -33,4 +33,12 @@ public class Resources {
             127, 208, 182, 225
     };
 
+    public static final music.Music[] music_with_metadata = new music.Music[] {
+            new music.Music(0),
+            new music.Music(1),
+            new music.Music(2),
+            new music.Music(3)
+
+    };
+
 }
