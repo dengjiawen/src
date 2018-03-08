@@ -14,7 +14,7 @@ public class Resources {
     public static final String icon_directory = "/resources/resources/icons/";
     public static final String panel_overlay_directory = "/resources/resources/panel_overlay/";
 
-    public static final String toggle_frozen_directory = "/resources/resources/music_control/frozen/";
+    public static final String toggle_directory = "/resources/resources/music_control/";
 
     public static Font system_bold;
     public static Font system_regular;
@@ -52,37 +52,42 @@ public class Resources {
     }
 
     public static BufferedImage car_icon_top;
-    public static BufferedImage signal_left;
 
-    public static BufferedImage frozen_music_backdrop_SM;
+    public static BufferedImage[] music_backdrop_SM;
+    public static BufferedImage[] music_highlight;
 
     public static BufferedImage[] music_control_pause;
     public static BufferedImage[] music_control_play;
     public static BufferedImage[] music_forward;
     public static BufferedImage[] music_rewind;
 
-    public static BufferedImage[] frozen_shuffle;
-    public static BufferedImage[] frozen_repeat;
+    public static BufferedImage[] music_shuffle;
+    public static BufferedImage[] music_repeat;
 
-    public static BufferedImage music_highlight;
+    public static BufferedImage[] signal_left;
+    public static BufferedImage[] signal_right;
 
     public static void initImage () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png"};
 
-        car_icon_top = loadImage(icon_directory + "car_icon_top_frunk_down.png");
-        signal_left = loadImage(icon_directory + "signal_left.png");
-        frozen_music_backdrop_SM = loadImage(panel_overlay_directory + "frozen.jpg");
+        music_backdrop_SM = new BufferedImage[4];
+        music_highlight = new BufferedImage[4];
 
-        music_highlight = loadImage(panel_overlay_directory + "highlight.png");
+        car_icon_top = loadImage(icon_directory + "car_icon_top_frunk_down.png");
+        music_backdrop_SM[0] = loadImage(panel_overlay_directory + "frozen_backdrop.jpg");
+        music_highlight[0] = loadImage(panel_overlay_directory + "frozen_highlight.png");
 
         music_control_pause = new BufferedImage[2];
         music_control_play = new BufferedImage[2];
         music_forward = new BufferedImage[2];
         music_rewind = new BufferedImage[2];
 
-        frozen_shuffle = new BufferedImage[2];
-        frozen_repeat = new BufferedImage[3];
+        music_shuffle = new BufferedImage[2];
+        music_repeat = new BufferedImage[3];
+
+        signal_left = new BufferedImage[2];
+        signal_right = new BufferedImage[2];
 
         for (int i = 0; i < 2; i ++) {
             music_control_pause[i] = loadImage(icon_directory + "pause" + toggle_assignment[i]);
@@ -90,11 +95,14 @@ public class Resources {
             music_forward[i] = loadImage(icon_directory + "forward" + toggle_assignment[i]);
             music_rewind[i] = loadImage(icon_directory + "rewind" + toggle_assignment[i]);
 
-            frozen_shuffle[i] = loadImage(toggle_frozen_directory + "shuffle" + toggle_assignment[i]);
-            frozen_repeat[i] = loadImage(toggle_frozen_directory + "repeat" + toggle_assignment[i]);
+            music_shuffle[i] = loadImage(toggle_directory + "shuffle" + toggle_assignment[i]);
+            music_repeat[i] = loadImage(toggle_directory + "repeat" + toggle_assignment[i]);
+
+            signal_right[i] = loadImage(icon_directory + "signal_right" + toggle_assignment[i]);
+            signal_left[i] = loadImage(icon_directory + "signal_left" + toggle_assignment[i]);
         }
 
-        frozen_repeat[2] = loadImage(toggle_frozen_directory + "repeat_1" + toggle_assignment[1]);
+        music_repeat[2] = loadImage(toggle_directory + "repeat_1" + toggle_assignment[1]);
 
     }
 

@@ -33,8 +33,6 @@ public class MainWindow extends JFrame {
 
         setVisible(true);
 
-        panel.init();
-
     }
 
 

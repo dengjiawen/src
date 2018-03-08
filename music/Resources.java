@@ -41,4 +41,8 @@ public class Resources {
 
     };
 
+    public static final SongList[] songlists = new SongList[] {
+            new SongList(new int[]{0,1,2,3})
+    };
+
 }

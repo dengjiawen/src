@@ -29,13 +29,19 @@ public class ToggleButton extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (++ active_state_num >= num_states) active_state_num = 0;
+                if (++active_state_num >= num_states) active_state_num = 0;
                 active_state = states[active_state_num];
 
                 RenderingService.invokeRepaint();
             }
         });
 
+    }
+
+    public void forceState (int state) {
+        active_state_num = state;
+        active_state = states[active_state_num];
+        RenderingService.invokeRepaint();
     }
 
     public void changeIcon (BufferedImage[] icon) {

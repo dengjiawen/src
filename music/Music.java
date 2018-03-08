@@ -36,6 +36,10 @@ public class Music {
         music.resume();
     }
 
+    public void stop () {
+        music.stop();
+    }
+
     public String getName () {
         return music_name;
     }

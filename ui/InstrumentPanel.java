@@ -13,8 +13,8 @@ import java.awt.geom.RoundRectangle2D;
 
 public class InstrumentPanel extends JPanel {
 
-    Timer slide_out_timer;
-    int slide_out_framecount;
+    private TurningSignal left;
+    private TurningSignal right;
 
     public InstrumentPanel () {
         super();
@@ -33,27 +33,18 @@ public class InstrumentPanel extends JPanel {
         speedometer.setVerticalAlignment(JLabel.CENTER);
         speedometer.setHorizontalAlignment(JLabel.CENTER);
 
-        slide_out_framecount = -350;
-        slide_out_timer = new Timer(1000/60, e -> {
-
-            if (slide_out_framecount < 20) {
-                slide_out_framecount += 5;
-            } else {
-                slide_out_timer.stop();
-            }
-            setBounds(slide_out_framecount,20,350,605);
-        });
+        right = new TurningSignal(TurningSignal.RIGHT_SIGNAL);
+        left = new TurningSignal(TurningSignal.LEFT_SIGNAL);
 
         add(speedometer);
         add(parked);
 
+        add(right);
+        add(left);
+
     }
 
-    public void init () {
-        slide_out_timer.stop();
-    }
-
-    public void paintComponent (Graphics g) {
+    protected void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
 
@@ -62,9 +53,7 @@ public class InstrumentPanel extends JPanel {
         g2d.setPaint(Constants.panel_bright);
         g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
 
-        g2d.drawImage(Resources.signal_left, 0, 0, null);
-
-        super.paintComponent(g);
+        super.paintComponent(g2d);
 
     }
 

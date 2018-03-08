@@ -1,14 +1,14 @@
 package ui;
 
-import javafx.scene.effect.BlendMode;
+import music.Music;
 import music.MusicController;
 import music.SongList;
 import resources.Constants;
 import resources.Resources;
-import sound.TinySound;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
@@ -18,23 +18,31 @@ import java.awt.geom.RoundRectangle2D;
 
 public class MusicPlayerPanelSM extends ContainerSM {
 
+    private static int music_track_control_width = (int)(0.25 * Resources.music_rewind[0].getWidth());
+    private static int music_track_control_height = (int)(0.25 * Resources.music_rewind[0].getHeight());
+
+    private static int music_control_play_width = (int)(0.25 * Resources.music_control_play[0].getWidth());
+    private static int music_control_play_height = (int)(0.25 * Resources.music_control_play[0].getHeight());
+
     private JLabel song_name;
     private JLabel album_artist_name;
-
-    private AudioControlPanel audio_control;
 
     private ToggleButton shuffle;
     private ToggleButton repeat;
 
-    public static Timer progression_bar;
-    public static float music_progression;
+    public Timer progression_bar;
+    public float music_progression;
 
     private SongListSubPanel song1;
     private SongListSubPanel song2;
     private SongListSubPanel song3;
     private SongListSubPanel song4;
 
-    public static SongList active_songlist;
+    private GlowButton pause;
+    private GlowButton rewind;
+    private GlowButton forward;
+
+    public static SongList active_songlist = music.Resources.songlists[0];
 
     public MusicPlayerPanelSM () {
 
@@ -64,23 +72,80 @@ public class MusicPlayerPanelSM extends ContainerSM {
 
         music_progression = 0f;
 
-        progression_bar = new Timer ((int)Math.floor(1000/(7250/(2 * 60 + 7.093))), e -> {
+        pause = new GlowButton(Resources.music_control_play, 190 + 73, 110 - 12,
+                music_control_play_width, music_control_play_height);
+        pause.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if (MusicController.isPaused()) {
+                    MusicController.resume();
+                    pause.changeIcon(Resources.music_control_pause);
+                    progression_bar.start();
+                } else {
+                    MusicController.pause();
+                    pause.changeIcon(Resources.music_control_play);
+                    progression_bar.stop();
+                }
+            }
+        });
+
+        rewind = new GlowButton(Resources.music_rewind, 190, 110,
+                music_track_control_width, music_track_control_height);
+        rewind.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                MusicController.rewind();
+
+                RenderingService.invokeRepaint();
+            }
+        });
+
+        forward = new GlowButton(Resources.music_forward, 190 + 120, 110,
+                music_track_control_width, music_track_control_height);
+        forward.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                MusicController.forward();
+
+                RenderingService.invokeRepaint();
+            }
+        });
+
+        progression_bar = new Timer((int) Math.floor(1000 / (7250 / (2 * 60 + 7.093))), e -> {
             music_progression += 0.11f;
             if (music_progression == 725f) {
                 progression_bar.stop();
             }
             RenderingService.invokeRepaint();
         });
-        progression_bar.start();
 
-        shuffle = new ToggleButton(Resources.frozen_shuffle, 2, 206, 68, (int)(0.8 * 93), (int)(0.8 * 24));
-        repeat = new ToggleButton(Resources.frozen_repeat, 3, 280, 68, (int)(0.8 * 93), (int)(0.8 * 24));
+        shuffle = new ToggleButton(Resources.music_shuffle, 2, 206, 68, (int) (0.8 * 93), (int) (0.8 * 24));
+        shuffle.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                MusicController.setShuffle();
+            }
+        });
 
-        audio_control = new AudioControlPanel();
+        repeat = new ToggleButton(Resources.music_repeat, 3, 280, 68, (int) (0.8 * 93), (int) (0.8 * 24));
+        repeat.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                MusicController.setRepeat();
+            }
+        });
+
+        add(pause);
+        add(rewind);
+        add(forward);
 
         add(song_name);
         add(album_artist_name);
-        add(audio_control);
 
         add(shuffle);
         add(repeat);
@@ -90,6 +155,37 @@ public class MusicPlayerPanelSM extends ContainerSM {
         add(song3);
         add(song4);
 
+        MusicController.panel = this;
+
+    }
+
+    public void reset (Music music) {
+
+        String song_name = music.getName();
+        if (music.getName().length() > 20) {
+            song_name = music.getName().substring(0, 20);
+            song_name += "...";
+        }
+
+        this.song_name.setText(song_name);
+        album_artist_name.setText(active_songlist.getName());
+
+        progression_bar.stop();
+        progression_bar.setDelay((int) Math.floor(1000 / (7250 / (music.getLength()))));
+        music_progression = 0f;
+        if (!MusicController.isPaused()) {
+            progression_bar.start();
+        }
+
+        RenderingService.invokeRepaint();
+    }
+
+    public void disableShuffle () {
+        shuffle.forceState(0);
+    }
+
+    public void disableRepeat1 () {
+        repeat.forceState(0);
     }
 
     protected void paintComponent (Graphics g) {
@@ -101,7 +197,7 @@ public class MusicPlayerPanelSM extends ContainerSM {
 
         g2d.clip(clip);
 
-        g2d.drawImage(Resources.frozen_music_backdrop_SM, 0, 0, ContainerSM.panel_width, ContainerSM.panel_height, null);
+        g2d.drawImage(active_songlist.getBackdrop(), 0, 0, ContainerSM.panel_width, ContainerSM.panel_height, null);
 
         GradientPaint primary = new GradientPaint(
                 0f, 0f, Constants.music_progress_stop_0, music_progression, 0f, Constants.music_progress_stop_1);
@@ -109,7 +205,20 @@ public class MusicPlayerPanelSM extends ContainerSM {
         g2d.setPaint(primary);
         g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, music_progression, 4));
 
-        g2d.drawImage(Resources.music_highlight, getWidth() - 300, 40, 300, 30, null);
+        switch (active_songlist.getIndex(MusicController.sequence[MusicController.current_index])) {
+            case 0:
+                g2d.drawImage(active_songlist.getHighlight(), getWidth() - 300, 40, 300, 30, null);
+                break;
+            case 1:
+                g2d.drawImage(active_songlist.getHighlight(), getWidth() - 300, 40 + 30, 300, 30, null);
+                break;
+            case 2:
+                g2d.drawImage(active_songlist.getHighlight(), getWidth() - 300, 40 + 60, 300, 30, null);
+                break;
+            case 3:
+                g2d.drawImage(active_songlist.getHighlight(), getWidth() - 300, 40 + 90, 300, 30, null);
+                break;
+        }
     }
 
 }
