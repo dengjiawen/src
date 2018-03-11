@@ -42,7 +42,7 @@ public class MusicPlayerPanelSM extends ContainerSM {
     private GlowButton rewind;
     private GlowButton forward;
 
-    public static SongList active_songlist = music.Resources.songlists[0];
+    public static SongList active_songlist = music.Resources.songlists[1];
 
     public MusicPlayerPanelSM () {
 
@@ -65,10 +65,10 @@ public class MusicPlayerPanelSM extends ContainerSM {
         album_artist_name.setOpaque(false);
         album_artist_name.setBounds(215, 8, 500, 50);
 
-        song1 = new SongListSubPanel(getWidth() - 250, 40, music.Resources.music_with_metadata[0]);
-        song2 = new SongListSubPanel(getWidth() - 250, 40 + 30, music.Resources.music_with_metadata[1]);
-        song3 = new SongListSubPanel(getWidth() - 250, 40 + 60, music.Resources.music_with_metadata[2]);
-        song4 = new SongListSubPanel(getWidth() - 250, 40 + 90, music.Resources.music_with_metadata[3]);
+        song1 = new SongListSubPanel(getWidth() - 250, 40, active_songlist.getMusic(0));
+        song2 = new SongListSubPanel(getWidth() - 250, 40 + 30, active_songlist.getMusic(1));
+        song3 = new SongListSubPanel(getWidth() - 250, 40 + 60, active_songlist.getMusic(2));
+        song4 = new SongListSubPanel(getWidth() - 250, 40 + 90, active_songlist.getMusic(3));
 
         music_progression = 0f;
 
@@ -156,6 +156,8 @@ public class MusicPlayerPanelSM extends ContainerSM {
         add(song4);
 
         MusicController.panel = this;
+
+        reset(MusicController.sequence[0]);
 
     }
 

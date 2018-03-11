@@ -157,7 +157,7 @@ public class MusicController {
         TinySound.init();
 
         current_index = 0;
-        current_songlist = Resources.songlists[0];
+        current_songlist = Resources.songlists[1];
 
         fullRepeat();
 

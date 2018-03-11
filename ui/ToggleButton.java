@@ -27,8 +27,8 @@ public class ToggleButton extends JPanel {
 
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
                 if (++active_state_num >= num_states) active_state_num = 0;
                 active_state = states[active_state_num];
 
@@ -46,7 +46,7 @@ public class ToggleButton extends JPanel {
 
     public void changeIcon (BufferedImage[] icon) {
         states = icon;
-        active_state = icon[0];
+        active_state = states[active_state_num];
 
         RenderingService.invokeRepaint();
     }

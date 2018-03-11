@@ -7,13 +7,16 @@ import javax.swing.Timer;
  */
 public class SoundService {
 
-    public static Timer signal_timing_controller = new Timer(500, e -> {
+    public static Timer signal_timing_controller = new Timer(295 * 2, e -> {
+        Resources.signal.play();
+        Resources.signal.play();
         Resources.signal.play();
     });
 
     public static void setSignalSound (boolean doSignal) {
-        if (doSignal) signal_timing_controller.start();
-        else signal_timing_controller.stop();
+        if (doSignal && !signal_timing_controller.isRunning()) {
+            signal_timing_controller.restart();
+        } else signal_timing_controller.stop();
     }
 
 }

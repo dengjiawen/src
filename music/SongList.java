@@ -15,7 +15,9 @@ public class SongList {
     private ArrayList<Music> music;
     private BufferedImage[] assets;
 
-    public SongList (int[] music_numbers) {
+    private String list_name;
+
+    public SongList (int[] music_numbers, String list_name) {
         music = new ArrayList<>(4);
 
         for (int i = 0; i < 4; i++) {
@@ -36,6 +38,8 @@ public class SongList {
                 album_number = 2;
                 break;
         }
+
+        this.list_name = list_name;
 
         assets[BACKDROP] = Resources.music_backdrop_SM[album_number];
         assets[HIGHLIGHT] = Resources.music_highlight[album_number];
@@ -58,7 +62,7 @@ public class SongList {
     }
 
     public String getName () {
-        return "Frozen OST";
+        return list_name;
     }
 
 }

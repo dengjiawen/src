@@ -1,6 +1,7 @@
 package ui;
 
 import resources.Constants;
+import resources.Resources;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +18,13 @@ public class ContainerLG extends JPanel {
     private static final int panel_width_contracted = 725;
     private static final int panel_height_contracted = 420;
 
+    MapPanelLG map_lg;
+
     public ContainerLG () {
-        super();
 
         setBounds(380,20, panel_width_contracted ,panel_height_contracted);
         setBackground(new Color(0,0,0,0));
+        setOpaque(false);
 
     }
 
@@ -29,11 +32,13 @@ public class ContainerLG extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //g2d.setPaint(Constants.panel_bright);
+        //g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width_contracted, panel_height_contracted, Constants.roundness, Constants.roundness));
 
-        g2d.setPaint(Constants.panel_bright);
-        g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width_contracted, panel_height_contracted, Constants.roundness, Constants.roundness));
+        g.setClip(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), Constants.roundness, Constants.roundness));
+        g2d.drawImage(Resources.shadow, 0, 0, getWidth(), 40, null);
 
+        super.paintComponent(g);
     }
 
 }

@@ -11,8 +11,12 @@ import java.awt.image.BufferedImage;
  */
 public class GlowButton extends JPanel {
 
-    private BufferedImage[] states;
-    private BufferedImage active_state;
+    protected BufferedImage[] states;
+    protected BufferedImage active_state;
+
+    public GlowButton () {
+
+    }
 
     public GlowButton (BufferedImage[] icon, int x, int y, int width, int height) {
 

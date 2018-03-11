@@ -10,23 +10,42 @@ import java.awt.*;
  */
 public class ParkedPanel extends JPanel {
 
+    ToggleButton fronk;
+    ToggleButton mirror;
+    ToggleButton charge;
+    ToggleButton trunk;
+
+    static final int button_width = (int)(0.25 * Resources.button_fronk[0].getWidth());
+    static final int button_height = (int)(0.25 * Resources.button_fronk[0].getHeight());
+
     public ParkedPanel () {
         super();
 
-        setBounds(5, 70, 340, 500);
+        setBounds(5, 65, 340, 500);
         setBackground(new Color(0, 0, 0, 0));
         setLayout(null);
 
-        OvalButton button1 = new OvalButton((getWidth() - 70) / 2,173,70,30, "OPEN");
-        OvalButton button2 = new OvalButton((getWidth() - 70) / 2, 405, 70, 30, "OPEN");
+        fronk = new ToggleButton(Resources.button_fronk, 2, (getWidth() - button_width)/2, 130 - button_height + 2,
+                button_width, button_height);
+        mirror = new ToggleButton(Resources.button_mirror, 2, 40, 200, button_width, button_height);
+        charge = new ToggleButton(Resources.button_charge, 2, 40, 300, button_width, button_height);
+        trunk = new ToggleButton(Resources.button_trunk, 2, (getWidth() - button_width)/2, 370,
+                button_width, button_height);
 
-        add(button1);
-        add(button2);
+        add(fronk);
+        add(mirror);
+        add(charge);
+        add(trunk);
+
     }
 
     public void paintComponent (Graphics g) {
-        g.drawImage(Resources.car_icon_top, (getWidth() - (int)(0.23 * Resources.car_icon_top.getWidth()))/2, 205,
-                (int)(0.23 * Resources.car_icon_top.getWidth()), (int)(0.23 * Resources.car_icon_top.getHeight()), null);
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.drawImage(Resources.car_icon_fronk[0], (getWidth() - (int)(0.13 * Resources.car_icon_fronk[0].getWidth()))/2, 130,
+                (int)(0.13 * Resources.car_icon_fronk[0].getWidth()), (int)(0.13 * Resources.car_icon_fronk[0].getHeight()), null);
     }
 
 }

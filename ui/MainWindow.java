@@ -7,6 +7,8 @@ package ui;
 import resources.Constants;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainWindow extends JFrame {
 
@@ -27,9 +29,24 @@ public class MainWindow extends JFrame {
         ContainerLG container_large = new ContainerLG();
         MusicPlayerPanelSM container_small = new MusicPlayerPanelSM();
 
+        add(new StatusBarPanel());
+        add(new MapPanelLG());
+        add(new CoreControlBarPanel());
         add(panel);
         add(container_large);
         add(container_small);
+
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    TurningSignal.left.activate();
+                } else if (e.getKeyCode() == KeyEvent.VK_D) {
+                    TurningSignal.right.activate();
+                }
+            }
+        });
 
         setVisible(true);
 

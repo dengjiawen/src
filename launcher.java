@@ -1,3 +1,4 @@
+import information.InformationService;
 import music.MusicController;
 import resources.Resources;
 import sound.TinySound;
@@ -17,6 +18,7 @@ public class launcher {
         Resources.initFont();
         Resources.initImage();
         MusicController.init();
+        InformationService.init();
 
         window = new MainWindow();
 
