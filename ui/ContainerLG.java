@@ -28,17 +28,4 @@ public class ContainerLG extends JPanel {
 
     }
 
-    protected void paintComponent (Graphics g) {
-
-        Graphics2D g2d = (Graphics2D) g;
-
-        //g2d.setPaint(Constants.panel_bright);
-        //g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width_contracted, panel_height_contracted, Constants.roundness, Constants.roundness));
-
-        g.setClip(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), Constants.roundness, Constants.roundness));
-        g2d.drawImage(Resources.shadow, 0, 0, getWidth(), 40, null);
-
-        super.paintComponent(g);
-    }
-
 }

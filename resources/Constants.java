@@ -9,20 +9,57 @@ import java.awt.geom.RoundRectangle2D;
  */
 public class Constants {
 
-    public static final Color background_grey = Color.decode("#141414");
-    public static final Color panel_bright = Color.decode("#f0f0f0");
-    public static final Color button_bright = Color.decode("#d7d7d7");
+    public static final Color BACKGROUND_GREY = Color.decode("#141414");
+    public static final Color PANEL_BRIGHT = Color.decode("#f0f0f0");
+    public static final Color BUTTON_BRIGHT = Color.decode("#d7d7d7");
 
-    public static final Color music_progress_stop_0 = Color.decode("#12b5de");
-    public static final Color music_progress_stop_1 = Color.decode("#d1dde0");
+    public static final Color MUSIC_PROGRESS_STOP_0 = Color.decode("#12b5de");
+    public static final Color MUSIC_PROGRESS_STOP_1 = Color.decode("#d1dde0");
 
-    public static final Color battery_progress_stop_0 = Color.decode("#088700");
-    public static final Color battery_progress_stop_1 = Color.decode("#a1d600");
+    public static final Color BATTERY_PROGRESS_STOP_0 = Color.decode("#088700");
+    public static final Color BATTERY_PROGRESS_STOP_1 = Color.decode("#a1d600");
 
-    public static final Color text_inactive = Color.decode("#c2bcbc");
+    public static final Color TEXT_INACTIVE = Color.decode("#c2bcbc");
 
-    public static final Color control_center = Color.decode("#e6e6e5");
+    public static final Color CONTROL_CENTER = Color.decode("#e6e6e5");
 
-    public static final int roundness = 25;
+    public static final Color CORE_BAR_INACTIVE = Color.decode("#404040");
+
+    public static final Color CONTROL_INTERFACE_INACTIVE = Color.decode("#989898");
+
+    public static final Color CONTROL_INTERFACE_STOP_0 = Color.decode("#f1f0f0");
+    public static final Color CONTROL_INTERFACE_STOP_1 = Color.decode("#ffffff");
+
+    public static final Color STATUS_BAR_WEATHER_ACTIVE = Color.decode("#4bd7ff");
+
+    public static final Color MUSIC_LG_GRADIENT_STOP_0 = Color.decode("#f7f7f7");
+    public static final Color MUSIC_LG_GRADIENT_STOP_1 = Color.decode("#ededed");
+
+    public static final Color MUSIC_LG_SUBPANEL_BACKGROUND = Color.decode("#e1e1e1");
+    public static final Color MUSIC_LG_PHONE_BACKGROUND = Color.decode("#ffffff");
+
+    public static final Color AC_BACKGROUND_STOP_0 = Color.decode("#f1f0f0");
+    public static final Color AC_BACKGROUND_STOP_1 = Color.decode("#ffffff");
+
+    public static Color STATUS_BAR_TEXT_COLOR = Color.decode("#000000");
+
+    public static final int ROUNDNESS = 25;
+
+    public static final int MIRROR_RETRACTED = 0;
+    public static final int MIRROR_EXTENDED = 1;
+    public static final int MIRROR_AUTO = 2;
+
+    public static final int AC_COLD = 0;
+    public static final int AC_HOT = 1;
+
+    public class WindowConstants {
+
+        public static final int STATE_SM = 0;
+        public static final int STATE_LG = 1;
+        public static final int STATE_XL = 2;
+
+        public static final int STATE_IDLE = -1;
+
+    }
 
 }

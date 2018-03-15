@@ -4,6 +4,7 @@
 
 package ui;
 
+import information.InformationService;
 import resources.Constants;
 import resources.Resources;
 
@@ -89,6 +90,14 @@ public class InstrumentPanel extends JPanel {
         lock = new ToggleButton(Resources.control_lock, 2, hazard.getX() + hazard.getWidth() + (safety.getX() - hazard.getX() - hazard.getWidth() - safety.getWidth()) / 2,
                 480 + (int)(0.25 * Resources.control_light[0].getHeight() + 5), (int)(0.25 * Resources.control_Rdefrost[0].getWidth()),
                 (int)(0.25 * Resources.control_Rdefrost[0].getHeight()));
+        lock.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if (!InformationService.allDoorsLocked()) InformationService.lockAllDoors();
+                else InformationService.unlockAllDoors();
+            }
+        });
 
         right = new TurningSignal(TurningSignal.RIGHT_SIGNAL);
         right.setLocation(255,80);
@@ -114,25 +123,31 @@ public class InstrumentPanel extends JPanel {
 
     }
 
-    protected void paintComponent (Graphics g) {
+        protected void paintComponent (Graphics g) {
+
+        if (lock.getState() == 0 && InformationService.allDoorsLocked()) {
+            lock.forceState(1);
+        } else if (lock.getState() == 1 && !InformationService.allDoorsLocked()) {
+            lock.forceState(0);
+        }
 
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.setPaint(Constants.panel_bright);
-        g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
+        g2d.setPaint(Constants.PANEL_BRIGHT);
+        g2d.fill(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
-        g2d.setPaint(Constants.text_inactive);
+        g2d.setPaint(Constants.TEXT_INACTIVE);
         g2d.fillRect(30, 155, 290, 2);
 
-        g2d.setPaint(Constants.control_center);
-        g2d.fill(new RoundRectangle2D.Double(15, 475, 320, 97, Constants.roundness, Constants.roundness));
+        g2d.setPaint(Constants.CONTROL_CENTER);
+        g2d.fill(new RoundRectangle2D.Double(15, 475, 320, 97, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
-        g2d.clip(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.roundness, Constants.roundness));
+        g2d.clip(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
         GradientPaint primary = new GradientPaint(
-                0f, 0f, Constants.battery_progress_stop_0, 200, 0f, Constants.battery_progress_stop_1);
+                0f, 0f, Constants.BATTERY_PROGRESS_STOP_0, 200, 0f, Constants.BATTERY_PROGRESS_STOP_1);
 
         g2d.setPaint(primary);
         g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, 200, 8));

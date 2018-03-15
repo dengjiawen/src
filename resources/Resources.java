@@ -1,21 +1,20 @@
 package resources;
 
-import ui.BigBufferedImage;
-
+import ui.LoadFrame;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.file.Files;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.io.IOException;
+import dependencies.fred.emma.BigBufferedImage;
 
 /**
  * Created by freddeng on 2018-03-01.
  */
 public class Resources {
+
+    public static final boolean DO_LOAD_WEATHER_ASSETS = true;
 
     public static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";
@@ -44,6 +43,18 @@ public class Resources {
 
     public static Font range_font;
 
+    public static Font weather_city_font;
+    public static Font weather_condition_font;
+    public static Font weather_main_temp_font;
+    public static Font weather_sub_title_font;
+    public static Font weather_sub_text_font;
+
+    public static Font core_temp_control_font;
+
+    public static Font control_sunroof_percentage_font;
+
+    public static Font music_lg_favorite_font;
+
     public static void initFont () {
 
         try{
@@ -67,6 +78,19 @@ public class Resources {
 
             range_font = system_bold.deriveFont(15f);
 
+            weather_city_font = system_bold.deriveFont(35f);
+            weather_condition_font = system_bold.deriveFont(20f);
+            weather_main_temp_font = system_bold.deriveFont(30f);
+
+            weather_sub_title_font = system_bold.deriveFont(13f);
+            weather_sub_text_font = system_regular.deriveFont(13f);
+
+            core_temp_control_font = system_bold.deriveFont(35f);
+
+            control_sunroof_percentage_font = system_bold.deriveFont(13f);
+
+            music_lg_favorite_font = system_bold.deriveFont(15f);
+
         } catch (Exception e) {e.printStackTrace();}
 
     }
@@ -75,13 +99,39 @@ public class Resources {
     public static BufferedImage shadow;
     public static BufferedImage tesla_logo;
 
+    public static BufferedImage weather_gradient;
+    public static BufferedImage weather_humidity;
+    public static BufferedImage weather_pressure;
+    public static BufferedImage weather_sunrise;
+    public static BufferedImage weather_sunset;
+
+    public static BufferedImage weather_warning_panel;
+    public static BufferedImage weather_forecast_panel;
+
+    public static BufferedImage control_sunroof_slider;
+    public static BufferedImage control_mirror_slider;
+
+    public static BufferedImage music_lg_connection;
+    public static BufferedImage music_lg_search;
+    public static BufferedImage music_lg_fav_text;
+
+    public static BufferedImage ac_accessory;
+    public static BufferedImage ac_main;
+    public static BufferedImage ac_dragger;
+
+    public static BufferedImage bar_lte;
+    public static BufferedImage[] bar_snow;
+
     public static BufferedImage[] music_backdrop_SM;
     public static BufferedImage[] music_highlight;
+    public static BufferedImage[] music_button;
 
     public static BufferedImage[] music_control_pause;
     public static BufferedImage[] music_control_play;
     public static BufferedImage[] music_forward;
     public static BufferedImage[] music_rewind;
+
+    public static BufferedImage music_expand;
 
     public static BufferedImage[] music_shuffle;
     public static BufferedImage[] music_repeat;
@@ -112,11 +162,61 @@ public class Resources {
     public static BufferedImage[] control_wiper;
     public static BufferedImage[] control_light;
 
+    public static BufferedImage[] core_ac;
+    public static BufferedImage[] core_control;
+    public static BufferedImage[] core_left_seat;
+    public static BufferedImage[] core_right_seat;
+    public static BufferedImage[] core_media;
+
+    public static BufferedImage[] core_up_temp_arrow;
+    public static BufferedImage[] core_down_temp_arrow;
+
+    public static BufferedImage[] control_left_mirror;
+    public static BufferedImage[] control_right_mirror;
+    public static BufferedImage[] control_door_lock;
+    public static BufferedImage[] control_mirror;
+    public static BufferedImage[] control_sunroof;
+
+    public static BufferedImage[] music_lg_frozen;
+    public static BufferedImage[] music_lg_lala;
+    public static BufferedImage[] music_lg_nine;
+    public static BufferedImage[] music_lg_device;
+    public static BufferedImage[] music_lg_radio;
+    public static BufferedImage[] music_lg_stream;
+
+    public static BufferedImage[] ac_butt_warmer_left;
+    public static BufferedImage[] ac_butt_warmer_right;
+
+    public static BufferedImage[][] ac_in_your_face;
+    public static BufferedImage[][] ac_in_your_feet;
+    public static BufferedImage[][] ac_power;
+
+    public static BufferedImage[] ac_hand_warmer;
+
+    public static BufferedImage[] music_mini_button;
+
     public static BufferedImage[] snow_loop;
 
     public static void initImage () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png"};
+
+        String[] ac_assignment = new String[] {"_cold.png", "_hot.png"};
+
+        ac_in_your_face = new BufferedImage[2][2];
+        ac_in_your_feet = new BufferedImage[2][2];
+        ac_power = new BufferedImage[2][2];
+
+        for (int i = 0; i < 2; i ++) {
+            ac_in_your_feet[i][1] = loadImage(icon_directory + "ac/in_your_feet_active" + ac_assignment[i]);
+            ac_in_your_feet[i][0] = loadImage(icon_directory + "ac/in_your_feet_inactive.png");
+
+            ac_in_your_face[i][1] = loadImage(icon_directory + "ac/in_your_face_active" + ac_assignment[i]);
+            ac_in_your_face[i][0] = loadImage(icon_directory + "ac/in_your_face_inactive.png");
+
+            ac_power[i][1] = loadImage(icon_directory + "ac/power_active" + ac_assignment[i]);
+            ac_power[i][0] = loadImage(icon_directory + "ac/power_inactive.png");
+        }
 
         button_fronk = new BufferedImage[2];
         button_mirror = new BufferedImage[2];
@@ -125,17 +225,29 @@ public class Resources {
 
         music_backdrop_SM = new BufferedImage[4];
         music_highlight = new BufferedImage[4];
+        music_button = new BufferedImage[4];
+
+        ac_accessory = loadImage(panel_overlay_directory + "ac_accessory.png");
+        ac_main = loadImage(panel_overlay_directory + "ac_main.png");
+        ac_dragger = loadImage(icon_directory + "ac/dragger.png");
 
         tesla_logo = loadImage(icon_directory + "tesla_logo.png");
 
+        music_lg_connection = loadImage(icon_directory + "music_xl/connection.png");
+        music_lg_search = loadImage(icon_directory + "music_xl/search.png");
+        music_lg_fav_text = loadImage(icon_directory + "music_xl/favorite_text.png");
+
         music_backdrop_SM[0] = loadImage(panel_overlay_directory + "frozen_backdrop.jpg");
         music_highlight[0] = loadImage(panel_overlay_directory + "frozen_highlight.png");
+        music_button[0] = loadImage(panel_overlay_directory + "frozen_button.png");
 
         music_backdrop_SM[1] = loadImage(panel_overlay_directory + "nine_backdrop.jpg");
         music_highlight[1] = loadImage(panel_overlay_directory + "nine_highlight.png");
+        music_button[1] = loadImage(panel_overlay_directory + "nine_button.png");
 
-        music_backdrop_SM[2] = loadImage(panel_overlay_directory + "help_backdrop.jpg");
-        music_highlight[2] = loadImage(panel_overlay_directory + "help_highlight.png");
+        music_backdrop_SM[2] = loadImage(panel_overlay_directory + "lala_backdrop.jpg");
+        music_highlight[2] = loadImage(panel_overlay_directory + "lala_highlight.png");
+        music_button[2] = loadImage(panel_overlay_directory + "lala_button.png");
 
         music_control_pause = new BufferedImage[2];
         music_control_play = new BufferedImage[2];
@@ -166,8 +278,54 @@ public class Resources {
         control_wiper = new BufferedImage[6];
         control_light = new BufferedImage[6];
 
+        core_ac = new BufferedImage[3];
+        core_control = new BufferedImage[2];
+        core_left_seat = new BufferedImage[4];
+        core_right_seat = new BufferedImage[4];
+        core_media = new BufferedImage[2];
+
+        core_up_temp_arrow = new BufferedImage[2];
+        core_down_temp_arrow = new BufferedImage[2];
+
+        control_left_mirror = new BufferedImage[5];
+        control_right_mirror = new BufferedImage[5];
+        control_door_lock = new BufferedImage[2];
+        control_mirror = new BufferedImage[3];
+        control_sunroof = new BufferedImage[2];
+
+        music_lg_frozen = new BufferedImage[2];
+        music_lg_lala = new BufferedImage[2];
+        music_lg_nine = new BufferedImage[2];
+        music_lg_device = new BufferedImage[2];
+        music_lg_radio = new BufferedImage[2];
+        music_lg_stream = new BufferedImage[2];
+
+        ac_butt_warmer_left = new BufferedImage[4];
+        ac_butt_warmer_right = new BufferedImage[4];
+
+        ac_hand_warmer = new BufferedImage[2];
+
+        music_mini_button = new BufferedImage[2];
+
+        music_expand = loadImage(panel_overlay_directory + "music_button_active.png");
+
+        control_mirror_slider = loadImage(icon_directory + "control/mirror_slider_base.png");
+        control_sunroof_slider = loadImage(icon_directory + "control/sunroof_slider_base.png");
+
         map_LG = loadImage(panel_overlay_directory + "map_LG.jpg");
         shadow = loadImage(panel_overlay_directory + "shadow.png");
+        weather_gradient = loadImage(panel_overlay_directory + "weather_gradient.png");
+
+        weather_humidity = loadImage(icon_directory + "weather/humidity.png");
+        weather_pressure = loadImage(icon_directory + "weather/pressure.png");
+        weather_sunrise = loadImage(icon_directory + "weather/sunrise.png");
+        weather_sunset = loadImage(icon_directory + "weather/sunset.png");
+
+        weather_warning_panel = loadImage(panel_overlay_directory + "warning_panel.png");
+        weather_forecast_panel = loadImage(panel_overlay_directory + "forecast_panel.png");
+
+        bar_lte = loadImage(icon_directory + "LTE.png");
+        bar_snow = new BufferedImage[2];
 
         for (int i = 0; i < 2; i ++) {
             music_control_pause[i] = loadImage(icon_directory + "pause" + toggle_assignment[i]);
@@ -201,6 +359,49 @@ public class Resources {
             control_hazard[i] = loadImage(icon_directory + "control_center/hazard" + toggle_assignment[i]);
             control_lock[i] = loadImage(icon_directory + "control_center/lock" + toggle_assignment[i]);
             control_safety[i] = loadImage(icon_directory + "control_center/safety" + toggle_assignment[i]);
+
+            core_control[i] = loadImage(icon_directory + "main_control_bar/control" + toggle_assignment[i]);
+            core_media[i] = loadImage(icon_directory + "main_control_bar/media" + toggle_assignment[i]);
+
+            core_up_temp_arrow[i] = loadImage(icon_directory + "main_control_bar/up_temp_arrow" + toggle_assignment[i]);
+            core_down_temp_arrow[i] = loadImage(icon_directory + "main_control_bar/down_temp_arrow" + toggle_assignment[i]);
+
+            control_door_lock[i] = loadImage(icon_directory + "control/door_lock" + toggle_assignment[i]);
+            control_sunroof[i] = loadImage(icon_directory + "control/sunroof" + toggle_assignment[i]);
+
+            music_lg_frozen[i] = loadImage(icon_directory + "music_xl/frozen" + toggle_assignment[i]);
+            music_lg_lala[i] = loadImage(icon_directory + "music_xl/lala" + toggle_assignment[i]);
+            music_lg_nine[i] = loadImage(icon_directory + "music_xl/nine" + toggle_assignment[i]);
+            music_lg_device[i] = loadImage(icon_directory + "music_xl/device" + toggle_assignment[i]);
+            music_lg_radio[i] = loadImage(icon_directory + "music_xl/radio" + toggle_assignment[i]);
+            music_lg_stream[i] = loadImage(icon_directory + "music_xl/stream" + toggle_assignment[i]);
+
+            music_mini_button[i] = loadImage(icon_directory + "mini_player" + toggle_assignment[i]);
+
+            bar_snow[i] = loadImage(icon_directory + "snow" + toggle_assignment[i]);
+
+            ac_hand_warmer[i] = loadImage(icon_directory + "ac/hand_warmer" + toggle_assignment[i]);
+        }
+
+        for (int i = 0; i < 3; i ++) {
+            control_mirror[i] = loadImage(icon_directory + "control/mirror_state_" + i + ".png");
+        }
+
+        for (int i = 0; i < 5; i ++) {
+            control_left_mirror[i] = loadImage(icon_directory + "control/left_mirror_" + i + ".png");
+            control_right_mirror[i] = loadImage(icon_directory + "control/right_mirror_" + i + ".png");
+        }
+
+        for (int i = 0; i < 4; i ++) {
+            core_right_seat[i] = loadImage(icon_directory + "main_control_bar/right_seat_mode_" + i + ".png");
+            core_left_seat[i] = loadImage(icon_directory + "main_control_bar/left_seat_mode_" + i + ".png");
+
+            ac_butt_warmer_left[i] = loadImage(icon_directory + "ac/butt_warmer_left_" + i + ".png");
+            ac_butt_warmer_right[i] = loadImage(icon_directory + "ac/butt_warmer_right_" + i + ".png");
+        }
+
+        for (int i = 0; i < 3; i ++) {
+            core_ac[i] = loadImage(icon_directory + "main_control_bar/ac_mode_" + i + ".png");
         }
 
         for (int i = 0; i < 6; i ++) {
@@ -208,36 +409,15 @@ public class Resources {
             control_light[i] = loadImage(icon_directory + "control_center/light/light_" + i + ".png");
         }
 
-        snow_loop = new BufferedImage[480];
-
-        ExecutorService[] threads = new ExecutorService[10];
-        for (int i = 0; i < 10; i ++) {
-            threads[i] = Executors.newSingleThreadExecutor();
-        }
-
-        File temp_dir = null;
-        try {
-            temp_dir =  File.createTempFile("temp",null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0, j = 0; i < 480; i ++, j++) {
-
-            final int currentnum = i;
-            threads[j].submit(() -> {
-                try {
-                    snow_loop[currentnum] = BigBufferedImage.create(new File(Resources.class.getResource
-                            (animation_directory + "weather/snow_loop_" + currentnum + ".jpg").toURI()), BigBufferedImage.TYPE_INT_RGB);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-            if (j == 9) {
-                j = -1;
+        snow_loop = new BufferedImage[200];
+        if (DO_LOAD_WEATHER_ASSETS) {
+            for (int i = 0; i < 200; i++) {
+                snow_loop[i] = loadImageNotStoredInRam(animation_directory + "weather_upd/snow_loop_" + i + ".jpg");
             }
-
+        } else {
+            for (int i = 0; i < 200; i++) {
+                snow_loop[i] = null;
+            }
         }
 
         music_repeat[2] = loadImage(toggle_directory + "repeat_1" + toggle_assignment[1]);
@@ -247,6 +427,9 @@ public class Resources {
     private static BufferedImage loadImage (String res_path) {
 
         try {
+            SwingUtilities.invokeLater(() -> {
+                LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path);
+            });
             return ImageIO.read(Resources.class.getResource(res_path));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Resources are missing. " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -255,6 +438,47 @@ public class Resources {
         }
 
         return null;
+    }
+
+    private static BufferedImage loadImageNotStoredInRam (String res_path) {
+
+        try {
+
+            File temp_file = File.createTempFile(String.valueOf(res_path.hashCode()), ".tmp");
+            temp_file.deleteOnExit();
+
+            BufferedImage image = loadImage(res_path);
+            ImageIO.write(image, "jpg", temp_file);
+
+            SwingUtilities.invokeLater(() -> {
+                LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path);
+            });
+
+            return BigBufferedImage.create(temp_file, BufferedImage.TYPE_INT_RGB);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static void invokeStatusBarDarkMode (boolean do_invoke) {
+
+        if (do_invoke) {
+            shadow = loadImage(icon_directory + "dark_assets/shadow.png");
+            bar_snow[0] = loadImage(icon_directory + "dark_assets/snow_inactive.png");
+            tesla_logo = loadImage(icon_directory + "dark_assets/tesla_logo.png");
+            bar_lte = loadImage(icon_directory + "dark_assets/LTE.png");
+            Constants.STATUS_BAR_TEXT_COLOR = Color.decode("#FFFFFF");
+        } else {
+            shadow = loadImage(panel_overlay_directory + "shadow.png");
+            bar_snow[0] = loadImage(icon_directory + "snow_inactive.png");
+            tesla_logo = loadImage(icon_directory + "tesla_logo.png");
+            bar_lte = loadImage(icon_directory + "LTE.png");
+            Constants.STATUS_BAR_TEXT_COLOR = Color.decode("#000000");
+        }
+
     }
 
 }

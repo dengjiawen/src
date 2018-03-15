@@ -28,8 +28,8 @@ public class ContainerSM extends JPanel {
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.setPaint(Constants.panel_bright);
-        g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width, panel_height, Constants.roundness, Constants.roundness));
+        g2d.setPaint(Constants.PANEL_BRIGHT);
+        g2d.fill(new RoundRectangle2D.Double(0, 0, panel_width, panel_height, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
     }
 

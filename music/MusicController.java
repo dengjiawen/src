@@ -1,7 +1,6 @@
 package music;
 
-import sound.TinySound;
-import music.Music;
+import kuusisto.tinysound.TinySound;
 import ui.MusicPlayerPanelSM;
 
 import javax.swing.*;
@@ -157,7 +156,7 @@ public class MusicController {
         TinySound.init();
 
         current_index = 0;
-        current_songlist = Resources.songlists[1];
+        current_songlist = Resources.songlists[2];
 
         fullRepeat();
 
@@ -285,6 +284,27 @@ public class MusicController {
         timing = 0;
 
         panel.reset(sequence[current_index]);
+    }
+
+    public static void changeSongList (SongList list) {
+
+        for (Music music : sequence) {
+            music.stop();
+        }
+
+        current_songlist = list;
+        shuffle = false;
+        repeat = false;
+
+        fullRepeat();
+
+        panel.changeSongList(list);
+
+        isPaused = false;
+
+        sequence[0].play();
+        panel.reset(sequence[0]);
+
     }
 
 }

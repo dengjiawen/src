@@ -1,6 +1,8 @@
 package music;
 
-import resources.Resources;
+import music.Resources;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -11,38 +13,36 @@ public class SongList {
 
     public static final int BACKDROP = 0;
     public static final int HIGHLIGHT = 1;
+    public static final int BUTTON = 2;
 
     private ArrayList<Music> music;
     private BufferedImage[] assets;
 
     private String list_name;
 
-    public SongList (int[] music_numbers, String list_name) {
+    public SongList (int[] music_numbers) {
         music = new ArrayList<>(4);
 
         for (int i = 0; i < 4; i++) {
-            music.add(new Music(music_numbers[i]));
+            music.add(Resources.music[music_numbers[i]]);
         }
 
-        assets = new BufferedImage[2];
+        assets = new BufferedImage[3];
 
         int album_number = 0;
-        switch (music_numbers[0]) {
-            case 0:
-                album_number = 0;
-                break;
-            case 4:
-                album_number = 1;
-                break;
-            case 8:
-                album_number = 2;
-                break;
+        if (music.get(0).getAlbum().equals("Frozen OST")) {
+            album_number = 0;
+        } else if (music.get(0).getAlbum().equals("Nine Track Mind")) {
+            album_number = 1;
+        } else if (music.get(0).getAlbum().equals("La La Land OST")) {
+            album_number = 2;
         }
 
-        this.list_name = list_name;
+        list_name = music.get(0).getAlbum();
 
-        assets[BACKDROP] = Resources.music_backdrop_SM[album_number];
-        assets[HIGHLIGHT] = Resources.music_highlight[album_number];
+        assets[BACKDROP] = resources.Resources.music_backdrop_SM[album_number];
+        assets[HIGHLIGHT] = resources.Resources.music_highlight[album_number];
+        assets[BUTTON] = resources.Resources.music_button[album_number];
     }
 
     public Music getMusic (int index) {
@@ -55,6 +55,10 @@ public class SongList {
 
     public BufferedImage getHighlight () {
         return assets[HIGHLIGHT];
+    }
+
+    public BufferedImage getButton () {
+        return assets[BUTTON];
     }
 
     public int getIndex (Music music) {

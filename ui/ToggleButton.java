@@ -11,10 +11,25 @@ import java.awt.image.BufferedImage;
  */
 public class ToggleButton extends JPanel {
 
-    private BufferedImage[] states;
-    private BufferedImage active_state;
+    protected BufferedImage[] states;
+    protected BufferedImage active_state;
 
-    private int active_state_num;
+    protected int active_state_num;
+
+    public ToggleButton () {
+
+    }
+
+    public ToggleButton(BufferedImage[] icon, int num_states, int x, int y, int width, int height, boolean manual_toggle) {
+
+        setBounds(x, y, width, height);
+
+        states = icon;
+        active_state_num = 0;
+
+        active_state = icon[active_state_num];
+
+    }
 
     public ToggleButton(BufferedImage[] icon, int num_states, int x, int y, int width, int height) {
 
@@ -39,9 +54,14 @@ public class ToggleButton extends JPanel {
     }
 
     public void forceState (int state) {
+        if (active_state_num == state) return;
         active_state_num = state;
         active_state = states[active_state_num];
         RenderingService.invokeRepaint();
+    }
+
+    public int getState () {
+        return active_state_num;
     }
 
     public void changeIcon (BufferedImage[] icon) {

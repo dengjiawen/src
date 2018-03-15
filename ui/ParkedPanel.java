@@ -1,9 +1,13 @@
 package ui;
 
+import information.InformationService;
+import resources.Constants;
 import resources.Resources;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Ann on 2018-03-01.
@@ -27,7 +31,16 @@ public class ParkedPanel extends JPanel {
 
         fronk = new ToggleButton(Resources.button_fronk, 2, (getWidth() - button_width)/2, 130 - button_height + 2,
                 button_width, button_height);
+
         mirror = new ToggleButton(Resources.button_mirror, 2, 40, 200, button_width, button_height);
+        mirror.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                InformationService.mirror_state = (InformationService.mirror_state == Constants.MIRROR_RETRACTED) ? Constants.MIRROR_EXTENDED : Constants.MIRROR_RETRACTED;
+            }
+        });
+
         charge = new ToggleButton(Resources.button_charge, 2, 40, 300, button_width, button_height);
         trunk = new ToggleButton(Resources.button_trunk, 2, (getWidth() - button_width)/2, 370,
                 button_width, button_height);
@@ -40,6 +53,12 @@ public class ParkedPanel extends JPanel {
     }
 
     public void paintComponent (Graphics g) {
+
+        if (InformationService.mirror_state == Constants.MIRROR_RETRACTED && mirror.getState() != 0) {
+            mirror.forceState(0);
+        } else if (InformationService.mirror_state != Constants.MIRROR_RETRACTED && mirror.getState() != 1) {
+            mirror.forceState(1);
+        }
 
         Graphics2D g2d = (Graphics2D) g;
 
