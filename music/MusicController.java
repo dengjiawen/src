@@ -303,7 +303,7 @@ public class MusicController {
         isPaused = false;
 
         sequence[0].play();
-        panel.reset(sequence[0]);
+        reset();
 
     }
 

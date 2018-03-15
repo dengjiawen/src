@@ -41,6 +41,8 @@ public class Constants {
     public static final Color AC_BACKGROUND_STOP_0 = Color.decode("#f1f0f0");
     public static final Color AC_BACKGROUND_STOP_1 = Color.decode("#ffffff");
 
+    public static final Color SPEED_UNIT_COLOR = Color.decode("#626262");
+
     public static Color STATUS_BAR_TEXT_COLOR = Color.decode("#000000");
 
     public static final int ROUNDNESS = 25;
@@ -51,6 +53,16 @@ public class Constants {
 
     public static final int AC_COLD = 0;
     public static final int AC_HOT = 1;
+
+    public final static int GEAR_PARKED = 0;
+    public final static int GEAR_REVERSE = 1;
+    public final static int GEAR_NEUTRAL = 2;
+    public final static int GEAR_DRIVE = 3;
+    public final static int GEAR_SPORT = 4;
+
+    public final static int MODE_NORMAL = 0;
+    public final static int MODE_CRUISE_CONTROL = 1;
+    public final static int MODE_AUTOPILOT = 2;
 
     public class WindowConstants {
 

@@ -92,6 +92,9 @@ public class MainWindow extends JFrame {
 
         add(music_lg);
 
+        instrument.shiftGear(Constants.GEAR_DRIVE);
+        status_bar.shiftGear(Constants.GEAR_DRIVE);
+
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

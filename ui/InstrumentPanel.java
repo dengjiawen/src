@@ -7,7 +7,6 @@ package ui;
 import information.InformationService;
 import resources.Constants;
 import resources.Resources;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -17,7 +16,10 @@ import java.awt.geom.RoundRectangle2D;
 
 public class InstrumentPanel extends JPanel {
 
-    JLabel speedometer;
+    JLabel parked_label;
+    JLabel neutral_label;
+    JLabel speed_label;
+    JLabel speed_unit_label;
     JLabel range;
 
     ToggleButton Fdefrost;
@@ -32,6 +34,9 @@ public class InstrumentPanel extends JPanel {
     TurningSignal left;
     TurningSignal right;
 
+    ParkedPanel parked;
+    DrivePanel drive;
+
     public InstrumentPanel () {
         super();
 
@@ -39,15 +44,45 @@ public class InstrumentPanel extends JPanel {
         setBackground(new Color(0,0,0,0));
         setLayout(null);
 
-        ParkedPanel parked = new ParkedPanel();
+        parked = new ParkedPanel();
 
-        speedometer = new JLabel("P");
-        speedometer.setFont(Resources.speedometer_font);
-        speedometer.setForeground(Color.BLACK);
-        speedometer.setOpaque(false);
-        speedometer.setBounds((getWidth() - 80)/2,40,80,100);
-        speedometer.setVerticalAlignment(JLabel.CENTER);
-        speedometer.setHorizontalAlignment(JLabel.CENTER);
+        drive = new DrivePanel();
+        drive.setVisible(false);
+
+        parked_label = new JLabel("P");
+        parked_label.setFont(Resources.speedometer_font);
+        parked_label.setForeground(Color.BLACK);
+        parked_label.setOpaque(false);
+        parked_label.setBounds((getWidth() - 80)/2,40,80,100);
+        parked_label.setVerticalAlignment(JLabel.CENTER);
+        parked_label.setHorizontalAlignment(JLabel.CENTER);
+
+        neutral_label = new JLabel("N");
+        neutral_label.setFont(Resources.speedometer_font);
+        neutral_label.setForeground(Color.BLACK);
+        neutral_label.setOpaque(false);
+        neutral_label.setBounds((getWidth() - 80)/2,40,80,100);
+        neutral_label.setVerticalAlignment(JLabel.CENTER);
+        neutral_label.setHorizontalAlignment(JLabel.CENTER);
+        neutral_label.setVisible(false);
+
+        speed_label = new JLabel("0");
+        speed_label.setFont(Resources.speed_font);
+        speed_label.setForeground(Color.BLACK);
+        speed_label.setOpaque(false);
+        speed_label.setBounds((getWidth() - 150)/2,35,150,100);
+        speed_label.setVerticalAlignment(JLabel.CENTER);
+        speed_label.setHorizontalAlignment(JLabel.CENTER);
+        speed_label.setVisible(false);
+
+        speed_unit_label = new JLabel("KMH");
+        speed_unit_label.setFont(Resources.speed_unit_font);
+        speed_unit_label.setForeground(Constants.SPEED_UNIT_COLOR);
+        speed_unit_label.setOpaque(false);
+        speed_unit_label.setBounds((getWidth() - 80)/2,85,80,100);
+        speed_unit_label.setVerticalAlignment(JLabel.CENTER);
+        speed_unit_label.setHorizontalAlignment(JLabel.CENTER);
+        speed_unit_label.setVisible(false);
 
         range = new JLabel("216 KM");
         range.setFont(Resources.range_font);
@@ -104,8 +139,13 @@ public class InstrumentPanel extends JPanel {
         left = new TurningSignal(TurningSignal.LEFT_SIGNAL);
         left.setLocation(60,80);
 
-        add(speedometer);
+        add(parked_label);
+        add(neutral_label);
+        add(speed_label);
+        add(speed_unit_label);
+
         add(parked);
+        add(drive);
 
         add(right);
         add(left);
@@ -121,9 +161,30 @@ public class InstrumentPanel extends JPanel {
 
         add(range);
 
+        InformationService.instrument_panel_reference = this;
+
     }
 
-        protected void paintComponent (Graphics g) {
+
+    public void shiftGear (int gear_modifier) {
+
+        switch (gear_modifier) {
+            case Constants.GEAR_DRIVE:
+                parked_label.setVisible(false);
+                parked.setVisible(false);
+                speed_label.setVisible(true);
+                speed_unit_label.setVisible(true);
+                drive.setVisible(true);
+        }
+
+        RenderingService.invokeRepaint();
+    }
+
+    public void updateSpeed () {
+        speed_label.setText(String.valueOf(InformationService.speed));
+    }
+
+    protected void paintComponent (Graphics g) {
 
         if (lock.getState() == 0 && InformationService.allDoorsLocked()) {
             lock.forceState(1);

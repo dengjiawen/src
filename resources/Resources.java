@@ -14,7 +14,7 @@ import dependencies.fred.emma.BigBufferedImage;
  */
 public class Resources {
 
-    public static final boolean DO_LOAD_WEATHER_ASSETS = true;
+    public static final boolean DO_LOAD_WEATHER_ASSETS = false;
 
     public static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";
@@ -29,6 +29,8 @@ public class Resources {
 
     public static Font oval_button_font;
     public static Font speedometer_font;
+    public static Font speed_font;
+    public static Font speed_unit_font;
 
     public static Font music_title_font;
     public static Font music_album_font;
@@ -64,6 +66,8 @@ public class Resources {
 
             oval_button_font = system_bold.deriveFont(14.5f);
             speedometer_font = system_bold.deriveFont(100f);
+            speed_font = system_bold.deriveFont(75f);
+            speed_unit_font = system_bold.deriveFont(20f);
 
             music_title_font = system_bold.deriveFont(20f);
             music_album_font = system_regular.deriveFont(13f);
@@ -195,6 +199,17 @@ public class Resources {
 
     public static BufferedImage[] music_mini_button;
 
+    public static BufferedImage tesla_3_rear;
+    public static BufferedImage speed_limit;
+    public static BufferedImage ap_icon;
+    public static BufferedImage cruise_icon;
+    public static BufferedImage ap_guide;
+    public static BufferedImage ap_shielding;
+    public static BufferedImage ap_shielding_down;
+
+    public static BufferedImage[] ap_plus;
+    public static BufferedImage[] ap_minus;
+
     public static BufferedImage[] snow_loop;
 
     public static void initImage () {
@@ -202,6 +217,17 @@ public class Resources {
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png"};
 
         String[] ac_assignment = new String[] {"_cold.png", "_hot.png"};
+
+        ap_plus = new BufferedImage[2];
+        ap_minus = new BufferedImage[2];
+
+        tesla_3_rear = loadImage(icon_directory + "drive/tesla_3_rear.png");
+        speed_limit = loadImage(icon_directory + "drive/speed_limit.png");
+        ap_icon = loadImage(icon_directory + "drive/autopilot_active.png");
+        cruise_icon = loadImage(icon_directory + "drive/cruise_active.png");
+        ap_guide = loadImage(icon_directory + "drive/ap_guide.png");
+        ap_shielding = loadImage(panel_overlay_directory + "ap_shielding.png");
+        ap_shielding_down = loadImage(panel_overlay_directory + "ap_shielding_down.png");
 
         ac_in_your_face = new BufferedImage[2][2];
         ac_in_your_feet = new BufferedImage[2][2];
@@ -381,6 +407,9 @@ public class Resources {
             bar_snow[i] = loadImage(icon_directory + "snow" + toggle_assignment[i]);
 
             ac_hand_warmer[i] = loadImage(icon_directory + "ac/hand_warmer" + toggle_assignment[i]);
+
+            ap_plus[i] = loadImage(icon_directory + "drive/plus" + toggle_assignment[i]);
+            ap_minus[i] = loadImage(icon_directory + "drive/minus" + toggle_assignment[i]);
         }
 
         for (int i = 0; i < 3; i ++) {

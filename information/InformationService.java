@@ -1,8 +1,11 @@
 package information;
 
 import resources.Constants;
+import ui.InstrumentPanel;
+import ui.RenderingService;
 import ui.StatusBarPanel;
 
+import javax.sound.midi.Instrument;
 import javax.swing.Timer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,11 +35,17 @@ public class InformationService {
     public static ImmutableInt passenger_ac_temp = new ImmutableInt(20);
 
     public static StatusBarPanel status_bar_reference;
+    public static InstrumentPanel instrument_panel_reference;
 
     public static boolean left_front_door_locked;
     public static boolean left_back_door_locked;
     public static boolean right_front_door_locked;
     public static boolean right_back_door_locked;
+
+    public static int drive_gear = Constants.GEAR_PARKED;
+    public static int drive_mode = Constants.MODE_NORMAL;
+
+    public static int speed = 0;
 
     public static int butt_warmer_left_state = 0;
     public static int butt_warmer_right_state = 0;
@@ -89,6 +98,16 @@ public class InformationService {
 
     public static boolean allDoorsUnlocked () {
         return !left_front_door_locked && !left_back_door_locked && !right_front_door_locked && !right_back_door_locked;
+    }
+
+    public static void changeGear (int drive_mode) {
+
+    }
+
+    public static void updateSpeed (int new_speed) {
+        speed = new_speed;
+        instrument_panel_reference.updateSpeed();
+        RenderingService.invokeRepaint();
     }
 
 }

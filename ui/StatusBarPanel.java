@@ -15,12 +15,6 @@ import java.awt.image.BufferedImage;
  */
 public class StatusBarPanel extends JPanel {
 
-    public final static int GEAR_PARKED = 0;
-    public final static int GEAR_REVERSE = 1;
-    public final static int GEAR_NEUTRAL = 2;
-    public final static int GEAR_DRIVE = 3;
-    public final static int GEAR_SPORT = 4;
-
     public static WeatherPanelSM weather_panel;
 
     JLabel time;
@@ -75,7 +69,7 @@ public class StatusBarPanel extends JPanel {
             RenderingService.invokeRepaint();
         });
 
-        current_drive_mode = GEAR_PARKED;
+        current_drive_mode = Constants.GEAR_PARKED;
 
         warning_state = Resources.warning[1];
         abs_state = Resources.abs[1];
@@ -101,6 +95,12 @@ public class StatusBarPanel extends JPanel {
 
     public void forceSetWeatherPanelStatus (boolean do_appear_active) {
         weather_is_showing = do_appear_active;
+        RenderingService.invokeRepaint();
+    }
+
+    public void shiftGear (int gear_modifier) {
+        current_drive_mode = gear_modifier;
+
         RenderingService.invokeRepaint();
     }
 
@@ -133,30 +133,26 @@ public class StatusBarPanel extends JPanel {
 
         g2d.setFont(Resources.drive_mode_font);
         g2d.setColor(Constants.TEXT_INACTIVE);
-        g2d.drawString("P R N D S", 15, 25);
+        g2d.drawString("P R N D", 15, 25);
 
         int padding = 0;
 
         g2d.setColor(Color.black);
         switch (current_drive_mode) {
-            case GEAR_PARKED:
+            case Constants.GEAR_PARKED:
                 g2d.drawString("P", 15, 25);
                 break;
-            case GEAR_REVERSE:
+            case Constants.GEAR_REVERSE:
                 padding = g.getFontMetrics(Resources.drive_mode_font).stringWidth("P ");
                 g2d.drawString("R", 15 + padding, 25);
                 break;
-            case GEAR_NEUTRAL:
+            case Constants.GEAR_NEUTRAL:
                 padding = g.getFontMetrics(Resources.drive_mode_font).stringWidth("P R ");
                 g2d.drawString("N", 15 + padding, 25);
                 break;
-            case GEAR_DRIVE:
+            case Constants.GEAR_DRIVE:
                 padding = g.getFontMetrics(Resources.drive_mode_font).stringWidth("P R N ");
                 g2d.drawString("D", 15 + padding, 25);
-                break;
-            case GEAR_SPORT:
-                padding = g.getFontMetrics(Resources.drive_mode_font).stringWidth("P R N D ");
-                g2d.drawString("S", 15 + padding, 25);
                 break;
         }
 

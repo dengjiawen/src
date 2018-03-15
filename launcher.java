@@ -1,9 +1,12 @@
 import information.InformationService;
 import kuusisto.tinysound.TinySound;
 import music.MusicController;
+import test.TestProgram;
 import ui.LoadFrame;
 import ui.MainWindow;
 import ui.RenderingService;
+
+import java.awt.*;
 
 /**
  * Created by freddeng on 2018-03-01.
@@ -12,6 +15,13 @@ public class launcher {
 //Hello
 
     public static MainWindow window;
+
+    public static int main_window_x;
+    public static int main_window_y;
+
+    public static int acc_window_x;
+    public static int acc_window_y;
+
     public static void main (String[] args) {
 
         LoadFrame load = new LoadFrame();
@@ -42,6 +52,29 @@ public class launcher {
         window = new MainWindow();
         InformationService.init();
         RenderingService.init(window);
+
+        TestProgram test = new TestProgram();
+
+        calcLocation();
+
+        test.reposition(acc_window_x, acc_window_y);
+        window.setLocation(main_window_x, main_window_y);
+
+        RenderingService.invokeRepaint();
+
+    }
+
+    private static void calcLocation () {
+
+        Dimension screen_size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        main_window_y = (screen_size.height - window.getHeight())/2;
+        acc_window_y = main_window_y;
+
+        int combined_width = 220 + window.getWidth();
+
+        acc_window_x = (screen_size.width - combined_width)/2;
+        main_window_x = acc_window_x + 220;
     }
 
 }

@@ -5,6 +5,7 @@
 package test;
 
 import com.sun.org.apache.regexp.internal.RE;
+import information.InformationService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,11 +20,12 @@ public class TestProgram {
             // tAccel is the timer used to time the acceleration, tDecel for deceleration, tBrake for brakes
             // tBat is the one used to calculate how much battery is used while the car is running
             // tCharge is the timer used to keep track of the energy charging
-        int intSpeed, intDistance, intCount1, intCount2;
+        int intSpeed, intCount1, intCount2;
             // intDistance is used to calculate the distance travelled in that second
             // intCount1 is used to keep track of whether the warning message was previously displayed
             // intCount2 is used for the charging message
             // Perhaps we can make the car stop after a certain percentage
+        float fltDistance;
         float flPercent = 100f;
             // This float represents the battery percentage. Starts at 100%
         boolean charging = false;
@@ -33,7 +35,7 @@ public class TestProgram {
         TestProgram BuildTest = new TestProgram();
     }
 
-    TestProgram(){
+    public TestProgram(){
 
         GUI();
         Timers();
@@ -43,7 +45,7 @@ public class TestProgram {
         return intSpeed;
     } */
 
-    private void GUI(){
+    public void GUI(){
         SpeedFrame = new JFrame("Speed");
         SpeedFrame.setSize(220, 250);
         SpeedFrame.setLayout(null);
@@ -62,11 +64,9 @@ public class TestProgram {
         Brakes.setVisible(true);
         SpeedFrame.add(Brakes);
 
-
-
         BatteryFrame = new JFrame("Battery");
         BatteryFrame.setLayout(null);
-        BatteryFrame.setSize(500, 210);
+        BatteryFrame.setSize(220, 210);
         BatteryFrame.setResizable(false);
         BatteryFrame.setVisible(true);
 
@@ -85,25 +85,26 @@ public class TestProgram {
     }
 
     private void Timers(){ // We should remove the println after
-        tAccel = new Timer(1000, e -> {
-            if((intSpeed + 24) < 227){ // The speed uniformly increases speed by 24 km/h
-                intSpeed +=  24; // If adding the speed is under the max speed, the speed gets added
-                System.out.println(intSpeed);
+        tAccel = new Timer(1000/24, e -> {
+            if((intSpeed + 1) < 227){ // The speed uniformly increases speed by 24 km/h
+                intSpeed +=  1; // If adding the speed is under the max speed, the speed gets added
+                InformationService.updateSpeed(intSpeed);
             }
-            else if((intSpeed + 24)>227){
+            else if((intSpeed + 1)>227){
                 intSpeed = 227; // If adding the speed goes over max speed, the car just travels at max
-                System.out.println(intSpeed);
+                InformationService.updateSpeed(intSpeed);
             }
         });
 
-        tDecel = new Timer(1000, e ->{
-            if((intSpeed - 5) > 0){ // The car decelerates by 5 km/h and does not go under 0
-                intSpeed -= 5;
-                System.out.println(intSpeed);
+        tDecel = new Timer(1000/5, e ->{
+            if((intSpeed - 1) >= 0){ // The car decelerates by 5 km/h and does not go under 0
+                intSpeed -= 1;
+                InformationService.updateSpeed(intSpeed);
             }
-            else if ((intSpeed >0)&&((intSpeed - 5)<0)){
+            else if ((intSpeed > 0)&&((intSpeed - 1) < 0)){
                 intSpeed = 0;
-                System.out.println(intSpeed);
+                InformationService.updateSpeed(intSpeed);
+                tDecel.stop();
             }
         });
 
@@ -124,14 +125,14 @@ public class TestProgram {
             }
         });
 
-        tBrake = new Timer(1000, e ->{
-            if((intSpeed - 60) > 0){ // The brakes decelerates the car at 60 km/h
-                intSpeed -= 60;
-                System.out.println(intSpeed);
+        tBrake = new Timer(1000/60, e ->{
+            if((intSpeed - 1) >= 0){ // The brakes decelerates the car at 60 km/h
+                intSpeed -= 1;
+                InformationService.updateSpeed(intSpeed);
             }
-            else if ((intSpeed >0)&&((intSpeed - 60)<0)){ // The speed should not go below 0
+            else if ((intSpeed > 0)&&((intSpeed - 1) < 0)){ // The speed should not go below 0
                 intSpeed = 0;
-                System.out.println(intSpeed);
+                InformationService.updateSpeed(intSpeed);
             }
         });
 
@@ -151,7 +152,8 @@ public class TestProgram {
 
 
         tBat = new Timer(1000, e->{
-                BPLabel.setText("Battery Percent: " + calculateTime() + "%"); // The battery percentage should be recalculated every second
+            BPLabel.setText("Battery Percent: " + calculateTime() + "%"); // The battery percentage should be recalculated every second
+            BatteryFrame.repaint();
         });
         tBat.start();
 
@@ -177,6 +179,7 @@ public class TestProgram {
         tCharge = new Timer( 6000, e ->{
             if(flPercent < 100){
                 flPercent += 1; // If the car wasn't fully charged, it increases by one
+                BPLabel.setText("Battery Percent: " + calculateTime() + "%");
             }
             else{
                 intCount1 = 0; // If the car is charged, the warning message resets
@@ -190,9 +193,9 @@ public class TestProgram {
     }
 
     public float calculateTime() {
-        intDistance = ((intSpeed / 60) / 60);
+        fltDistance = ((intSpeed / 3600f));
 
-        flPercent -= ((intDistance / 499) * 100);
+        flPercent -= ((fltDistance / 1) * 100);
 
         if ((flPercent < 10)&&(intCount1 == 0)) {
             warning();
@@ -205,4 +208,12 @@ public class TestProgram {
     public void warning(){
         JOptionPane.showMessageDialog(null, "Battery is low", "Warning", JOptionPane.WARNING_MESSAGE, null);
     }
+
+    public void reposition (int x, int y) {
+
+        SpeedFrame.setLocation(x, y);
+        BatteryFrame.setLocation(x, y + SpeedFrame.getHeight());
+
+    }
+
 }
