@@ -4,7 +4,6 @@
 
 package test;
 
-import com.sun.org.apache.regexp.internal.RE;
 import information.InformationService;
 
 import javax.swing.*;
@@ -30,6 +29,8 @@ public class TestProgram {
             // This float represents the battery percentage. Starts at 100%
         boolean charging = false;
             // The same button is used for starting and stopping charging, so a boolean is used to keep track of it
+
+        Timer ambient_power_depletion;
 
     public static void main (String [] args) {
         TestProgram BuildTest = new TestProgram();
@@ -106,6 +107,9 @@ public class TestProgram {
                 InformationService.updateSpeed(intSpeed);
                 tDecel.stop();
             }
+
+            regenerativeBraking();
+
         });
 
 
@@ -115,6 +119,7 @@ public class TestProgram {
                 super.mousePressed(e);
                 tAccel.start();
                 tDecel.stop();
+                InformationService.accelerating = true;
             }
 
             @Override
@@ -122,6 +127,7 @@ public class TestProgram {
                 super.mouseReleased(e);
                 tAccel.stop();
                 tDecel.start();
+                InformationService.accelerating = false;
             }
         });
 
@@ -150,9 +156,16 @@ public class TestProgram {
             }
         });
 
+        ambient_power_depletion = new Timer(6000, e -> {
+            flPercent -= 0.1;
+            InformationService.updateBattery(flPercent);
+        });
+        ambient_power_depletion.start();
 
-        tBat = new Timer(1000, e->{
-            BPLabel.setText("Battery Percent: " + calculateTime() + "%"); // The battery percentage should be recalculated every second
+        tBat = new Timer(500, e->{
+            if (InformationService.accelerating) calculateTime();
+            InformationService.updateBattery(flPercent);
+            BPLabel.setText("Battery Percent: " + flPercent + "%"); // The battery percentage should be recalculated every second
             BatteryFrame.repaint();
         });
         tBat.start();
@@ -176,10 +189,9 @@ public class TestProgram {
             }
         });
 
-        tCharge = new Timer( 6000, e ->{
+        tCharge = new Timer( 2000, e ->{
             if(flPercent < 100){
                 flPercent += 1; // If the car wasn't fully charged, it increases by one
-                BPLabel.setText("Battery Percent: " + calculateTime() + "%");
             }
             else{
                 intCount1 = 0; // If the car is charged, the warning message resets
@@ -192,17 +204,33 @@ public class TestProgram {
         });
     }
 
-    public float calculateTime() {
+    public void calculateTime() {
         fltDistance = ((intSpeed / 3600f));
 
-        flPercent -= ((fltDistance / 1) * 100);
+        if (intSpeed > 100) {
+            flPercent -= ((fltDistance / 75) * 100);
+        } else if (intSpeed > 200) {
+            flPercent -= ((fltDistance / 40) * 100);
+        } else {
+            flPercent -= ((fltDistance / 100) * 100);
+        }
 
         if ((flPercent < 10)&&(intCount1 == 0)) {
             warning();
             intCount1 = 1;
         }
 
-        return flPercent;
+    }
+
+    public void regenerativeBraking() {
+        fltDistance = ((intSpeed / 3600f));
+
+        flPercent += ((fltDistance / 8000) * 100);
+
+        if (flPercent > 100) {
+            flPercent = 100;
+        }
+
     }
 
     public void warning(){

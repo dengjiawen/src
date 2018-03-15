@@ -37,6 +37,8 @@ public class InstrumentPanel extends JPanel {
     ParkedPanel parked;
     DrivePanel drive;
 
+    float battery_progress;
+
     public InstrumentPanel () {
         super();
 
@@ -48,6 +50,8 @@ public class InstrumentPanel extends JPanel {
 
         drive = new DrivePanel();
         drive.setVisible(false);
+
+        battery_progress = 100;
 
         parked_label = new JLabel("P");
         parked_label.setFont(Resources.speedometer_font);
@@ -84,7 +88,7 @@ public class InstrumentPanel extends JPanel {
         speed_unit_label.setHorizontalAlignment(JLabel.CENTER);
         speed_unit_label.setVisible(false);
 
-        range = new JLabel("216 KM");
+        range = new JLabel("449 KM");
         range.setFont(Resources.range_font);
         range.setForeground(Color.BLACK);
         range.setOpaque(false);
@@ -165,7 +169,6 @@ public class InstrumentPanel extends JPanel {
 
     }
 
-
     public void shiftGear (int gear_modifier) {
 
         switch (gear_modifier) {
@@ -182,6 +185,11 @@ public class InstrumentPanel extends JPanel {
 
     public void updateSpeed () {
         speed_label.setText(String.valueOf(InformationService.speed));
+    }
+
+    public void updateBatteryProgress () {
+        battery_progress = InformationService.battery;
+        range.setText((int)((battery_progress/100f) * 449f) + " KM");
     }
 
     protected void paintComponent (Graphics g) {
@@ -202,16 +210,24 @@ public class InstrumentPanel extends JPanel {
         g2d.setPaint(Constants.TEXT_INACTIVE);
         g2d.fillRect(30, 155, 290, 2);
 
+        if (InformationService.accelerating) {
+            g2d.setPaint(Constants.LOW_ECO);
+            g2d.fillRect(175 - (int)((InformationService.speed/227f) * 145), 155, (int)((InformationService.speed/227f) * 145), 4);
+        } else {
+            g2d.setPaint(Constants.HIGH_ECO);
+            g2d.fillRect(175, 155, (int)((InformationService.speed/227f) * 145), 4);
+        }
+
         g2d.setPaint(Constants.CONTROL_CENTER);
         g2d.fill(new RoundRectangle2D.Double(15, 475, 320, 97, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
         g2d.clip(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
         GradientPaint primary = new GradientPaint(
-                0f, 0f, Constants.BATTERY_PROGRESS_STOP_0, 200, 0f, Constants.BATTERY_PROGRESS_STOP_1);
+                0f, 0f, Constants.BATTERY_PROGRESS_STOP_0, (battery_progress/100f) * getWidth(), 0f, Constants.BATTERY_PROGRESS_STOP_1);
 
         g2d.setPaint(primary);
-        g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, 200, 8));
+        g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, (battery_progress/100f) * getWidth(), 8));
 
         super.paintComponent(g);
 

@@ -1,5 +1,6 @@
 package information;
 
+import com.sun.org.apache.regexp.internal.RE;
 import resources.Constants;
 import ui.InstrumentPanel;
 import ui.RenderingService;
@@ -42,10 +43,13 @@ public class InformationService {
     public static boolean right_front_door_locked;
     public static boolean right_back_door_locked;
 
+    public static boolean accelerating = false;
+
     public static int drive_gear = Constants.GEAR_PARKED;
     public static int drive_mode = Constants.MODE_NORMAL;
 
     public static int speed = 0;
+    public static float battery = 100f;
 
     public static int butt_warmer_left_state = 0;
     public static int butt_warmer_right_state = 0;
@@ -107,6 +111,13 @@ public class InformationService {
     public static void updateSpeed (int new_speed) {
         speed = new_speed;
         instrument_panel_reference.updateSpeed();
+        RenderingService.invokeRepaint();
+    }
+
+    public static void updateBattery (float new_battery) {
+        if (battery == new_battery) return;
+        battery = new_battery;
+        instrument_panel_reference.updateBatteryProgress();
         RenderingService.invokeRepaint();
     }
 
