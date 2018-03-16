@@ -33,9 +33,6 @@ public class VolumePanelSM extends ContainerSM implements NegotiablePanel {
 
         StatusBarPanel.volume_panel = this;
 
-
-
-
     }
 
     protected void paintComponent (Graphics g) {
