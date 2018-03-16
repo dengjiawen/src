@@ -6,6 +6,7 @@ package test;
 
 import information.InformationService;
 import resources.Constants;
+import ui.ParkedPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class TestProgram {
             // intCount2 is used for the charging message
             // Perhaps we can make the car stop after a certain percentage
         float fltDistance;
-        float flPercent = 22f;
+        float flPercent = 0.5f;
             // This float represents the battery percentage. Starts at 100%
         boolean charging = false;
             // The same button is used for starting and stopping charging, so a boolean is used to keep track of it
@@ -43,6 +44,7 @@ public class TestProgram {
         Timers();
 
         InformationService.test_program_reference = this;
+        ParkedPanel.test_program_reference = this;
 
     }
 
@@ -86,6 +88,7 @@ public class TestProgram {
         Recharge.setLocation(5,5);
         Recharge.setSize(200,100);
         Recharge.setVisible(true);
+        Recharge.setEnabled(false);
         BatteryFrame.add(Recharge);
     }
 
@@ -197,6 +200,7 @@ public class TestProgram {
 
         tBat = new Timer(500, e->{
             if (InformationService.accelerating) calculateTime();
+            if (flPercent < 0) flPercent = 0;
             InformationService.updateBattery(flPercent);
             BPLabel.setText("Battery Percent: " + flPercent + "%"); // The battery percentage should be recalculated every second
             BatteryFrame.repaint();
@@ -207,16 +211,17 @@ public class TestProgram {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if(charging == false){ // If the car wasn't charging, it starts charging
-                    charging = true;
+                if(!tCharge.isRunning()){ // If the car wasn't charging, it starts charging
+
+                    InformationService.setCharging(true);
 
                     tCharge.start();
                 }
-                else if(charging == true){ // If the car was charging, it stops
-                    charging = false;
+                else if(tCharge.isRunning()){ // If the car was charging, it stops
+
+                    InformationService.setCharging(false);
 
                     tCharge.stop();
-                    intCount2 = 0;
                 }
 
             }
@@ -242,11 +247,6 @@ public class TestProgram {
             flPercent -= ((fltDistance / 100) * 100);
         }
 
-        if ((flPercent < 10)&&(intCount1 == 0)) {
-            warning();
-            intCount1 = 1;
-        }
-
     }
 
     public void regenerativeBraking() {
@@ -263,10 +263,6 @@ public class TestProgram {
 
     }
 
-    public void warning(){
-        JOptionPane.showMessageDialog(null, "Battery is low", "Warning", JOptionPane.WARNING_MESSAGE, null);
-    }
-
     public void reposition (int x, int y) {
 
         SpeedFrame.setLocation(x, y);
@@ -281,7 +277,10 @@ public class TestProgram {
 
     public void setAllowCharging (boolean b) {
         if (b) Recharge.setEnabled(true);
-        else Recharge.setEnabled(false);
+        else {
+            Recharge.setEnabled(false);
+            tCharge.stop();
+        }
     }
 
     public boolean chargingIsAllowed () {
@@ -294,6 +293,10 @@ public class TestProgram {
 
         if (b) tAccel.start();
         else tAccel.stop();
+    }
+
+    public boolean isCharging () {
+        return tCharge.isRunning();
     }
 
 }

@@ -122,6 +122,8 @@ public class ParkedPanel extends JPanel {
             charging_animation_controller.stop();
             charging_animation_framecount = 0;
         }
+
+        RenderingService.invokeRepaint();
     }
 
 }

@@ -171,7 +171,7 @@ public class StatusBarPanel extends JPanel {
 
         if (InformationService.battery < 20) {
             warning_state = Resources.warning[1];
-            battery_state = Resources.warning[1];
+            battery_state = Resources.battery[1];
         }
 
         g2d.setColor(Color.black);

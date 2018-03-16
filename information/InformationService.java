@@ -96,14 +96,14 @@ public class InformationService {
     public static Timer short_term_information_update = new Timer(1000,e -> {
         infoUpdateTime();
 
-        if (battery < 20 && !warning_20_given) {
+        if (battery < 20 && !warning_20_given && !test_program_reference.isCharging()) {
             MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, battery_warning_reference);
             warning_20_given = true;
-        } else if (battery == 0 && !warning_critical_given && !battery_warning_reference.isVisible()) {
+        } else if (battery == 0 && !warning_critical_given && !battery_warning_reference.isVisible() && !test_program_reference.isCharging()) {
             MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, battery_warning_reference);
         }
 
-        if (battery == 0 && !warning_critical_given) {
+        if (battery == 0 && !warning_critical_given && !test_program_reference.isCharging()) {
             instrument_panel_reference.startHazard();
             changeMode(Constants.MODE_NORMAL);
 
@@ -201,11 +201,13 @@ public class InformationService {
     });
 
     public static Timer cruise_control = new Timer(50, e -> {
+        lowBattery();
         if (speed < cruise_control_speed) test_program_reference.artificialAccel(true);
         else test_program_reference.artificialAccel(false);
     });
 
     public static Timer autopilot = new Timer(50, e -> {
+        lowBattery();
         if (speed < (50 + 500 / ap_following_distance)) test_program_reference.artificialAccel(true);
         else test_program_reference.artificialAccel(false);
     });
@@ -326,14 +328,27 @@ public class InformationService {
         }
     }
 
-    public static void startCharging () {
+    public static void setCharging (boolean b) {
 
-        if (battery_warning_reference.isVisible()) MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_IDLE, battery_warning_reference);
-        parked_panel_reference.setCharging(true);
+        if (b) {
+            if (battery_warning_reference.isVisible())
+                MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_IDLE, battery_warning_reference);
+            parked_panel_reference.setCharging(true);
 
-        warning_critical_given = false;
-        warning_20_given = false;
+            warning_critical_given = false;
+            warning_20_given = false;
+        } else {
+            parked_panel_reference.setCharging(false);
+        }
 
+    }
+
+    public static void lowBattery () {
+        autopilot.stop();
+        cruise_control.stop();
+
+        ap_frame_reference.setAutonomousFunctions(false);
+        ap_frame_reference.setAutonomousFunctions(true);
     }
 
 }

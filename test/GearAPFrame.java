@@ -58,6 +58,9 @@ public class GearAPFrame extends JFrame {
 
         cruise_control_button = new JButton("Cruise Control");
         cruise_control_button.addActionListener(e -> {
+
+            if (InformationService.battery == 0) return;
+
             InformationService.changeMode(Constants.MODE_CRUISE_CONTROL);
             cruise_control_button.setEnabled(false);
             autopilot_button.setEnabled(true);
@@ -67,6 +70,9 @@ public class GearAPFrame extends JFrame {
 
         autopilot_button = new JButton("Autopilot");
         autopilot_button.addActionListener(e -> {
+
+            if (InformationService.battery == 0) return;
+
             InformationService.changeMode(Constants.MODE_AUTOPILOT);
             cruise_control_button.setEnabled(true);
             autopilot_button.setEnabled(false);
