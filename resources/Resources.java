@@ -59,6 +59,8 @@ public class Resources {
 
     public static Font music_lg_favorite_font;
 
+    public static Font volume_font;
+
     public static void initFont () {
 
         try{
@@ -98,6 +100,8 @@ public class Resources {
             music_lg_favorite_font = system_bold.deriveFont(15f);
 
             ac_fanspeed_font = system_bold.deriveFont(15f);
+
+            volume_font = system_bold.deriveFont(50f);
 
         } catch (Exception e) {e.printStackTrace();}
 

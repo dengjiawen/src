@@ -78,7 +78,7 @@ public class StatusBarPanel extends JPanel {
         volume_panel_invoker.setOpaque(false);
         volume_panel_invoker.setContentAreaFilled(false);
         volume_panel_invoker.setBorderPainted(false);
-        volume_panel_invoker.setBounds(380 + 40, 0, 30, 40);
+        volume_panel_invoker.setBounds(380 + 10 + (int) (0.15 * Resources.bar_lte.getWidth()) + 10, 0, 50, 40);
         volume_panel_invoker.addActionListener(e -> {
             if (!volume_panel.isVisible()) {
                 MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, volume_panel);
