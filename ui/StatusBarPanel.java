@@ -154,7 +154,7 @@ public class StatusBarPanel extends JPanel {
 
         int padding = 0;
 
-        if (InformationService.drive_mode == Constants.GEAR_NEUTRAL || InformationService.drive_mode == Constants.GEAR_PARKED) {
+        if (InformationService.drive_gear == Constants.GEAR_NEUTRAL || InformationService.drive_gear == Constants.GEAR_PARKED) {
             warning_state = Resources.warning[1];
             airbag_state = Resources.airbag[1];
         } else {

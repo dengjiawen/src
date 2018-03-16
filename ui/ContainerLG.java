@@ -18,8 +18,6 @@ public class ContainerLG extends JPanel {
     private static final int panel_width_contracted = 725;
     private static final int panel_height_contracted = 420;
 
-    MapPanelLG map_lg;
-
     public ContainerLG () {
 
         setBounds(380,20, panel_width_contracted ,panel_height_contracted);

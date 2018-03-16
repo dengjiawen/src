@@ -27,7 +27,7 @@ public class TestProgram {
             // intCount2 is used for the charging message
             // Perhaps we can make the car stop after a certain percentage
         float fltDistance;
-        float flPercent = 0.5f;
+        float flPercent = 1.0f;
             // This float represents the battery percentage. Starts at 100%
         boolean charging = false;
             // The same button is used for starting and stopping charging, so a boolean is used to keep track of it

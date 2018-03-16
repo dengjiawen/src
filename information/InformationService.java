@@ -201,13 +201,13 @@ public class InformationService {
     });
 
     public static Timer cruise_control = new Timer(50, e -> {
-        lowBattery();
+        if (battery == 0) lowBattery();
         if (speed < cruise_control_speed) test_program_reference.artificialAccel(true);
         else test_program_reference.artificialAccel(false);
     });
 
     public static Timer autopilot = new Timer(50, e -> {
-        lowBattery();
+        if (battery == 0) lowBattery();
         if (speed < (50 + 500 / ap_following_distance)) test_program_reference.artificialAccel(true);
         else test_program_reference.artificialAccel(false);
     });
@@ -278,7 +278,7 @@ public class InformationService {
 
     public static void changeMode (int new_mode) {
 
-        if (battery == 0) return;
+        if (battery == 0 && new_mode != Constants.MODE_NORMAL) return;
 
         drive_mode = new_mode;
 

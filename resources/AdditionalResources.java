@@ -44,9 +44,21 @@ public class AdditionalResources {
     public static BufferedImage battery_warning_20;
     public static BufferedImage battery_warning_critical;
 
+    public static BufferedImage map_compass;
+    public static BufferedImage map_nav_bar;
+
+    public static BufferedImage[] map_zoom_in;
+    public static BufferedImage[] map_zoom_out;
+
     public static void init () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png", "_disabled.png"};
+
+        map_zoom_in = new BufferedImage[2];
+        map_zoom_out = new BufferedImage[2];
+
+        map_compass = loadImage(Resources.icon_directory + "map/compass.png");
+        map_nav_bar = loadImage(Resources.icon_directory + "map/nav_bar.png");
 
         charging_animation = new BufferedImage[125];
         for (int i = 0; i < 125; i ++) {
@@ -103,6 +115,9 @@ public class AdditionalResources {
 
             left_dragger[j] = loadImage(Resources.icon_directory + "dismiss_left" + toggle_assignment[j]);
             right_dragger[j] = loadImage(Resources.icon_directory + "dismiss_right" + toggle_assignment[j]);
+
+            map_zoom_in[j] = loadImage(Resources.icon_directory + "map/zoom_in" + toggle_assignment[j]);
+            map_zoom_out[j] = loadImage(Resources.icon_directory + "map/zoom_out" + toggle_assignment[j]);
         }
 
         for (int i = 0; i < 3; i ++) {
