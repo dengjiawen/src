@@ -4,13 +4,11 @@ import com.sun.org.apache.regexp.internal.RE;
 import resources.Constants;
 import test.GearAPFrame;
 import test.TestProgram;
-import ui.DrivePanel;
-import ui.InstrumentPanel;
-import ui.RenderingService;
-import ui.StatusBarPanel;
+import ui.*;
 
 import javax.sound.midi.Instrument;
 import javax.swing.Timer;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
@@ -44,6 +42,11 @@ public class InformationService {
     public static GearAPFrame ap_frame_reference;
     public static DrivePanel drive_panel_reference;
     public static TestProgram test_program_reference;
+    public static WarningPanelSM battery_warning_reference;
+    public static ParkedPanel parked_panel_reference;
+
+    private static boolean warning_20_given;
+    private static boolean warning_critical_given;
 
     public static boolean show_gear_warning;
     public static boolean show_speed_warning;
@@ -92,6 +95,20 @@ public class InformationService {
 
     public static Timer short_term_information_update = new Timer(1000,e -> {
         infoUpdateTime();
+
+        if (battery < 20 && !warning_20_given) {
+            MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, battery_warning_reference);
+            warning_20_given = true;
+        } else if (battery == 0 && !warning_critical_given && !battery_warning_reference.isVisible()) {
+            MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, battery_warning_reference);
+        }
+
+        if (battery == 0 && !warning_critical_given) {
+            instrument_panel_reference.startHazard();
+            changeMode(Constants.MODE_NORMAL);
+
+            warning_critical_given = true;
+        }
 
         if (Math.abs(driver_ac_temp.getValue() - passenger_ac_temp.getValue()) > 20 || (driver_ac_temp.getValue() > 20 && passenger_ac_temp.getValue() > 20)) {
             ac_temp_mode = Constants.AC_HOT;
@@ -238,6 +255,10 @@ public class InformationService {
             return;
         }
 
+        if (drive_gear == Constants.GEAR_PARKED) {
+            parked_panel_reference.setCharging(false);
+        }
+
         if (new_gear == Constants.GEAR_DRIVE) {
             ap_frame_reference.setAutonomousFunctions(true);
         } else {
@@ -254,6 +275,8 @@ public class InformationService {
     }
 
     public static void changeMode (int new_mode) {
+
+        if (battery == 0) return;
 
         drive_mode = new_mode;
 
@@ -301,6 +324,16 @@ public class InformationService {
         } else {
             return -1;
         }
+    }
+
+    public static void startCharging () {
+
+        if (battery_warning_reference.isVisible()) MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_IDLE, battery_warning_reference);
+        parked_panel_reference.setCharging(true);
+
+        warning_critical_given = false;
+        warning_20_given = false;
+
     }
 
 }

@@ -39,12 +39,19 @@ public class AdditionalResources {
     public static BufferedImage[] left_dragger;
     public static BufferedImage[] right_dragger;
 
+    public static BufferedImage[] charging_animation;
+
     public static BufferedImage battery_warning_20;
     public static BufferedImage battery_warning_critical;
 
     public static void init () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png", "_disabled.png"};
+
+        charging_animation = new BufferedImage[125];
+        for (int i = 0; i < 125; i ++) {
+            charging_animation[i] = loadImage(Resources.animation_directory + "charge_upd/charge_" + i + ".png");
+        }
 
         battery_warning_20 = loadImage(Resources.panel_overlay_directory + "battery_low_20.png");
         battery_warning_critical = loadImage(Resources.panel_overlay_directory + "battery_low_critical.png");

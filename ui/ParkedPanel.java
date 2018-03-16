@@ -1,6 +1,7 @@
 package ui;
 
 import information.InformationService;
+import resources.AdditionalResources;
 import resources.Constants;
 import resources.Resources;
 import test.TestProgram;
@@ -22,6 +23,9 @@ public class ParkedPanel extends JPanel {
     ToggleButton charge;
     ToggleButton trunk;
 
+    Timer charging_animation_controller;
+    int charging_animation_framecount;
+
     static final int button_width = (int)(0.25 * Resources.button_fronk[0].getWidth());
     static final int button_height = (int)(0.25 * Resources.button_fronk[0].getHeight());
 
@@ -31,6 +35,8 @@ public class ParkedPanel extends JPanel {
         setBounds(5, 65, 340, 500);
         setBackground(new Color(0, 0, 0, 0));
         setLayout(null);
+
+        charging_animation_framecount = 0;
 
         fronk = new ToggleButton(Resources.button_fronk, 2, (getWidth() - button_width)/2, 130 - button_height + 2,
                 button_width, button_height);
@@ -57,10 +63,24 @@ public class ParkedPanel extends JPanel {
         trunk = new ToggleButton(Resources.button_trunk, 2, (getWidth() - button_width)/2, 370,
                 button_width, button_height);
 
+        charging_animation_controller = new Timer(1000/24, e -> {
+
+            if (InformationService.battery == 100) {
+                charging_animation_framecount = 124;
+                RenderingService.invokeRepaint();
+                return;
+            }
+
+            charging_animation_framecount = (charging_animation_framecount == 124) ? 0 : charging_animation_framecount + 1;
+            RenderingService.invokeRepaint();
+        });
+
         add(fronk);
         add(mirror);
         add(charge);
         add(trunk);
+
+        InformationService.parked_panel_reference = this;
 
     }
 
@@ -76,7 +96,7 @@ public class ParkedPanel extends JPanel {
         }
     }
 
-    public void paintComponent (Graphics g) {
+    protected void paintComponent (Graphics g) {
 
         if (InformationService.mirror_state == Constants.MIRROR_RETRACTED && mirror.getState() != 0) {
             mirror.forceState(0);
@@ -89,6 +109,19 @@ public class ParkedPanel extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.drawImage(Resources.car_icon_fronk[0], (getWidth() - (int)(0.13 * Resources.car_icon_fronk[0].getWidth()))/2, 130,
                 (int)(0.13 * Resources.car_icon_fronk[0].getWidth()), (int)(0.13 * Resources.car_icon_fronk[0].getHeight()), null);
+
+        if (charging_animation_controller.isRunning()) {
+            ((Graphics2D) g).drawImage(AdditionalResources.charging_animation[charging_animation_framecount], 253, 225, 41, 41, null);
+        }
+
+    }
+
+    public void setCharging (boolean b) {
+        if (b) charging_animation_controller.start();
+        else {
+            charging_animation_controller.stop();
+            charging_animation_framecount = 0;
+        }
     }
 
 }

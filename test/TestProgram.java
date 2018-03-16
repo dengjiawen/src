@@ -26,7 +26,7 @@ public class TestProgram {
             // intCount2 is used for the charging message
             // Perhaps we can make the car stop after a certain percentage
         float fltDistance;
-        float flPercent = 100f;
+        float flPercent = 22f;
             // This float represents the battery percentage. Starts at 100%
         boolean charging = false;
             // The same button is used for starting and stopping charging, so a boolean is used to keep track of it
@@ -136,6 +136,10 @@ public class TestProgram {
                 super.mousePressed(e);
 
                 if (InformationService.drive_gear == Constants.GEAR_PARKED || InformationService.drive_gear == Constants.GEAR_NEUTRAL) return;
+                if (InformationService.battery == 0) {
+                    mouseReleased(e);
+                    return;
+                }
 
                 tAccel.start();
                 tDecel.stop();
@@ -182,6 +186,10 @@ public class TestProgram {
         });
 
         ambient_power_depletion = new Timer(6000, e -> {
+            if (InformationService.battery == 0) {
+                flPercent = 0;
+                return;
+            }
             flPercent -= 0.1;
             InformationService.updateBattery(flPercent);
         });
@@ -215,7 +223,7 @@ public class TestProgram {
         });
 
         tCharge = new Timer( 2000, e ->{
-            if(flPercent < 100){
+            if(flPercent + 1 <= 100){
                 flPercent += 1; // If the car wasn't fully charged, it increases by one
             } else {
                 flPercent = 100;
@@ -242,6 +250,9 @@ public class TestProgram {
     }
 
     public void regenerativeBraking() {
+        if (InformationService.battery == 0) {
+            return;
+        }
         fltDistance = ((intSpeed / 3600f));
 
         flPercent += ((fltDistance / 8000) * 100);

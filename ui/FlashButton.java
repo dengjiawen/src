@@ -50,4 +50,14 @@ public class FlashButton extends GlowButton {
 
     }
 
+    public void click () {
+
+        MouseEvent artificial_mouseevent = new MouseEvent(this, MouseEvent.MOUSE_RELEASED,
+                System.currentTimeMillis() + 10, MouseEvent.NOBUTTON, 0, 0, 0, false);
+
+        for (MouseListener listener : getMouseListeners()) {
+            listener.mouseReleased(artificial_mouseevent);
+        }
+    }
+
 }

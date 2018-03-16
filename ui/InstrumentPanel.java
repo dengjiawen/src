@@ -245,6 +245,10 @@ public class InstrumentPanel extends JPanel {
         range.setText((int)((battery_progress/100f) * 449f) + " KM");
     }
 
+    public void startHazard () {
+        hazard.click();
+    }
+
     protected void paintComponent (Graphics g) {
 
         if (lock.getState() == 0 && InformationService.allDoorsLocked()) {

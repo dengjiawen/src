@@ -65,6 +65,8 @@ public class WarningPanelSM extends ContainerSM implements NegotiablePanel {
             }
         });
 
+        InformationService.battery_warning_reference = this;
+
     }
 
     void dismiss () {
@@ -88,6 +90,12 @@ public class WarningPanelSM extends ContainerSM implements NegotiablePanel {
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         g2d.drawImage(AdditionalResources.left_dragger[dismissed ? 1 : 0], 38, 47, 46, 83, null);
+
+        if (InformationService.battery > 0 && InformationService.battery <= 20) {
+            g2d.drawImage(AdditionalResources.battery_warning_20, 178, 56, 407, 66, null);
+        } else if (InformationService.battery == 0) {
+            g2d.drawImage(AdditionalResources.battery_warning_critical, 178, 56, 366, 66, null);
+        }
     }
 
     @Override
