@@ -74,6 +74,8 @@ public class SlideTemperatureAdjustor extends JPanel {
 
                 if (difference > 8) {
 
+                    CoreControlBarPanel.ac_panel.forcePowerOn();
+
                     int delay = 4000/difference;
                     if (delay < 150) {
                         delay = 150;
@@ -87,6 +89,8 @@ public class SlideTemperatureAdjustor extends JPanel {
                         decrease_timer.start();
                     }
                 } else if (difference < -8) {
+
+                    CoreControlBarPanel.ac_panel.forcePowerOn();
 
                     int delay = 4000/-difference;
                     if (delay < 150) {

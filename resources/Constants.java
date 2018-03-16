@@ -67,6 +67,9 @@ public class Constants {
     public final static int MODE_CRUISE_CONTROL = 1;
     public final static int MODE_AUTOPILOT = 2;
 
+    public final static int AC_MANUAL = 0;
+    public final static int AC_AUTO = 1;
+
     public class WindowConstants {
 
         public static final int STATE_SM = 0;

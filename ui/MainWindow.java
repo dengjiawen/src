@@ -23,6 +23,7 @@ public class MainWindow extends JFrame {
     private ControlPanelSM control_sm;
     private WeatherPanelSM weather_sm;
     private MusicPlayerPanelSM music_sm;
+    private ACPanelSM ac_panel_sm;
 
     private MapPanelSM map_sm;
     private MapPanelLG map_lg;
@@ -50,11 +51,13 @@ public class MainWindow extends JFrame {
         control_sm = new ControlPanelSM();
         weather_sm = new WeatherPanelSM();
         music_sm = new MusicPlayerPanelSM();
+        ac_panel_sm = new ACPanelSM();
 
         control_sm.setVisible(false);
         weather_sm.setVisible(false);
         weather_sm.setActive(false);
         music_sm.setVisible(false);
+        ac_panel_sm.setVisible(false);
 
         map_sm = new MapPanelSM();
         map_sm.setVisible(false);
@@ -80,10 +83,10 @@ public class MainWindow extends JFrame {
         add(control_sm);
         add(weather_sm);
         add(music_sm);
+        add(ac_panel_sm);
 
         add(map_lg);
         add(map_xl);
-        //add(new ACPanelSM());
         add(map_sm);
 
         music_lg = new MusicPlayerPanelLG();

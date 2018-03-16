@@ -14,6 +14,8 @@ public class GlowButton extends JPanel {
     protected BufferedImage[] states;
     protected BufferedImage active_state;
 
+    protected boolean is_disabled;
+
     public GlowButton () {
 
     }
@@ -29,6 +31,7 @@ public class GlowButton extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                if (is_disabled) return;
                 active_state = states[1];
                 RenderingService.invokeRepaint();
             }
@@ -36,6 +39,7 @@ public class GlowButton extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
+                if (is_disabled) return;
                 active_state = states[0];
                 RenderingService.invokeRepaint();
             }
@@ -47,11 +51,23 @@ public class GlowButton extends JPanel {
         states = icon;
         active_state = icon[0];
 
+        if (is_disabled) active_state = icon[2];
+
         RenderingService.invokeRepaint();
     }
 
     protected void paintComponent (Graphics g) {
         g.drawImage(active_state, 0, 0, getWidth(), getHeight(), null);
+    }
+
+    public void setDisable (boolean disable) {
+        is_disabled = disable;
+
+        changeIcon(states);
+    }
+
+    public boolean isDisabled () {
+        return is_disabled;
     }
 
 }

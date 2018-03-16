@@ -16,6 +16,7 @@ public class CoreControlBarPanel extends JPanel {
 
     public static MusicPlayerPanelSM music_panel;
     public static ControlPanelSM control_panel;
+    public static ACPanelSM ac_panel;
 
     ToggleButton media;
     ToggleButton control;
@@ -87,6 +88,18 @@ public class CoreControlBarPanel extends JPanel {
 
 
         ac = new StateButton(Resources.core_ac, 3, 490, 0, 105, 75);
+        ac.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+                if (!ac_panel.isVisible()) {
+                    MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, ac_panel);
+                } else {
+                    MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_IDLE, ac_panel);
+                }
+            }
+        });
 
         driver_adjustor = new SlideTemperatureAdjustor(35, 0, InformationService.driver_ac_temp);
         passenger_adjustor = new SlideTemperatureAdjustor(985, 0, InformationService.passenger_ac_temp);
@@ -107,10 +120,22 @@ public class CoreControlBarPanel extends JPanel {
         left_seat.forceState(InformationService.butt_warmer_left_state);
         right_seat.forceState(InformationService.butt_warmer_right_state);
 
+        if (InformationService.ac_is_on && InformationService.ac_control_mode == Constants.AC_AUTO) {
+            ac.forceState(1);
+        } else if (InformationService.ac_is_on && InformationService.ac_control_mode == Constants.AC_MANUAL) {
+            ac.forceState(2);
+        } else {
+            ac.forceState(0);
+        }
+
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.setColor(Constants.CORE_BAR_INACTIVE);
+        if (!InformationService.ac_is_on) {
+            g2d.setColor(Constants.CORE_BAR_INACTIVE);
+        } else {
+            g2d.setColor(Color.WHITE);
+        }
         g2d.setFont(Resources.core_temp_control_font);
 
         if (InformationService.driver_ac_temp.getValue() == -1) {

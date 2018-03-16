@@ -10,6 +10,7 @@ import javax.sound.midi.Instrument;
 import javax.swing.Timer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by freddeng on 2018-03-09.
@@ -58,6 +59,20 @@ public class InformationService {
 
     public static int mirror_state = Constants.MIRROR_RETRACTED;
 
+    private static int target_distant_car_y = 10;
+    public static int current_distant_car_y = 10;
+
+    private static int target_distant_car_x = 125;
+    public static int current_distant_car_x = 125;
+
+    private static int target_current_car_x = 38;
+    public static int current_current_car_x = 38;
+
+    public static boolean ac_is_on = false;
+
+    public static int ac_control_mode = Constants.AC_MANUAL;
+    public static int ac_fan_speed = 4;
+
     public static Timer short_term_information_update = new Timer(1000,e -> {
         infoUpdateTime();
 
@@ -66,11 +81,69 @@ public class InformationService {
         } else {
             ac_temp_mode = Constants.AC_COLD;
         }
+    });
+
+    public static Timer short_term_car_position_update = new Timer(50, e -> {
+
+        if (speed == 0) {
+            return;
+        }
+
+        if (target_distant_car_x != current_distant_car_x) {
+            if (current_distant_car_x < target_distant_car_x) {
+                current_distant_car_x ++;
+                RenderingService.invokeRepaint();
+            } else if (current_distant_car_x > target_distant_car_x) {
+                current_distant_car_x --;
+                RenderingService.invokeRepaint();
+            }
+        }
+
+        if (target_distant_car_y != current_distant_car_y) {
+            if (current_distant_car_y < target_distant_car_y) {
+                current_distant_car_y ++;
+                RenderingService.invokeRepaint();
+            } else if (current_distant_car_y > target_distant_car_y) {
+                current_distant_car_y --;
+                RenderingService.invokeRepaint();
+            }
+        }
+
+        if (speed < 120) {
+            target_distant_car_y = 10 + (int) ((speed / 150f) * 40);
+        } else if (target_distant_car_y == current_distant_car_y) {
+            if (ThreadLocalRandom.current().nextInt(0, 100) > 98) {
+                target_distant_car_y = ThreadLocalRandom.current().nextInt(43, 47);
+            } else if (ThreadLocalRandom.current().nextInt(0, 100) > 70) {
+                target_distant_car_y = 50;
+            }
+        }
+
+        if (target_distant_car_x == current_distant_car_x) {
+            if (ThreadLocalRandom.current().nextInt(0, 100) > 95) {
+                target_distant_car_x = ThreadLocalRandom.current().nextInt(120, 125);
+            } else {
+                target_distant_car_x = 125;
+            }
+        }
+
+        if (target_current_car_x != current_current_car_x) {
+            if (current_current_car_x < target_current_car_x) {
+                current_current_car_x ++;
+                RenderingService.invokeRepaint();
+            } else if (current_current_car_x > target_current_car_x) {
+                current_current_car_x --;
+                RenderingService.invokeRepaint();
+            }
+        } else if (ThreadLocalRandom.current().nextInt(0, 100) > 90) {
+            target_current_car_x = ThreadLocalRandom.current().nextInt(35, 41);
+        }
 
     });
 
     public static void init (){
         short_term_information_update.start();
+        short_term_car_position_update.start();
     }
 
     public static void infoUpdateTime () {

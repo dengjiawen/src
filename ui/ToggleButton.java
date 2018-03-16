@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 /**
@@ -15,6 +16,8 @@ public class ToggleButton extends JPanel {
     protected BufferedImage active_state;
 
     protected int active_state_num;
+
+    protected boolean is_disabled;
 
     public ToggleButton () {
 
@@ -44,6 +47,8 @@ public class ToggleButton extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
+
+                if (is_disabled) return;
                 if (++active_state_num >= num_states) active_state_num = 0;
                 active_state = states[active_state_num];
 
@@ -68,11 +73,37 @@ public class ToggleButton extends JPanel {
         states = icon;
         active_state = states[active_state_num];
 
+        if (is_disabled) active_state = states[2];
+
         RenderingService.invokeRepaint();
     }
 
     protected void paintComponent (Graphics g) {
         g.drawImage(active_state, 0, 0, getWidth(), getHeight(), null);
+    }
+
+    public void setDisable (boolean disable) {
+        is_disabled = disable;
+
+        if (is_disabled) active_state_num = 0;
+
+        changeIcon(states);
+
+        RenderingService.invokeRepaint();
+    }
+
+    public boolean isDisabled () {
+        return is_disabled;
+    }
+
+    public void click () {
+
+        MouseEvent artificial_mouseevent = new MouseEvent(this, MouseEvent.MOUSE_RELEASED,
+                System.currentTimeMillis() + 10, MouseEvent.NOBUTTON, 0, 0, 0, false);
+
+        for (MouseListener listener : getMouseListeners()) {
+            listener.mouseReleased(artificial_mouseevent);
+        }
     }
 
 }

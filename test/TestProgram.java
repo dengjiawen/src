@@ -105,6 +105,7 @@ public class TestProgram {
             else if ((intSpeed > 0)&&((intSpeed - 1) < 0)){
                 intSpeed = 0;
                 InformationService.updateSpeed(intSpeed);
+                InformationService.short_term_car_position_update.stop();
                 tDecel.stop();
             }
 
@@ -120,6 +121,8 @@ public class TestProgram {
                 tAccel.start();
                 tDecel.stop();
                 InformationService.accelerating = true;
+
+                if (!InformationService.short_term_car_position_update.isRunning()) InformationService.short_term_car_position_update.start();
             }
 
             @Override

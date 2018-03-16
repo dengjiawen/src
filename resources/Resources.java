@@ -14,7 +14,7 @@ import dependencies.fred.emma.BigBufferedImage;
  */
 public class Resources {
 
-    public static final boolean DO_LOAD_WEATHER_ASSETS = false;
+    public static final boolean DO_LOAD_WEATHER_ASSETS = true;
 
     public static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";
@@ -215,7 +215,6 @@ public class Resources {
     public static void initImage () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png"};
-
         String[] ac_assignment = new String[] {"_cold.png", "_hot.png"};
 
         ap_plus = new BufferedImage[2];
@@ -450,6 +449,8 @@ public class Resources {
         }
 
         music_repeat[2] = loadImage(toggle_directory + "repeat_1" + toggle_assignment[1]);
+
+        AdditionalResources.init();
 
     }
 
