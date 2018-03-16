@@ -11,6 +11,12 @@ import java.awt.image.BufferedImage;
  */
 public class AdditionalResources {
 
+    public static BufferedImage parking_brake;
+
+    public static BufferedImage warning_speed;
+    public static BufferedImage warning_gear;
+    public static BufferedImage warning_dist;
+
     public static BufferedImage[] ac_up_down_adjustor;
     public static BufferedImage[] ac_fan_up;
     public static BufferedImage[] ac_fan_down;
@@ -23,10 +29,28 @@ public class AdditionalResources {
     public static BufferedImage[][] ac_fresh_air;
     public static BufferedImage[][] ac_circulation;
 
+    public static BufferedImage[][] bar_volume_icon;
+    public static BufferedImage[] panel_volume_icon;
+
+    public static BufferedImage[] left_dragger;
+    public static BufferedImage[] right_dragger;
+
     public static void init () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png", "_disabled.png"};
-        String[] ac_assignment = new String[] {"_cold.png", "_hot.png"};
+
+        bar_volume_icon = new BufferedImage[4][2];
+        panel_volume_icon = new BufferedImage[4];
+
+        left_dragger = new BufferedImage[2];
+        right_dragger = new BufferedImage[2];
+
+        for (int i = 0; i < 4; i ++) {
+            for (int j = 0; j < 2; j++) {
+                bar_volume_icon[i][j] = loadImage(Resources.icon_directory + "status_bar/volume_" + i + toggle_assignment[j]);
+            }
+            panel_volume_icon[i] = loadImage(Resources.icon_directory + "volume_" + i + ".png");
+        }
 
         ac_up_down_adjustor = new BufferedImage[2];
         ac_fan_up = new BufferedImage[3];
@@ -40,6 +64,12 @@ public class AdditionalResources {
         ac_fresh_air = new BufferedImage[2][];
         ac_circulation = new BufferedImage[2][];
 
+        parking_brake = loadImage(Resources.icon_directory + "p_brake.png");
+
+        warning_speed = loadImage(Resources.icon_directory + "speed_warning.png");
+        warning_gear = loadImage(Resources.icon_directory + "gear_warning.png");
+        warning_dist = loadImage(Resources.icon_directory + "follow_warning.png");
+
         ac_up_down_adjustor[0] = loadImage(Resources.icon_directory + "ac/up_down_adjustor_disabled.png");
         ac_up_down_adjustor[1] = loadImage(Resources.icon_directory + "ac/up_down_adjustor.png");
 
@@ -49,6 +79,9 @@ public class AdditionalResources {
         for (int j = 0; j < 2; j ++) {
             ac_auto[j] = loadImage(Resources.icon_directory + "ac/auto" + toggle_assignment[j]);
             ac_manual[j] = loadImage(Resources.icon_directory + "ac/manual" + toggle_assignment[j]);
+
+            left_dragger[j] = loadImage(Resources.icon_directory + "dismiss_left" + toggle_assignment[j]);
+            right_dragger[j] = loadImage(Resources.icon_directory + "dismiss_right" + toggle_assignment[j]);
         }
 
         for (int i = 0; i < 3; i ++) {

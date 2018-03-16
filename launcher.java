@@ -1,6 +1,7 @@
 import information.InformationService;
 import kuusisto.tinysound.TinySound;
 import music.MusicController;
+import test.GearAPFrame;
 import test.TestProgram;
 import ui.LoadFrame;
 import ui.MainWindow;
@@ -21,6 +22,9 @@ public class launcher {
 
     public static int acc_window_x;
     public static int acc_window_y;
+
+    private static TestProgram test;
+    private static GearAPFrame gear_control;
 
     public static void main (String[] args) {
 
@@ -53,14 +57,19 @@ public class launcher {
         InformationService.init();
         RenderingService.init(window);
 
-        TestProgram test = new TestProgram();
+        test = new TestProgram();
+        gear_control = new GearAPFrame();
 
         calcLocation();
 
         test.reposition(acc_window_x, acc_window_y);
         window.setLocation(main_window_x, main_window_y);
+        gear_control.setLocation(acc_window_x, acc_window_y + 250 + 210);
 
         RenderingService.invokeRepaint();
+        test.repaintAll();
+        gear_control.validate();
+        gear_control.repaint();
 
     }
 

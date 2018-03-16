@@ -3,6 +3,7 @@ package music;
 import com.mpatric.mp3agic.ID3v1;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;
+import information.InformationService;
 import kuusisto.tinysound.TinySound;
 import ui.LoadFrame;
 
@@ -78,7 +79,11 @@ public class Music {
     }
 
     public void play () {
-        music.play(false);
+        music.play(false, InformationService.current_volume);
+    }
+
+    public void updateVolume () {
+        music.setVolume(InformationService.current_volume);
     }
 
     public void rewind () {

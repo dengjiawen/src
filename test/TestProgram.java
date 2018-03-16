@@ -247,4 +247,14 @@ public class TestProgram {
 
     }
 
+    public void repaintAll () {
+        SpeedFrame.revalidate();
+        SpeedFrame.repaint();
+    }
+
+    public void setAllowCharging (boolean b) {
+        if (b) Recharge.setEnabled(true);
+        else Recharge.setEnabled(false);
+    }
+
 }

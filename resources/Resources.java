@@ -14,7 +14,7 @@ import dependencies.fred.emma.BigBufferedImage;
  */
 public class Resources {
 
-    public static final boolean DO_LOAD_WEATHER_ASSETS = true;
+    public static final boolean DO_LOAD_WEATHER_ASSETS = false;
 
     public static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";
@@ -31,6 +31,8 @@ public class Resources {
     public static Font speedometer_font;
     public static Font speed_font;
     public static Font speed_unit_font;
+
+    public static Font ac_fanspeed_font;
 
     public static Font music_title_font;
     public static Font music_album_font;
@@ -94,6 +96,8 @@ public class Resources {
             control_sunroof_percentage_font = system_bold.deriveFont(13f);
 
             music_lg_favorite_font = system_bold.deriveFont(15f);
+
+            ac_fanspeed_font = system_bold.deriveFont(15f);
 
         } catch (Exception e) {e.printStackTrace();}
 
@@ -500,12 +504,22 @@ public class Resources {
             bar_snow[0] = loadImage(icon_directory + "dark_assets/snow_inactive.png");
             tesla_logo = loadImage(icon_directory + "dark_assets/tesla_logo.png");
             bar_lte = loadImage(icon_directory + "dark_assets/LTE.png");
+
+            for (int i = 0; i < 4; i ++) {
+                AdditionalResources.bar_volume_icon[i][0] = loadImage(icon_directory + "dark_assets/volume_" + i + "_inactive.png");
+            }
+
             Constants.STATUS_BAR_TEXT_COLOR = Color.decode("#FFFFFF");
         } else {
             shadow = loadImage(panel_overlay_directory + "shadow.png");
             bar_snow[0] = loadImage(icon_directory + "snow_inactive.png");
             tesla_logo = loadImage(icon_directory + "tesla_logo.png");
             bar_lte = loadImage(icon_directory + "LTE.png");
+
+            for (int i = 0; i < 4; i ++) {
+                AdditionalResources.bar_volume_icon[i][0] = loadImage(icon_directory + "status_bar/volume_" + i + "_inactive.png");
+            }
+
             Constants.STATUS_BAR_TEXT_COLOR = Color.decode("#000000");
         }
 

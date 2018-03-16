@@ -56,6 +56,7 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
                 super.mouseReleased(e);
 
                 if (fresh_air.isDisabled()) return;
+                forcePowerOn();
                 circulation.forceState(0);
             }
         });
@@ -67,6 +68,7 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
                 super.mouseReleased(e);
 
                 if (circulation.isDisabled()) return;
+                forcePowerOn();
                 fresh_air.forceState(0);
             }
         });
@@ -91,7 +93,30 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
         });
 
         up_fan_speed = new GlowButton(AdditionalResources.ac_fan_up, 393, 77, 22, 25);
+        up_fan_speed.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+                if (up_fan_speed.isDisabled()) return;
+                forcePowerOn();
+                InformationService.ac_fan_speed = (InformationService.ac_fan_speed == 5) ? 5 : InformationService.ac_fan_speed + 1;
+                RenderingService.invokeRepaint();
+            }
+        });
+
         down_fan_speed = new GlowButton(AdditionalResources.ac_fan_down, 310, 77, 22, 25);
+        down_fan_speed.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+                if (up_fan_speed.isDisabled()) return;
+                forcePowerOn();
+                InformationService.ac_fan_speed = (InformationService.ac_fan_speed == 1) ? 1 : InformationService.ac_fan_speed - 1;
+                RenderingService.invokeRepaint();
+            }
+        });
 
         butt_warmer_left = new ToggleButton(Resources.ac_butt_warmer_left, 4, 252, 119, 31, 31, true);
         butt_warmer_left.addMouseListener(new MouseAdapter() {
@@ -116,7 +141,22 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
         });
 
         in_your_face = new ToggleButton(Resources.ac_in_your_face[current_temp_mode], 2, 252, 28, 31, 31);
+        in_your_face.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                forcePowerOn();
+            }
+        });
+
         in_your_feet = new ToggleButton(Resources.ac_in_your_feet[current_temp_mode], 2, 252, 73, 31, 31);
+        in_your_feet.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                forcePowerOn();
+            }
+        });
 
         hand_warmer = new ToggleButton(Resources.ac_hand_warmer, 2, 326, 119, 31, 31);
 
@@ -208,10 +248,17 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
         if (InformationService.ac_control_mode == Constants.AC_MANUAL) {
             g2d.drawImage(AdditionalResources.ac_up_down_adjustor[1], 310, 77, 105, 25, null);
             g2d.drawImage(AdditionalResources.ac_fan_icon[0], 350, 84, 11, 11, null);
+
+            g2d.setColor(Constants.AC_FAN_SPEED_ACTIVE);
         } else {
             g2d.drawImage(AdditionalResources.ac_up_down_adjustor[0], 310, 77, 105, 25, null);
             g2d.drawImage(AdditionalResources.ac_fan_icon[1], 350, 84, 11, 11, null);
+
+            g2d.setColor(Constants.AC_FAN_SPEED_INACTIVE);
         }
+
+        g2d.setFont(Resources.ac_fanspeed_font);
+        g2d.drawString(String.valueOf(InformationService.ac_fan_speed), 365, 95);
 
     }
 

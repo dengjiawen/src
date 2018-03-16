@@ -68,6 +68,8 @@ public class InformationService {
     private static int target_current_car_x = 38;
     public static int current_current_car_x = 38;
 
+    public static double current_volume = 1.0;
+
     public static boolean ac_is_on = false;
 
     public static int ac_control_mode = Constants.AC_MANUAL;
@@ -177,7 +179,14 @@ public class InformationService {
         return !left_front_door_locked && !left_back_door_locked && !right_front_door_locked && !right_back_door_locked;
     }
 
-    public static void changeGear (int drive_mode) {
+    public static void changeGear (int new_gear) {
+
+        drive_gear = new_gear;
+
+        speed = 0;
+
+        instrument_panel_reference.shiftGear(new_gear);
+        status_bar_reference.shiftGear(new_gear);
 
     }
 
@@ -192,6 +201,20 @@ public class InformationService {
         battery = new_battery;
         instrument_panel_reference.updateBatteryProgress();
         RenderingService.invokeRepaint();
+    }
+
+    public static int getVolumeIconState () {
+        if (current_volume > 0.66) {
+            return 3;
+        } else if (current_volume > 0.33) {
+            return 2;
+        } else if (current_volume > 0) {
+            return 1;
+        } else if (current_volume == 0) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 
 }

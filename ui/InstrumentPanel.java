@@ -7,6 +7,8 @@ package ui;
 import information.InformationService;
 import resources.Constants;
 import resources.Resources;
+import sound.SoundService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -36,6 +38,8 @@ public class InstrumentPanel extends JPanel {
 
     ParkedPanel parked;
     DrivePanel drive;
+    ReversePanel reverse;
+    NeutralPanel neutral;
 
     float battery_progress;
 
@@ -47,6 +51,12 @@ public class InstrumentPanel extends JPanel {
         setLayout(null);
 
         parked = new ParkedPanel();
+
+        reverse = new ReversePanel();
+        reverse.setVisible(false);
+
+        neutral = new NeutralPanel();
+        neutral.setVisible(false);
 
         drive = new DrivePanel();
         drive.setVisible(false);
@@ -114,11 +124,19 @@ public class InstrumentPanel extends JPanel {
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
                 if (!right.isEmergency()) {
+                    right.activate(false);
+                    left.activate(false);
+
                     right.emergency(true);
                     left.emergency(true);
+
+                    SoundService.setSignalSound(true);
                 } else {
                     left.emergency(false);
                     right.emergency(false);
+
+                    right.activate(false);
+                    left.activate(false);
                 }
             }
         });
@@ -150,6 +168,8 @@ public class InstrumentPanel extends JPanel {
 
         add(parked);
         add(drive);
+        add(reverse);
+        add(neutral);
 
         add(right);
         add(left);
@@ -172,12 +192,45 @@ public class InstrumentPanel extends JPanel {
     public void shiftGear (int gear_modifier) {
 
         switch (gear_modifier) {
-            case Constants.GEAR_DRIVE:
-                parked_label.setVisible(false);
+            case Constants.GEAR_PARKED:
+                reverse.setVisible(false);
+                drive.setVisible(false);
+                speed_label.setVisible(false);
+                speed_unit_label.setVisible(false);
+
+                parked_label.setVisible(true);
+                parked.setVisible(true);
+                break;
+            case Constants.GEAR_REVERSE:
                 parked.setVisible(false);
+                parked_label.setVisible(false);
+                neutral.setVisible(false);
+                neutral_label.setVisible(false);
+
+                speed_unit_label.setVisible(true);
+                speed_label.setVisible(true);
+                reverse.setVisible(true);
+                break;
+            case Constants.GEAR_NEUTRAL:
+                speed_unit_label.setVisible(false);
+                speed_label.setVisible(false);
+                reverse.setVisible(false);
+                drive.setVisible(false);
+
+                neutral.setVisible(true);
+                neutral_label.setVisible(true);
+                break;
+            case Constants.GEAR_DRIVE:
+                neutral_label.setVisible(false);
+                parked_label.setVisible(false);
+
+                parked.setVisible(false);
+                neutral.setVisible(false);
+
                 speed_label.setVisible(true);
                 speed_unit_label.setVisible(true);
                 drive.setVisible(true);
+                break;
         }
 
         RenderingService.invokeRepaint();

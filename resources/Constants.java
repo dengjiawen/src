@@ -46,6 +46,9 @@ public class Constants {
     public static final Color LOW_ECO = Color.decode("#d0021b");
     public static final Color HIGH_ECO = Color.decode("#25cb55");
 
+    public static final Color AC_FAN_SPEED_ACTIVE = Color.decode("#7f7f7f");
+    public static final Color AC_FAN_SPEED_INACTIVE = Color.decode("#575757");
+
     public static Color STATUS_BAR_TEXT_COLOR = Color.decode("#000000");
 
     public static final int ROUNDNESS = 25;

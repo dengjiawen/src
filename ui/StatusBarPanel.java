@@ -2,6 +2,7 @@ package ui;
 
 import information.InformationService;
 import information.WeatherService;
+import resources.AdditionalResources;
 import resources.Constants;
 import resources.Resources;
 
@@ -16,15 +17,18 @@ import java.awt.image.BufferedImage;
 public class StatusBarPanel extends JPanel {
 
     public static WeatherPanelSM weather_panel;
+    public static VolumePanelSM volume_panel;
 
     JLabel time;
     JLabel temp;
 
     JButton weather_panel_invoker;
+    JButton volume_panel_invoker;
 
     int current_drive_mode;
 
     boolean weather_is_showing;
+    boolean volume_is_showing;
 
     BufferedImage abs_state;
     BufferedImage warning_state;
@@ -69,6 +73,22 @@ public class StatusBarPanel extends JPanel {
             RenderingService.invokeRepaint();
         });
 
+        volume_is_showing = false;
+        volume_panel_invoker = new JButton();
+        volume_panel_invoker.setOpaque(false);
+        volume_panel_invoker.setContentAreaFilled(false);
+        volume_panel_invoker.setBorderPainted(false);
+        volume_panel_invoker.setBounds(380 + 40, 0, 30, 40);
+        volume_panel_invoker.addActionListener(e -> {
+            if (!volume_panel.isVisible()) {
+                MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_SM, volume_panel);
+                volume_is_showing = true;
+            } else {
+                MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_IDLE, volume_panel);
+                volume_is_showing = false;
+            }
+        });
+
         current_drive_mode = Constants.GEAR_PARKED;
 
         warning_state = Resources.warning[1];
@@ -80,9 +100,11 @@ public class StatusBarPanel extends JPanel {
         add(time);
         add(temp);
         add(weather_panel_invoker);
+        add(volume_panel_invoker);
 
         InformationService.status_bar_reference = this;
         WeatherPanelSM.invoker = this;
+        VolumePanelSM.invoker = this;
 
     }
 
@@ -95,6 +117,11 @@ public class StatusBarPanel extends JPanel {
 
     public void forceSetWeatherPanelStatus (boolean do_appear_active) {
         weather_is_showing = do_appear_active;
+        RenderingService.invokeRepaint();
+    }
+
+    public void forceSetVolumePanelStatus (boolean do_appear_active) {
+        volume_is_showing = do_appear_active;
         RenderingService.invokeRepaint();
     }
 
@@ -164,6 +191,14 @@ public class StatusBarPanel extends JPanel {
         } else {
             temp.setForeground(Constants.STATUS_BAR_TEXT_COLOR);
             g2d.drawImage(Resources.bar_snow[0], getWidth() - 178, 2, (int) (0.17 * Resources.bar_snow[0].getWidth()), (int) (0.17 * Resources.bar_snow[0].getHeight()), null);
+        }
+
+        if (volume_is_showing) {
+            g2d.drawImage(AdditionalResources.bar_volume_icon[InformationService.getVolumeIconState()][1],
+                    380 + 10 + (int) (0.15 * Resources.bar_lte.getWidth()) + 10, 9, 19, 15, null);
+        } else {
+            g2d.drawImage(AdditionalResources.bar_volume_icon[InformationService.getVolumeIconState()][0],
+                    380 + 10 + (int) (0.15 * Resources.bar_lte.getWidth()) + 10, 9, 19, 15, null);
         }
 
     }

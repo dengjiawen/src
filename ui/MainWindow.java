@@ -95,21 +95,6 @@ public class MainWindow extends JFrame {
 
         add(music_lg);
 
-        instrument.shiftGear(Constants.GEAR_DRIVE);
-        status_bar.shiftGear(Constants.GEAR_DRIVE);
-
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    TurningSignal.left.activate();
-                } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    TurningSignal.right.activate();
-                }
-            }
-        });
-
         setVisible(true);
 
     }

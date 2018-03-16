@@ -164,8 +164,7 @@ public class MusicController {
             timing ++;
             if (timing == sequence[current_index].getLength()) {
                 if (next(repeat_1) == MUSIC_UNAVAILABLE) {
-                    //TODO: IMPLEMENT
-
+                    pause();
                 } else {
                     if (!isPaused()) {
                         sequence[current_index].play();
@@ -305,6 +304,10 @@ public class MusicController {
         sequence[0].play();
         reset();
 
+    }
+
+    public static void updateVolume () {
+        sequence[current_index].updateVolume();
     }
 
 }
