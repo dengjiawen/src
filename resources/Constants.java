@@ -19,6 +19,9 @@ public class Constants {
     public static final Color BATTERY_PROGRESS_STOP_0 = Color.decode("#088700");
     public static final Color BATTERY_PROGRESS_STOP_1 = Color.decode("#a1d600");
 
+    public static final Color BATTERY_DANGER_STOP_0 = Color.decode("#ed1e24");
+    public static final Color BATTERY_DANGER_STOP_1 = Color.decode("#f59495");
+
     public static final Color TEXT_INACTIVE = Color.decode("#c2bcbc");
 
     public static final Color CONTROL_CENTER = Color.decode("#e6e6e5");

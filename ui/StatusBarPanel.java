@@ -147,22 +147,32 @@ public class StatusBarPanel extends JPanel {
 
         g2d.setClip(null);
         g2d.drawImage(Resources.tesla_logo, 380 + (705 - 20) / 2, 5, 20, 20, null);
-        g2d.drawImage(abs_state, 310, 10,
-                (int) (0.2 * abs_state.getWidth()), (int) (0.2 * abs_state.getHeight()), null);
-        g2d.drawImage(warning_state, 283, 10,
-                (int) (0.2 * warning_state.getWidth()), (int) (0.2 * warning_state.getHeight()), null);
-        g2d.drawImage(water_temp_state, 243, 10,
-                (int) (0.2 * water_temp_state.getWidth()), (int) (0.2 * water_temp_state.getHeight()), null);
-        g2d.drawImage(battery_state, 218, 8,
-                (int) (0.2 * battery_state.getWidth()), (int) (0.2 * battery_state.getHeight()), null);
-        g2d.drawImage(airbag_state, 193, 10,
-                (int) (0.2 * airbag_state.getWidth()), (int) (0.2 * airbag_state.getHeight()), null);
 
         g2d.setFont(Resources.drive_mode_font);
         g2d.setColor(Constants.TEXT_INACTIVE);
         g2d.drawString("P R N D", 15, 25);
 
         int padding = 0;
+
+        if (InformationService.drive_mode == Constants.GEAR_NEUTRAL || InformationService.drive_mode == Constants.GEAR_PARKED) {
+            warning_state = Resources.warning[1];
+            airbag_state = Resources.airbag[1];
+        } else {
+            warning_state = Resources.warning[0];
+            abs_state = Resources.abs[0];
+            water_temp_state = Resources.water_temp[0];
+            battery_state = Resources.battery[0];
+            airbag_state = Resources.airbag[0];
+        }
+
+        if (InformationService.show_speed_warning || InformationService.show_follow_warning || InformationService.show_gear_warning) {
+            warning_state = Resources.warning[1];
+        }
+
+        if (InformationService.battery < 20) {
+            warning_state = Resources.warning[1];
+            battery_state = Resources.warning[1];
+        }
 
         g2d.setColor(Color.black);
         switch (current_drive_mode) {
@@ -200,6 +210,17 @@ public class StatusBarPanel extends JPanel {
             g2d.drawImage(AdditionalResources.bar_volume_icon[InformationService.getVolumeIconState()][0],
                     380 + 10 + (int) (0.15 * Resources.bar_lte.getWidth()) + 10, 9, 19, 15, null);
         }
+
+        g2d.drawImage(abs_state, 310, 10,
+                (int) (0.2 * abs_state.getWidth()), (int) (0.2 * abs_state.getHeight()), null);
+        g2d.drawImage(warning_state, 283, 10,
+                (int) (0.2 * warning_state.getWidth()), (int) (0.2 * warning_state.getHeight()), null);
+        g2d.drawImage(water_temp_state, 243, 10,
+                (int) (0.2 * water_temp_state.getWidth()), (int) (0.2 * water_temp_state.getHeight()), null);
+        g2d.drawImage(battery_state, 218, 8,
+                (int) (0.2 * battery_state.getWidth()), (int) (0.2 * battery_state.getHeight()), null);
+        g2d.drawImage(airbag_state, 193, 10,
+                (int) (0.2 * airbag_state.getWidth()), (int) (0.2 * airbag_state.getHeight()), null);
 
     }
 

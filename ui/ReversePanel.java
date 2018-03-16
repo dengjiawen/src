@@ -1,6 +1,7 @@
 package ui;
 
 import information.InformationService;
+import resources.AdditionalResources;
 import resources.Resources;
 
 import javax.swing.*;
@@ -25,6 +26,11 @@ public class ReversePanel extends JPanel {
         super.paintComponent(g);
 
         g.drawImage(Resources.tesla_3_rear, (getWidth() - 264)/2, getHeight() - 215, 264, 192, null);
+
+        if (InformationService.show_gear_warning)
+            g.drawImage(AdditionalResources.gear_warning, (getWidth() - (int)(0.25 * AdditionalResources.gear_warning.getWidth()))/2,
+                    getHeight() - 200, (int)(0.25 * AdditionalResources.gear_warning.getWidth()),
+                    (int)(0.25 * AdditionalResources.gear_warning.getHeight()), null);
 
     }
 

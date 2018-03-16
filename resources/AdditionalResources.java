@@ -17,6 +17,10 @@ public class AdditionalResources {
     public static BufferedImage warning_gear;
     public static BufferedImage warning_dist;
 
+    public static BufferedImage gear_warning;
+    public static BufferedImage speed_warning;
+    public static BufferedImage follow_warning;
+
     public static BufferedImage[] ac_up_down_adjustor;
     public static BufferedImage[] ac_fan_up;
     public static BufferedImage[] ac_fan_down;
@@ -35,9 +39,19 @@ public class AdditionalResources {
     public static BufferedImage[] left_dragger;
     public static BufferedImage[] right_dragger;
 
+    public static BufferedImage battery_warning_20;
+    public static BufferedImage battery_warning_critical;
+
     public static void init () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png", "_disabled.png"};
+
+        battery_warning_20 = loadImage(Resources.panel_overlay_directory + "battery_low_20.png");
+        battery_warning_critical = loadImage(Resources.panel_overlay_directory + "battery_low_critical.png");
+
+        gear_warning = loadImage(Resources.icon_directory + "gear_warning.png");
+        speed_warning = loadImage(Resources.icon_directory + "speed_warning.png");
+        follow_warning = loadImage(Resources.icon_directory + "follow_warning.png");
 
         bar_volume_icon = new BufferedImage[4][2];
         panel_volume_icon = new BufferedImage[4];

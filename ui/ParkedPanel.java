@@ -3,6 +3,7 @@ package ui;
 import information.InformationService;
 import resources.Constants;
 import resources.Resources;
+import test.TestProgram;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,8 @@ import java.awt.event.MouseEvent;
  * Created by Ann on 2018-03-01.
  */
 public class ParkedPanel extends JPanel {
+
+    public static TestProgram test_program_reference;
 
     ToggleButton fronk;
     ToggleButton mirror;
@@ -42,6 +45,15 @@ public class ParkedPanel extends JPanel {
         });
 
         charge = new ToggleButton(Resources.button_charge, 2, 40, 300, button_width, button_height);
+        charge.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+                test_program_reference.setAllowCharging(!test_program_reference.chargingIsAllowed());
+            }
+        });
+
         trunk = new ToggleButton(Resources.button_trunk, 2, (getWidth() - button_width)/2, 370,
                 button_width, button_height);
 
@@ -50,6 +62,18 @@ public class ParkedPanel extends JPanel {
         add(charge);
         add(trunk);
 
+    }
+
+    public void setVisible (boolean b) {
+        super.setVisible(b);
+
+        if (!b) {
+            fronk.forceState(0);
+            trunk.forceState(0);
+            charge.forceState(0);
+
+            test_program_reference.setAllowCharging(false);
+        }
     }
 
     public void paintComponent (Graphics g) {

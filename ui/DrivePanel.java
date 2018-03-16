@@ -1,6 +1,7 @@
 package ui;
 
 import information.InformationService;
+import resources.AdditionalResources;
 import resources.Constants;
 import resources.Resources;
 
@@ -14,8 +15,7 @@ import java.awt.event.MouseEvent;
  */
 public class DrivePanel extends JPanel {
 
-    Point current_car_pos;
-    Point distant_car_pos;
+    AutoPilotAdjustor adjustor;
 
     public DrivePanel() {
         super();
@@ -24,8 +24,12 @@ public class DrivePanel extends JPanel {
         setBackground(new Color(0, 0, 0, 0));
         setLayout(null);
 
+        adjustor = new AutoPilotAdjustor();
+        adjustor.setVisible(false);
 
+        add(adjustor);
 
+        InformationService.drive_panel_reference = this;
 
     }
 
@@ -45,6 +49,35 @@ public class DrivePanel extends JPanel {
 
         g.drawImage(Resources.speed_limit, 40, 30, 38, 51, null);
 
+        if (InformationService.drive_mode == Constants.MODE_AUTOPILOT) {
+            g.drawImage(Resources.ap_icon, 280, 30, 27, 27, null);
+        } else if (InformationService.drive_mode == Constants.MODE_CRUISE_CONTROL) {
+            g.drawImage(Resources.cruise_icon, 280, 30, 29, 25, null);
+        }
+
+        if (InformationService.show_gear_warning)
+            g.drawImage(AdditionalResources.gear_warning, (getWidth() - (int)(0.25 * AdditionalResources.gear_warning.getWidth()))/2,
+                    getHeight() - 200, (int)(0.25 * AdditionalResources.gear_warning.getWidth()),
+                    (int)(0.25 * AdditionalResources.gear_warning.getHeight()), null);
+        else if (InformationService.show_follow_warning)
+            g.drawImage(AdditionalResources.follow_warning, (getWidth() - (int)(0.25 * AdditionalResources.follow_warning.getWidth()))/2,
+                    getHeight() - 200, (int)(0.25 * AdditionalResources.follow_warning.getWidth()),
+                    (int)(0.25 * AdditionalResources.follow_warning.getHeight()), null);
+        else if (InformationService.show_speed_warning)
+            g.drawImage(AdditionalResources.speed_warning, (getWidth() - (int)(0.25 * AdditionalResources.speed_warning.getWidth()))/2,
+                    getHeight() - 200, (int)(0.25 * AdditionalResources.speed_warning.getWidth()),
+                    (int)(0.25 * AdditionalResources.speed_warning.getHeight()), null);
+
+    }
+
+    public void updateDrivingMode () {
+        if (InformationService.drive_mode == Constants.MODE_NORMAL) {
+            adjustor.setVisible(false);
+        } else {
+            adjustor.setVisible(true);
+        }
+
+        RenderingService.invokeRepaint();
     }
 
 }

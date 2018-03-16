@@ -276,8 +276,14 @@ public class InstrumentPanel extends JPanel {
 
         g2d.clip(new RoundRectangle2D.Double(0, 0, 350, 605, Constants.ROUNDNESS, Constants.ROUNDNESS));
 
-        GradientPaint primary = new GradientPaint(
-                0f, 0f, Constants.BATTERY_PROGRESS_STOP_0, (battery_progress/100f) * getWidth(), 0f, Constants.BATTERY_PROGRESS_STOP_1);
+        GradientPaint primary;
+        if (battery_progress > 20) {
+            primary = new GradientPaint(
+                    0f, 0f, Constants.BATTERY_PROGRESS_STOP_0, (battery_progress / 100f) * getWidth(), 0f, Constants.BATTERY_PROGRESS_STOP_1);
+        } else {
+            primary = new GradientPaint(
+                    0f, 0f, Constants.BATTERY_DANGER_STOP_0, (battery_progress / 100f) * getWidth(), 0f, Constants.BATTERY_DANGER_STOP_1);
+        }
 
         g2d.setPaint(primary);
         g2d.fill(new Rectangle2D.Float(0, getHeight() - 4, (battery_progress/100f) * getWidth(), 8));

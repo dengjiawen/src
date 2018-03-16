@@ -61,12 +61,16 @@ public class Resources {
 
     public static Font volume_font;
 
+    public static Font ap_cruise_font;
+
     public static void initFont () {
 
         try{
             system_bold = Font.createFont(Font.TRUETYPE_FONT, Resources.class.getResourceAsStream(font_directory + "system_bold.ttf"));
             system_regular = Font.createFont(Font.TRUETYPE_FONT, Resources.class.getResourceAsStream(font_directory + "system_regular.ttf"));
             system_light = Font.createFont(Font.TRUETYPE_FONT, Resources.class.getResourceAsStream(font_directory + "system_light.ttf"));
+
+            ap_cruise_font = system_bold.deriveFont(11f);
 
             oval_button_font = system_bold.deriveFont(14.5f);
             speedometer_font = system_bold.deriveFont(100f);

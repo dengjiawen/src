@@ -57,10 +57,30 @@ public class GearAPFrame extends JFrame {
         getContentPane().add(autopilot);
 
         cruise_control_button = new JButton("Cruise Control");
+        cruise_control_button.addActionListener(e -> {
+            InformationService.changeMode(Constants.MODE_CRUISE_CONTROL);
+            cruise_control_button.setEnabled(false);
+            autopilot_button.setEnabled(true);
+            stop_autonomous_button.setEnabled(true);
+        });
         cruise_control_button.setEnabled(false);
+
         autopilot_button = new JButton("Autopilot");
+        autopilot_button.addActionListener(e -> {
+            InformationService.changeMode(Constants.MODE_AUTOPILOT);
+            cruise_control_button.setEnabled(true);
+            autopilot_button.setEnabled(false);
+            stop_autonomous_button.setEnabled(true);
+        });
         autopilot_button.setEnabled(false);
+
         stop_autonomous_button = new JButton("Stop");
+        stop_autonomous_button.addActionListener(e -> {
+            InformationService.changeMode(Constants.MODE_NORMAL);
+            cruise_control_button.setEnabled(true);
+            autopilot_button.setEnabled(true);
+            stop_autonomous_button.setEnabled(false);
+        });
         stop_autonomous_button.setEnabled(false);
 
         autopilot.add(cruise_control_button);
@@ -98,6 +118,8 @@ public class GearAPFrame extends JFrame {
         gearshifter.add(gear_down_button);
         gearshifter.add(gear_up_button);
 
+        InformationService.ap_frame_reference = this;
+
     }
 
     public void setAutonomousFunctions (boolean b) {
@@ -105,6 +127,10 @@ public class GearAPFrame extends JFrame {
             stop_autonomous_button.setEnabled(false);
             autopilot_button.setEnabled(true);
             cruise_control_button.setEnabled(true);
+        } else {
+            stop_autonomous_button.setEnabled(false);
+            autopilot_button.setEnabled(false);
+            cruise_control_button.setEnabled(false);
         }
     }
 

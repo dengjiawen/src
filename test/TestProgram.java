@@ -5,6 +5,7 @@
 package test;
 
 import information.InformationService;
+import resources.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +41,9 @@ public class TestProgram {
 
         GUI();
         Timers();
+
+        InformationService.test_program_reference = this;
+
     }
 
     /* int getSpeed () {
@@ -86,14 +90,26 @@ public class TestProgram {
     }
 
     private void Timers(){ // We should remove the println after
-        tAccel = new Timer(1000/24, e -> {
-            if((intSpeed + 1) < 227){ // The speed uniformly increases speed by 24 km/h
-                intSpeed +=  1; // If adding the speed is under the max speed, the speed gets added
-                InformationService.updateSpeed(intSpeed);
-            }
-            else if((intSpeed + 1)>227){
-                intSpeed = 227; // If adding the speed goes over max speed, the car just travels at max
-                InformationService.updateSpeed(intSpeed);
+        tAccel = new Timer(1000/80, e -> {
+
+            if (InformationService.drive_gear == Constants.GEAR_DRIVE) {
+                if (tAccel.getDelay() != 1000/20) tAccel.setDelay(1000/20);
+                if ((intSpeed + 1) < 227) { // The speed uniformly increases speed by 24 km/h
+                    intSpeed += 1; // If adding the speed is under the max speed, the speed gets added
+                    InformationService.updateSpeed(intSpeed);
+                } else if ((intSpeed + 1) > 227) {
+                    intSpeed = 227; // If adding the speed goes over max speed, the car just travels at max
+                    InformationService.updateSpeed(intSpeed);
+                }
+            } else if (InformationService.drive_gear == Constants.GEAR_REVERSE) {
+                if (tAccel.getDelay() != 1000/10) tAccel.setDelay(1000/10);
+                if ((intSpeed + 1) < 80) { // The speed uniformly increases speed by 24 km/h
+                    intSpeed += 1; // If adding the speed is under the max speed, the speed gets added
+                    InformationService.updateSpeed(intSpeed);
+                } else if ((intSpeed + 1) > 80) {
+                    intSpeed = 80; // If adding the speed goes over max speed, the car just travels at max
+                    InformationService.updateSpeed(intSpeed);
+                }
             }
         });
 
@@ -118,6 +134,9 @@ public class TestProgram {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+
+                if (InformationService.drive_gear == Constants.GEAR_PARKED || InformationService.drive_gear == Constants.GEAR_NEUTRAL) return;
+
                 tAccel.start();
                 tDecel.stop();
                 InformationService.accelerating = true;
@@ -150,6 +169,9 @@ public class TestProgram {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
                 tBrake.start();
+
+                InformationService.changeMode(Constants.MODE_NORMAL);
+                tAccel.stop();
             }
 
             @Override
@@ -195,14 +217,8 @@ public class TestProgram {
         tCharge = new Timer( 2000, e ->{
             if(flPercent < 100){
                 flPercent += 1; // If the car wasn't fully charged, it increases by one
-            }
-            else{
-                intCount1 = 0; // If the car is charged, the warning message resets
-                if(intCount2 == 0){
-                    JOptionPane.showMessageDialog(null, "Battery is fully charged", "Battery", JOptionPane.INFORMATION_MESSAGE, null);
-                    intCount2 = 1;
-                }
-
+            } else {
+                flPercent = 100;
             }
         });
     }
@@ -255,6 +271,18 @@ public class TestProgram {
     public void setAllowCharging (boolean b) {
         if (b) Recharge.setEnabled(true);
         else Recharge.setEnabled(false);
+    }
+
+    public boolean chargingIsAllowed () {
+        return Recharge.isEnabled();
+    }
+
+    public void artificialAccel (boolean b) {
+
+        if (Acceleration.getModel().isPressed()) return;
+
+        if (b) tAccel.start();
+        else tAccel.stop();
     }
 
 }

@@ -2,6 +2,9 @@ package information;
 
 import com.sun.org.apache.regexp.internal.RE;
 import resources.Constants;
+import test.GearAPFrame;
+import test.TestProgram;
+import ui.DrivePanel;
 import ui.InstrumentPanel;
 import ui.RenderingService;
 import ui.StatusBarPanel;
@@ -38,6 +41,15 @@ public class InformationService {
 
     public static StatusBarPanel status_bar_reference;
     public static InstrumentPanel instrument_panel_reference;
+    public static GearAPFrame ap_frame_reference;
+    public static DrivePanel drive_panel_reference;
+    public static TestProgram test_program_reference;
+
+    public static boolean show_gear_warning;
+    public static boolean show_speed_warning;
+    public static boolean show_follow_warning;
+
+    public static int gear_warning_time = 0;
 
     public static boolean left_front_door_locked;
     public static boolean left_back_door_locked;
@@ -58,6 +70,9 @@ public class InformationService {
     public static int ac_temp_mode;
 
     public static int mirror_state = Constants.MIRROR_RETRACTED;
+
+    public static int cruise_control_speed = 10;
+    public static int ap_following_distance = 15;
 
     private static int target_distant_car_y = 10;
     public static int current_distant_car_y = 10;
@@ -83,12 +98,37 @@ public class InformationService {
         } else {
             ac_temp_mode = Constants.AC_COLD;
         }
+
+        if (drive_gear == Constants.GEAR_PARKED || drive_gear == Constants.GEAR_NEUTRAL) return;
+
+        if (speed == 0 && show_gear_warning) {
+            show_gear_warning = false;
+            gear_warning_time = 0;
+            RenderingService.invokeRepaint();
+        } else if (show_gear_warning && gear_warning_time > 0) {
+            gear_warning_time --;
+        } else if (show_gear_warning && gear_warning_time == 0) {
+            show_gear_warning = false;
+        }
+
     });
 
     public static Timer short_term_car_position_update = new Timer(50, e -> {
 
         if (speed == 0) {
             return;
+        }
+
+        if (speed > 150) {
+            show_follow_warning = true;
+        } else if (speed > 110) {
+            show_speed_warning = true;
+        }
+
+        if (speed <= 150 && speed > 120) {
+            show_follow_warning = false;
+        } else if (speed <= 120) {
+            show_speed_warning = false;
         }
 
         if (target_distant_car_x != current_distant_car_x) {
@@ -143,6 +183,16 @@ public class InformationService {
 
     });
 
+    public static Timer cruise_control = new Timer(50, e -> {
+        if (speed < cruise_control_speed) test_program_reference.artificialAccel(true);
+        else test_program_reference.artificialAccel(false);
+    });
+
+    public static Timer autopilot = new Timer(50, e -> {
+        if (speed < (50 + 500 / ap_following_distance)) test_program_reference.artificialAccel(true);
+        else test_program_reference.artificialAccel(false);
+    });
+
     public static void init (){
         short_term_information_update.start();
         short_term_car_position_update.start();
@@ -181,6 +231,19 @@ public class InformationService {
 
     public static void changeGear (int new_gear) {
 
+        if (speed != 0) {
+            show_gear_warning = true;
+            gear_warning_time = 4;
+
+            return;
+        }
+
+        if (new_gear == Constants.GEAR_DRIVE) {
+            ap_frame_reference.setAutonomousFunctions(true);
+        } else {
+            ap_frame_reference.setAutonomousFunctions(false);
+        }
+
         drive_gear = new_gear;
 
         speed = 0;
@@ -188,6 +251,29 @@ public class InformationService {
         instrument_panel_reference.shiftGear(new_gear);
         status_bar_reference.shiftGear(new_gear);
 
+    }
+
+    public static void changeMode (int new_mode) {
+
+        drive_mode = new_mode;
+
+        if (drive_mode == Constants.MODE_CRUISE_CONTROL) {
+            if (speed < 10) cruise_control_speed = 10;
+            else if (speed > 150) cruise_control_speed = 150;
+            else cruise_control_speed = speed - (speed % 10);
+
+            cruise_control.start();
+            autopilot.stop();
+        } else if (drive_mode == Constants.MODE_AUTOPILOT) {
+            cruise_control.stop();
+            autopilot.start();
+        } else {
+            cruise_control.stop();
+            autopilot.stop();
+            ap_frame_reference.setAutonomousFunctions(true);
+        }
+
+        drive_panel_reference.updateDrivingMode();
     }
 
     public static void updateSpeed (int new_speed) {
