@@ -1,9 +1,25 @@
 /**
- * Created by freddeng on 2018-03-01.
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * Fred have a crush on someone ~
+ *
+ *-----------------------------------------------------------------------------
+ * MainWindow.java
+ *-----------------------------------------------------------------------------
+ * The MainWindow, the JFrame that hosts all the vehicle UI.
+ *-----------------------------------------------------------------------------
  */
 
 package ui;
 
+import information.Console;
 import resources.Constants;
 import javax.swing.*;
 
@@ -12,12 +28,13 @@ public class MainWindow extends JFrame {
     private final static int frame_width = 1125;
     private final static int frame_height = 720;
 
-    public static MainWindow window;
+    public static MainWindow window;    // static reference of the window object itself
 
-    private static NegotiablePanel current_XL;
-    private static NegotiablePanel current_SM;
-    private static NegotiablePanel current_LG;
+    private static NegotiablePanel current_XL;  // reference for current panel in zone 1
+    private static NegotiablePanel current_SM;  // reference for current panel in zone 3
+    private static NegotiablePanel current_LG;  // reference for current panel in zone 2
 
+    // the following are instances of sub panel objects
     private ControlPanelSM control_sm;
     private WeatherPanelSM weather_sm;
     private MusicPlayerPanelSM music_sm;
@@ -36,10 +53,17 @@ public class MainWindow extends JFrame {
 
     private InstrumentPanel instrument;
 
-    MusicPlayerPanelLG music_lg;
+    private MusicPlayerPanelLG music_lg;
 
+    /**
+     * Default Constructor
+     * Instantiates all panels, and add them
+     * to the frame.
+     */
     public MainWindow () {
         super();
+
+        Console.printGeneralMessage("Instantiating the main window frame...");
 
         window = this;
 
@@ -49,6 +73,8 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         getContentPane().setBackground(Constants.BACKGROUND_GREY);
+
+        Console.printGeneralMessage("Instantiating all sub-panels...");
 
         control_sm = new ControlPanelSM();
         weather_sm = new WeatherPanelSM();
@@ -113,7 +139,16 @@ public class MainWindow extends JFrame {
 
     }
 
+    /**
+     * Method that transitions a sub panel from zone 2 (LG) to zone 3 (SM)
+     * @param desired_state the desired state (SM/LG)
+     * @param panel the target panel
+     */
     public void negotiateTransition (int desired_state, NegotiablePanel panel) {
+
+        // set current SM zone 3 as invisible, place the target panel in zone 3.
+        // put zone 2 version of the map in zone 2.
+
         current_LG.setVisible(false);
         current_LG.setActive(false);
         current_LG = null;
@@ -132,6 +167,12 @@ public class MainWindow extends JFrame {
 
     }
 
+    /**
+     * Method that grants the backup camera the ability to take over
+     * the entire screen.
+     * @param panel 
+     * @param b
+     */
     public void requestXLPrivilage (NegotiablePanel panel, boolean b) {
 
         if (b) {

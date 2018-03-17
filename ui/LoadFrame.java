@@ -8,6 +8,8 @@
  * in whole or in part, without the express written permission of
  * Jiawen Deng.
  *
+ * There's really not much here for commenting.
+ *
  *-----------------------------------------------------------------------------
  * LoadFrame.java
  *-----------------------------------------------------------------------------

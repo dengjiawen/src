@@ -8,6 +8,8 @@
  * in whole or in part, without the express written permission of
  * Jiawen Deng.
  *
+ * These methods are recycled from the CrazyEights project.
+ *
  *-----------------------------------------------------------------------------
  * LoadPanel.java
  *-----------------------------------------------------------------------------

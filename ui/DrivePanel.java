@@ -75,7 +75,7 @@ public class DrivePanel extends JPanel {
 
     /**
      * Overriden paintComponent method
-     * @param g
+     * @param g Abstract Graphics
      */
     @Override
     protected void paintComponent (Graphics g) {
