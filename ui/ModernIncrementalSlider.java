@@ -1,27 +1,51 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * Hardware (noun.)
+ * The part of the computer that you can kick.
+ *
+ *-----------------------------------------------------------------------------
+ * ModernIncrementalSlider.java
+ *-----------------------------------------------------------------------------
+ * A modified version of ModernSlider that have sticky increments.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
 import information.InformationService;
 import resources.Constants;
 import resources.Resources;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * Created by freddeng on 2018-03-13.
- */
 public class ModernIncrementalSlider extends ModernSlider {
 
-    private static final int X_POS_1 = 2;
+    private static final int X_POS_1 = 2;       // three increment x values
     private static final int X_POS_2 = 69;
     private static final int X_POS_3 = 136;
 
-    private boolean sliding;
+    private boolean sliding;    // whether the slider is sticky or sliding
 
-    public ModernIncrementalSlider (int x, int y) {
+    /**
+     * Constructor
+     * @param x x pos
+     * @param y y pos
+     */
+    ModernIncrementalSlider (int x, int y) {
+
+        // call on parent constructor
         super(x, y, Resources.control_mirror_slider, Resources.control_mirror);
 
+        // set mouse listeners to "stick" slider at increments
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -68,7 +92,12 @@ public class ModernIncrementalSlider extends ModernSlider {
         });
     }
 
-    public void changeState (boolean mirror_extended) {
+    /**
+     * Method that forces the slider to change its state
+     * @param mirror_extended   boolean of whether the mirror is extended
+     *                          State is changed based on InformationService
+     */
+    void changeState (boolean mirror_extended) {
         if (sliding) return;
         if (mirror_extended) {
             slider_location_x = X_POS_2;
@@ -80,16 +109,28 @@ public class ModernIncrementalSlider extends ModernSlider {
         }
     }
 
-    public int getState () {
+    /**
+     * Method that returns the state of the slider
+     * @return  state
+     */
+    int getState () {
         return current_state;
     }
 
+    /**
+     * Overriden paintComponent method
+     * @param g Abstract Graphics
+     */
+    @Override
     protected void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.drawImage(slider_background, 0, 0, getWidth(), getHeight(), null);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // draw slider background and the slider itself
+        g2d.drawImage(slider_background, 0, 0, getWidth(), getHeight(), null);
         g2d.drawImage(slider_states[current_state], slider_location_x, 2, 72, 29, null);
     }
 

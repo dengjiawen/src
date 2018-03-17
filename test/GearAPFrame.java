@@ -94,30 +94,22 @@ public class GearAPFrame extends JFrame {
         autopilot.add(stop_autonomous_button);
 
         gear_up_button = new JButton("Next Gear");
-        gear_up_button.addActionListener(e -> {
-            InformationService.changeGear(
-                    (InformationService.drive_gear == Constants.GEAR_DRIVE) ?
-                            Constants.GEAR_PARKED : InformationService.drive_gear + 1
-            );
-        });
+        gear_up_button.addActionListener(e -> InformationService.changeGear(
+                (InformationService.drive_gear == Constants.GEAR_DRIVE) ?
+                        Constants.GEAR_PARKED : InformationService.drive_gear + 1
+        ));
 
         gear_down_button = new JButton("Prev Gear");
-        gear_down_button.addActionListener(e -> {
-            InformationService.changeGear(
-                    (InformationService.drive_gear == Constants.GEAR_PARKED) ?
-                            Constants.GEAR_DRIVE : InformationService.drive_gear - 1
-            );
-        });
+        gear_down_button.addActionListener(e -> InformationService.changeGear(
+                (InformationService.drive_gear == Constants.GEAR_PARKED) ?
+                        Constants.GEAR_DRIVE : InformationService.drive_gear - 1
+        ));
 
         left_indicator = new JButton("Left");
-        left_indicator.addActionListener(e -> {
-            TurningSignal.left.activate();
-        });
+        left_indicator.addActionListener(e -> TurningSignal.left.activate());
 
         right_indicator = new JButton("Right");
-        right_indicator.addActionListener(e -> {
-            TurningSignal.right.activate();
-        });
+        right_indicator.addActionListener(e -> TurningSignal.right.activate());
 
         gearshifter.add(left_indicator);
         gearshifter.add(right_indicator);

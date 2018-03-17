@@ -72,9 +72,7 @@ public class Music {
         music_length = (int)mp3_file.getLengthInSeconds();
         music = TinySound.loadMusic(MusicController.class.getResource(path), true);
 
-        SwingUtilities.invokeLater(() -> {
-            LoadFrame.requestLoadPanelReference().updateLoadedAsset(path);
-        });
+        SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(path));
 
     }
 

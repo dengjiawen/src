@@ -1,31 +1,42 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * A: Why did the programmer quit his job?
+ * Q: Because he didn't get his arrays (a raise).
+ *
+ *-----------------------------------------------------------------------------
+ * ModernSlider.java
+ *-----------------------------------------------------------------------------
+ * A nicer looking slider compared to the junky JComponent ones.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
 import resources.Constants;
 import resources.Resources;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by freddeng on 2018-03-13.
- */
 class ModernSlider extends JPanel {
 
-    BufferedImage slider_background;
+    protected BufferedImage slider_background;
+    protected BufferedImage[] slider_states;
 
-    BufferedImage[] slider_states;
+    protected int current_state;
+    protected int slider_location_x;
 
-    int current_state;
-    int slider_location_x;
-
-    private String slider_percentage;
-
-    ModernSlider() {
-
-    }
+    protected String slider_percentage;
 
     public ModernSlider (int x, int y) {
 

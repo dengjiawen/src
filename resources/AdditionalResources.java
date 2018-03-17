@@ -146,9 +146,7 @@ public class AdditionalResources {
     private static BufferedImage loadImage (String res_path) {
 
         try {
-            SwingUtilities.invokeLater(() -> {
-                LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path);
-            });
+            SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path));
             return ImageIO.read(AdditionalResources.class.getResource(res_path));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Resources are missing. " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

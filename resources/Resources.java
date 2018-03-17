@@ -469,9 +469,7 @@ public class Resources {
     private static BufferedImage loadImage (String res_path) {
 
         try {
-            SwingUtilities.invokeLater(() -> {
-                LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path);
-            });
+            SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path));
             return ImageIO.read(Resources.class.getResource(res_path));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Resources are missing. " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -492,9 +490,7 @@ public class Resources {
             BufferedImage image = loadImage(res_path);
             ImageIO.write(image, "jpg", temp_file);
 
-            SwingUtilities.invokeLater(() -> {
-                LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path);
-            });
+            SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path));
 
             return BigBufferedImage.create(temp_file, BufferedImage.TYPE_INT_RGB);
 
