@@ -2,7 +2,6 @@ package music;
 
 import music.Resources;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 

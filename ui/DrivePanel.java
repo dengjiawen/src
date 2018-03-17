@@ -1,22 +1,41 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * //Roses are red
+ * //Violets are blue
+ * abstract class Poem {
+ * //TODO
+ *
+ *-----------------------------------------------------------------------------
+ * DrivePanel.java
+ *-----------------------------------------------------------------------------
+ * A panel for controlling UI elements for when the car is in DRIVE (D) mode.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
 import information.InformationService;
 import resources.AdditionalResources;
 import resources.Constants;
 import resources.Resources;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-/**
- * Created by Ann on 2018-03-01.
- */
 public class DrivePanel extends JPanel {
 
-    AutoPilotAdjustor adjustor;
+    private AutoPilotAdjustor adjustor;    // for adjusting speed/following dist of cruise control + autopilot
 
+    /**
+     * Default Constructor
+     */
     public DrivePanel() {
         super();
 

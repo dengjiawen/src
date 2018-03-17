@@ -1,7 +1,5 @@
 package ui;
 
-import javax.swing.*;
-
 /**
  * Created by freddeng on 2018-03-13.
  */

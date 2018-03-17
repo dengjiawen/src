@@ -1,6 +1,5 @@
 package ui;
 
-import com.sun.java.swing.ui.StatusBar;
 import information.InformationService;
 import music.MusicController;
 import resources.AdditionalResources;

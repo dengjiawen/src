@@ -1,12 +1,9 @@
 package ui;
 
 import information.InformationService;
-import music.MusicController;
 import resources.AdditionalResources;
 import resources.Constants;
-import resources.Resources;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

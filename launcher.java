@@ -32,7 +32,7 @@ public class launcher {
 
         try {
             Thread.sleep(3000);     // hang the main thread while frame is loaded
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException ignored) {}
 
         TinySound.init();
         music.Resources.init();

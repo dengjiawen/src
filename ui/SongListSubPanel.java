@@ -6,7 +6,6 @@ import resources.Resources;
 import javax.swing.*;
 import java.awt.*;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 /**
  * Created by freddeng on 2018-03-07.

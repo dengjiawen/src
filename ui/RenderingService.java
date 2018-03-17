@@ -1,5 +1,7 @@
 package ui;
 
+import information.Console;
+
 import java.lang.ref.WeakReference;
 import javax.swing.*;
 
@@ -20,7 +22,7 @@ public class RenderingService {
         rendering_service = new Timer(1000/refreshRate, e -> {
 
             if (doRepaint) {
-                System.out.println(System.nanoTime() + " | Repainted");
+                Console.printRepaintMessage();
                 SwingUtilities.invokeLater(() -> {
                     window.get().revalidate();
                     window.get().repaint();

@@ -1,19 +1,41 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * Roses are red,
+ * array is old,
+ * linked list is great,
+ * where is my gold?
+ *
+ *-----------------------------------------------------------------------------
+ * ContainerSM.java
+ *-----------------------------------------------------------------------------
+ * The basis/template for all UI objects inheriting ContainerSM.
+ * All inherited object are placed in zone 3.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
 import resources.Constants;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-/**
- * Created by freddeng on 2018-03-01.
- */
 public class ContainerSM extends JPanel {
 
     public static final int panel_width = 725;
     public static final int panel_height = 175;
 
+    /**
+     * Default Constructor
+     */
     public ContainerSM () {
         super();
 
@@ -22,6 +44,11 @@ public class ContainerSM extends JPanel {
 
     }
 
+    /**
+     * Overriden paintComponent class
+     * @param g Abstract Graphics
+     */
+    @Override
     protected void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;

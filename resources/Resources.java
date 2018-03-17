@@ -14,7 +14,7 @@ import dependencies.fred.emma.BigBufferedImage;
  */
 public class Resources {
 
-    public static final boolean DO_LOAD_WEATHER_ASSETS = false;
+    public static final boolean DO_LOAD_WEATHER_ASSETS = true;
 
     public static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";

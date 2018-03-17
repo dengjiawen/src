@@ -1,14 +1,11 @@
 package information;
 
-import com.sun.org.apache.regexp.internal.RE;
 import resources.Constants;
 import test.GearAPFrame;
 import test.TestProgram;
 import ui.*;
 
-import javax.sound.midi.Instrument;
 import javax.swing.Timer;
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;

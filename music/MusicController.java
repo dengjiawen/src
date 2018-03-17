@@ -302,6 +302,8 @@ public class MusicController {
         isPaused = false;
 
         sequence[0].play();
+        current_index = 0;
+
         reset();
 
     }

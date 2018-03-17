@@ -1,8 +1,6 @@
 package resources;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
 /**
  * Created by freddeng on 2018-03-01.
