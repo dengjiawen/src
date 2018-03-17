@@ -1,5 +1,24 @@
 /**
- * Created by freddeng on 2018-03-01.
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * Roses are red
+ * As one seldom forgets,
+ * But array jokes are old now:
+ * Let's move on to sets.
+ *
+ *-----------------------------------------------------------------------------
+ * InstrumentPanel.java
+ *-----------------------------------------------------------------------------
+ * The panel that is always visible at the left side of the UI. Contains
+ * crucial elements such as speedometer and DrivePanel.
+ *-----------------------------------------------------------------------------
  */
 
 package ui;
@@ -8,7 +27,6 @@ import information.InformationService;
 import resources.Constants;
 import resources.Resources;
 import sound.SoundService;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -18,30 +36,30 @@ import java.awt.geom.RoundRectangle2D;
 
 public class InstrumentPanel extends JPanel {
 
-    JLabel parked_label;
-    JLabel neutral_label;
-    JLabel speed_label;
-    JLabel speed_unit_label;
-    JLabel range;
+    private JLabel parked_label;
+    private JLabel neutral_label;
+    private JLabel speed_label;
+    private JLabel speed_unit_label;
+    private JLabel range;
 
-    ToggleButton Fdefrost;
-    ToggleButton Rdefrost;
-    ToggleButton lock;
-    ToggleButton safety;
-    ToggleButton wiper;
-    ToggleButton light;
+    private ToggleButton Fdefrost;
+    private ToggleButton Rdefrost;
+    private ToggleButton lock;
+    private ToggleButton safety;
+    private ToggleButton wiper;
+    private ToggleButton light;
 
-    FlashButton hazard;
+    private FlashButton hazard;
 
-    TurningSignal left;
-    TurningSignal right;
+    private TurningSignal left;
+    private TurningSignal right;
 
-    ParkedPanel parked;
-    DrivePanel drive;
-    ReversePanel reverse;
-    NeutralPanel neutral;
+    private ParkedPanel parked;
+    private DrivePanel drive;
+    private ReversePanel reverse;
+    private NeutralPanel neutral;
 
-    float battery_progress;
+    private float battery_progress;
 
     public InstrumentPanel () {
         super();
