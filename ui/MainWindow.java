@@ -165,15 +165,20 @@ public class MainWindow extends JFrame {
         panel.setActive(true);
         current_SM = panel;
 
+        Console.printGeneralMessage(panel.getClass().getName() + " requesting transition to " + desired_state + ".");
+        Console.printGeneralMessage(panel.getClass().getName() + " transition is successful.");
+
     }
 
     /**
      * Method that grants the backup camera the ability to take over
      * the entire screen.
-     * @param panel 
-     * @param b
+     * @param panel the target panel
+     * @param b     whether the panel is requesting zone 1 privilage
      */
     public void requestXLPrivilage (NegotiablePanel panel, boolean b) {
+
+        // set the target panel as visible/invisible based on boolean value
 
         if (b) {
             if (current_SM != null) {
@@ -191,6 +196,10 @@ public class MainWindow extends JFrame {
 
             panel.setVisible(true);
             panel.setActive(true);
+
+            Console.printGeneralMessage(panel.getClass().getName() + " requesting XL privilage.");
+            Console.printGeneralMessage(panel.getClass().getName() + " transition is successful.");
+
         } else {
 
             panel.setActive(false);
@@ -210,10 +219,20 @@ public class MainWindow extends JFrame {
                 current_XL.setVisible(true);
             }
 
+            Console.printGeneralMessage(panel.getClass().getName() + " abandoning XL privilage.");
+            Console.printGeneralMessage(panel.getClass().getName() + " transition is successful.");
+
         }
 
     }
 
+    /**
+     * Request transitions to any zone.
+     * I honestly don't know how this whole chunk of code works...
+     * Somehow, it does, and that is good enough for me.
+     * @param desired_state
+     * @param panel
+     */
     public void negotiateSpace (int desired_state, NegotiablePanel panel) {
         if (desired_state == Constants.WindowConstants.STATE_SM && current_SM != null) {
             current_SM.setVisible(false);
