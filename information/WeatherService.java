@@ -106,7 +106,7 @@ public class WeatherService {
         getForecastDataFromAPI();
     }
 
-    public static void requestDocumentsFromAPI () {
+    private static void requestDocumentsFromAPI() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
@@ -128,7 +128,7 @@ public class WeatherService {
         }
     }
 
-    public static String getDataFromXML (Document document, String XPATH_EXPR) {
+    private static String getDataFromXML(Document document, String XPATH_EXPR) {
         XPathFactory factory = XPathFactory.newInstance();
         XPath xpath = factory.newXPath();
         try {
@@ -140,15 +140,15 @@ public class WeatherService {
         }
     }
 
-    public static int kelvinToCelcius (Float kelvin) {
+    private static int kelvinToCelcius(Float kelvin) {
         return (int)Math.round(kelvin - 273.15);
     }
 
-    public static int kelvinToCelcius (String kelvin) {
+    private static int kelvinToCelcius(String kelvin) {
         return kelvinToCelcius(Float.parseFloat(kelvin));
     }
 
-    public static String _24HourTo12Hour (String _24_hour) {
+    private static String _24HourTo12Hour(String _24_hour) {
         SimpleDateFormat _24_hour_format = new SimpleDateFormat("HH:mm");
         SimpleDateFormat _12_hour_format = new SimpleDateFormat("hh:mm aa");
         try {
@@ -159,7 +159,7 @@ public class WeatherService {
         }
     }
 
-    public static String _24HourTo12HourForForecast (String _24_hour) {
+    private static String _24HourTo12HourForForecast(String _24_hour) {
         SimpleDateFormat _24_hour_format = new SimpleDateFormat("HH:mm");
         SimpleDateFormat _12_hour_format = new SimpleDateFormat("h aa");
         try {
@@ -170,7 +170,7 @@ public class WeatherService {
         }
     }
 
-    public static void getWeatherDataFromAPI () {
+    private static void getWeatherDataFromAPI() {
         temperature = kelvinToCelcius(getDataFromXML(latest_weather_from_api, XPATH_EXPR_TEMP));
         high_temp = kelvinToCelcius(getDataFromXML(latest_weather_from_api, XPATH_EXPR_HIGH));
         low_temp = kelvinToCelcius(getDataFromXML(latest_weather_from_api, XPATH_EXPR_LOW));
@@ -182,7 +182,7 @@ public class WeatherService {
         sun_set = _24HourTo12Hour(getDataFromXML(latest_weather_from_api, XPATH_EXPR_SET).substring(11, 16));
     }
 
-    public static void getForecastDataFromAPI () {
+    private static void getForecastDataFromAPI() {
         forecast_times = new String[3];
         forecast_temperatures = new int[3];
         forecast_precipitations = new int[3];

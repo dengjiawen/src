@@ -17,7 +17,7 @@ public class ModernIncrementalSlider extends ModernSlider {
     private static final int X_POS_2 = 69;
     private static final int X_POS_3 = 136;
 
-    boolean sliding;
+    private boolean sliding;
 
     public ModernIncrementalSlider (int x, int y) {
         super(x, y, Resources.control_mirror_slider, Resources.control_mirror);

@@ -12,16 +12,16 @@ import java.awt.*;
 /**
  * Created by freddeng on 2018-03-01.
  */
-public class launcher {
+class launcher {
 //Hello
 
-    public static MainWindow window;
+    private static MainWindow window;
 
-    public static int main_window_x;
-    public static int main_window_y;
+    private static int main_window_x;
+    private static int main_window_y;
 
-    public static int acc_window_x;
-    public static int acc_window_y;
+    private static int acc_window_x;
+    private static int acc_window_y;
 
     private static TestProgram test;
     private static GearAPFrame gear_control;

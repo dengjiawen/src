@@ -14,20 +14,20 @@ import dependencies.fred.emma.BigBufferedImage;
  */
 public class Resources {
 
-    public static final boolean DO_LOAD_WEATHER_ASSETS = true;
+    private static final boolean DO_LOAD_WEATHER_ASSETS = true;
 
-    public static final String font_directory = "/resources/resources/fonts/";
+    private static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";
     public static final String panel_overlay_directory = "/resources/resources/panel_overlay/";
     public static final String animation_directory = "/resources/resources/animation/";
 
-    public static final String toggle_directory = "/resources/resources/music_control/";
+    private static final String toggle_directory = "/resources/resources/music_control/";
 
-    public static Font system_bold;
-    public static Font system_regular;
-    public static Font system_light;
+    private static Font system_bold;
+    private static Font system_regular;
+    private static Font system_light;
 
-    public static Font oval_button_font;
+    private static Font oval_button_font;
     public static Font speedometer_font;
     public static Font speed_font;
     public static Font speed_unit_font;
@@ -155,7 +155,7 @@ public class Resources {
     public static BufferedImage[] signal_left;
     public static BufferedImage[] signal_right;
 
-    public static BufferedImage[] fan;
+    private static BufferedImage[] fan;
 
     public static BufferedImage[] abs;
     public static BufferedImage[] warning;

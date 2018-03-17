@@ -12,18 +12,18 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class MusicController {
 
-    public final static int MUSIC_AVAILABLE = 1;
-    public final static int MUSIC_UNAVAILABLE = 0;
+    private final static int MUSIC_AVAILABLE = 1;
+    private final static int MUSIC_UNAVAILABLE = 0;
 
-    public static boolean repeat = false;
-    public static boolean repeat_1 = false;
-    public static boolean shuffle = false;
+    private static boolean repeat = false;
+    private static boolean repeat_1 = false;
+    private static boolean shuffle = false;
 
     private static boolean isPaused = true;
-    public static SongList current_songlist;
+    private static SongList current_songlist;
 
-    public static Timer timing_controller;
-    public static int timing = 0;
+    private static Timer timing_controller;
+    private static int timing = 0;
 
     public static Music[] sequence = new Music[4];
     public static int current_index;
@@ -61,7 +61,7 @@ public class MusicController {
         }
     }
 
-    public static void partialShuffle () {
+    private static void partialShuffle() {
 
         sequence[0] = sequence[current_index];
 
@@ -86,7 +86,7 @@ public class MusicController {
         current_index = 0;
     }
 
-    public static void partialRepeat () {
+    private static void partialRepeat() {
 
         sequence[0] = sequence[current_index];
 
@@ -112,14 +112,14 @@ public class MusicController {
         current_index = 0;
     }
 
-    public static void partialReorder () {
+    private static void partialReorder() {
         current_index = current_songlist.getIndex(sequence[current_index]);
         for (int i = 0; i < sequence.length; i ++) {
             sequence[i] = current_songlist.getMusic(i);
         }
     }
 
-    public static void fullShuffle () {
+    private static void fullShuffle() {
         int num_0 = -1;
         int num_1 = -1;
         int num_2 = -1;
@@ -146,7 +146,7 @@ public class MusicController {
         sequence[3] = current_songlist.getMusic(num_3);
     }
 
-    public static void fullRepeat () {
+    private static void fullRepeat() {
         for (int i = 0; i < sequence.length; i ++) {
             sequence[i] = current_songlist.getMusic(i);
         }
@@ -219,7 +219,7 @@ public class MusicController {
         reset();
     }
 
-    public static int previous () {
+    private static int previous() {
         sequence[current_index].stop();
 
         current_index --;
@@ -235,7 +235,7 @@ public class MusicController {
         return MUSIC_AVAILABLE;
     }
 
-    public static int next (boolean repeat_1) {
+    private static int next(boolean repeat_1) {
 
         sequence[current_index].stop();
 
@@ -278,7 +278,7 @@ public class MusicController {
         }
     }
 
-    public static void reset () {
+    private static void reset() {
         timing_controller.restart();
         timing = 0;
 

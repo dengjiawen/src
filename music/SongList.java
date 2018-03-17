@@ -10,9 +10,9 @@ import java.util.ArrayList;
  */
 public class SongList {
 
-    public static final int BACKDROP = 0;
-    public static final int HIGHLIGHT = 1;
-    public static final int BUTTON = 2;
+    private static final int BACKDROP = 0;
+    private static final int HIGHLIGHT = 1;
+    private static final int BUTTON = 2;
 
     private ArrayList<Music> music;
     private BufferedImage[] assets;

@@ -3,7 +3,7 @@ package ui;
 /**
  * Created by freddeng on 2018-03-13.
  */
-public interface NegotiablePanel {
+interface NegotiablePanel {
 
     void updateInvoker ();
 

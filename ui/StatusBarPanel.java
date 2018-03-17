@@ -19,22 +19,22 @@ public class StatusBarPanel extends JPanel {
     public static WeatherPanelSM weather_panel;
     public static VolumePanelSM volume_panel;
 
-    JLabel time;
-    JLabel temp;
+    private JLabel time;
+    private JLabel temp;
 
-    JButton weather_panel_invoker;
-    JButton volume_panel_invoker;
+    private JButton weather_panel_invoker;
+    private JButton volume_panel_invoker;
 
-    int current_drive_mode;
+    private int current_drive_mode;
 
-    boolean weather_is_showing;
-    boolean volume_is_showing;
+    private boolean weather_is_showing;
+    private boolean volume_is_showing;
 
-    BufferedImage abs_state;
-    BufferedImage warning_state;
-    BufferedImage airbag_state;
-    BufferedImage battery_state;
-    BufferedImage water_temp_state;
+    private BufferedImage abs_state;
+    private BufferedImage warning_state;
+    private BufferedImage airbag_state;
+    private BufferedImage battery_state;
+    private BufferedImage water_temp_state;
 
     public StatusBarPanel () {
 

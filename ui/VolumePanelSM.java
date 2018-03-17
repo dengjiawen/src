@@ -21,10 +21,10 @@ public class VolumePanelSM extends ContainerSM implements NegotiablePanel {
 
     public static StatusBarPanel invoker;
 
-    Timer increase_timer;
-    Timer decrease_timer;
+    private Timer increase_timer;
+    private Timer decrease_timer;
 
-    MouseEvent initial_event = null;
+    private MouseEvent initial_event = null;
 
     public VolumePanelSM() {
 

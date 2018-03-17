@@ -50,7 +50,7 @@ public class ControlPanelSM extends ContainerSM implements NegotiablePanel {
     /**
      * Default Constructor
      */
-    public ControlPanelSM() {
+    ControlPanelSM() {
 
         super();
 

@@ -8,11 +8,11 @@ import java.util.concurrent.Executors;
  */
 public class Resources {
 
-    public static final String MUSIC_PATH = "/music/resources/";
+    private static final String MUSIC_PATH = "/music/resources/";
 
-    public static boolean pool_1_done = false;
-    public static boolean pool_2_done = false;
-    public static boolean pool_3_done = false;
+    private static boolean pool_1_done = false;
+    private static boolean pool_2_done = false;
+    private static boolean pool_3_done = false;
 
     public static final music.Music[] music = new music.Music[12];
     public static final SongList[] songlists = new SongList[3];

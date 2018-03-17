@@ -17,9 +17,9 @@ public class WeatherPanelSM extends ContainerSM implements NegotiablePanel {
 
     public static StatusBarPanel invoker;
 
-    BufferedImage current_weather_frame;
-    int animation_framecount;
-    Timer animation_controller;
+    private BufferedImage current_weather_frame;
+    private int animation_framecount;
+    private Timer animation_controller;
 
     public WeatherPanelSM() {
 

@@ -10,11 +10,11 @@ import javax.swing.*;
  */
 public class RenderingService {
 
-    public static WeakReference<MainWindow> window;
-    public static Timer rendering_service;
+    private static WeakReference<MainWindow> window;
+    private static Timer rendering_service;
 
-    public static boolean doRepaint = false;
-    public static int refreshRate = 35;
+    private static boolean doRepaint = false;
+    private static int refreshRate = 35;
 
     public static void init (MainWindow window_reference) {
         window = new WeakReference<>(window_reference);

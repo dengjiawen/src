@@ -32,12 +32,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class GlowButton extends JPanel {
+class GlowButton extends JPanel {
 
-    protected BufferedImage[] states;       // array of icons that contains the two states
-    protected BufferedImage active_state;   // bufferedimage representation of current state
+    BufferedImage[] states;       // array of icons that contains the two states
+    BufferedImage active_state;   // bufferedimage representation of current state
 
-    protected boolean is_disabled;          // boolean of whether button is disabled
+    private boolean is_disabled;          // boolean of whether button is disabled
 
     /**
      * Constructor

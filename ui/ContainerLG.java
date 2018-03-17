@@ -26,7 +26,7 @@ package ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class ContainerLG extends JPanel {
+class ContainerLG extends JPanel {
 
     private static final int panel_width_contracted = 725;
     private static final int panel_height_contracted = 420;
@@ -34,7 +34,7 @@ public class ContainerLG extends JPanel {
     /**
      * Default Constructor
      */
-    public ContainerLG () {
+    ContainerLG() {
 
         setBounds(380,20, panel_width_contracted ,panel_height_contracted);
         setBackground(new Color(0,0,0,0));

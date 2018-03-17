@@ -29,7 +29,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ACSubPanel extends JPanel {
+class ACSubPanel extends JPanel {
 
     private Point dragger_position;     // keeps track of the "dragger"'s position on the panel
 

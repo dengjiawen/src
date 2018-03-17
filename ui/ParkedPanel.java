@@ -18,16 +18,16 @@ public class ParkedPanel extends JPanel {
 
     public static TestProgram test_program_reference;
 
-    ToggleButton fronk;
-    ToggleButton mirror;
-    ToggleButton charge;
-    ToggleButton trunk;
+    private ToggleButton fronk;
+    private ToggleButton mirror;
+    private ToggleButton charge;
+    private ToggleButton trunk;
 
-    Timer charging_animation_controller;
-    int charging_animation_framecount;
+    private Timer charging_animation_controller;
+    private int charging_animation_framecount;
 
-    static final int button_width = (int)(0.25 * Resources.button_fronk[0].getWidth());
-    static final int button_height = (int)(0.25 * Resources.button_fronk[0].getHeight());
+    private static final int button_width = (int)(0.25 * Resources.button_fronk[0].getWidth());
+    private static final int button_height = (int)(0.25 * Resources.button_fronk[0].getHeight());
 
     public ParkedPanel () {
         super();

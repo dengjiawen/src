@@ -13,10 +13,6 @@ public class AdditionalResources {
 
     public static BufferedImage parking_brake;
 
-    public static BufferedImage warning_speed;
-    public static BufferedImage warning_gear;
-    public static BufferedImage warning_dist;
-
     public static BufferedImage gear_warning;
     public static BufferedImage speed_warning;
     public static BufferedImage follow_warning;
@@ -98,10 +94,6 @@ public class AdditionalResources {
         ac_circulation = new BufferedImage[2][];
 
         parking_brake = loadImage(Resources.icon_directory + "p_brake.png");
-
-        warning_speed = loadImage(Resources.icon_directory + "speed_warning.png");
-        warning_gear = loadImage(Resources.icon_directory + "gear_warning.png");
-        warning_dist = loadImage(Resources.icon_directory + "follow_warning.png");
 
         ac_up_down_adjustor[0] = loadImage(Resources.icon_directory + "ac/up_down_adjustor_disabled.png");
         ac_up_down_adjustor[1] = loadImage(Resources.icon_directory + "ac/up_down_adjustor.png");

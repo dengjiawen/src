@@ -50,7 +50,7 @@ public class InformationService {
     public static boolean show_speed_warning;
     public static boolean show_follow_warning;
 
-    public static int gear_warning_time = 0;
+    private static int gear_warning_time = 0;
 
     public static boolean left_front_door_locked;
     public static boolean left_back_door_locked;
@@ -91,7 +91,7 @@ public class InformationService {
     public static int ac_control_mode = Constants.AC_MANUAL;
     public static int ac_fan_speed = 4;
 
-    public static Timer short_term_information_update = new Timer(1000,e -> {
+    private static Timer short_term_information_update = new Timer(1000, e -> {
         infoUpdateTime();
 
         if (battery < 20 && !warning_20_given && !test_program_reference.isCharging()) {
@@ -198,13 +198,13 @@ public class InformationService {
 
     });
 
-    public static Timer cruise_control = new Timer(50, e -> {
+    private static Timer cruise_control = new Timer(50, e -> {
         if (battery == 0) lowBattery();
         if (speed < cruise_control_speed) test_program_reference.artificialAccel(true);
         else test_program_reference.artificialAccel(false);
     });
 
-    public static Timer autopilot = new Timer(50, e -> {
+    private static Timer autopilot = new Timer(50, e -> {
         if (battery == 0) lowBattery();
         if (speed < (50 + 500 / ap_following_distance)) test_program_reference.artificialAccel(true);
         else test_program_reference.artificialAccel(false);
@@ -215,7 +215,7 @@ public class InformationService {
         short_term_car_position_update.start();
     }
 
-    public static void infoUpdateTime () {
+    private static void infoUpdateTime() {
 
         String time = new SimpleDateFormat("h:mm aa").format(new Date());
         status_bar_reference.updateTime(time);
@@ -347,7 +347,7 @@ public class InformationService {
 
     }
 
-    public static void lowBattery () {
+    private static void lowBattery() {
         autopilot.stop();
         cruise_control.stop();
 

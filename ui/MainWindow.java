@@ -230,8 +230,8 @@ public class MainWindow extends JFrame {
      * Request transitions to any zone.
      * I honestly don't know how this whole chunk of code works...
      * Somehow, it does, and that is good enough for me.
-     * @param desired_state
-     * @param panel
+     * @param desired_state     the desired zone/state
+     * @param panel     target panel
      */
     public void negotiateSpace (int desired_state, NegotiablePanel panel) {
         if (desired_state == Constants.WindowConstants.STATE_SM && current_SM != null) {

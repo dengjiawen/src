@@ -29,7 +29,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class ContainerXL extends JPanel {
+class ContainerXL extends JPanel {
 
     private static final int panel_width_expanded = 725;
     private static final int panel_height_expanded = 605;
@@ -37,7 +37,7 @@ public class ContainerXL extends JPanel {
     /**
      * Default Constructor
      */
-    public ContainerXL() {
+    ContainerXL() {
 
         setBounds(380,20, panel_width_expanded, panel_height_expanded);
         setBackground(new Color(0,0,0,0));

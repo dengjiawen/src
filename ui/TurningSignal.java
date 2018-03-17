@@ -24,8 +24,8 @@ public class TurningSignal extends JPanel {
     private Timer timing_controller;
     private int signal_type;
 
-    boolean activated;
-    boolean emergency;
+    private boolean activated;
+    private boolean emergency;
 
     public TurningSignal (byte signal_type) {
 

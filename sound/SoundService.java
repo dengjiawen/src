@@ -7,7 +7,7 @@ import javax.swing.Timer;
  */
 public class SoundService {
 
-    public static Timer signal_timing_controller = new Timer(295 * 2, e -> {
+    private static Timer signal_timing_controller = new Timer(295 * 2, e -> {
         Resources.signal.play();
         Resources.signal.play();
         Resources.signal.play();

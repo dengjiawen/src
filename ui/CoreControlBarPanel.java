@@ -28,7 +28,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CoreControlBarPanel extends JPanel {
+class CoreControlBarPanel extends JPanel {
 
     // reference of various objects needed for proper functions
     public static MusicPlayerPanelSM music_panel;

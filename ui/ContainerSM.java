@@ -28,15 +28,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class ContainerSM extends JPanel {
+class ContainerSM extends JPanel {
 
-    public static final int panel_width = 725;
-    public static final int panel_height = 175;
+    static final int panel_width = 725;
+    static final int panel_height = 175;
 
     /**
      * Default Constructor
      */
-    public ContainerSM () {
+    ContainerSM() {
         super();
 
         setBounds(380,450, panel_width ,panel_height);

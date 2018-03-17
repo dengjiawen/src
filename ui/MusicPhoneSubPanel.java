@@ -12,11 +12,11 @@ import java.awt.event.MouseEvent;
 /**
  * Created by freddeng on 2018-03-13.
  */
-public class MusicPhoneSubPanel extends JPanel {
+class MusicPhoneSubPanel extends JPanel {
 
-    ModifiedToggleButton nine;
-    ModifiedToggleButton lala;
-    ModifiedToggleButton frozen;
+    private ModifiedToggleButton nine;
+    private ModifiedToggleButton lala;
+    private ModifiedToggleButton frozen;
 
     public MusicPhoneSubPanel () {
 

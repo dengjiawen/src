@@ -29,7 +29,7 @@ public class MusicPlayerPanelSM extends ContainerSM implements NegotiablePanel {
 
     public static ToggleButton invoker;
 
-    boolean is_active;
+    private boolean is_active;
 
     private JLabel song_name;
     private JLabel album_artist_name;
@@ -37,8 +37,8 @@ public class MusicPlayerPanelSM extends ContainerSM implements NegotiablePanel {
     private ToggleButton shuffle;
     private ToggleButton repeat;
 
-    public Timer progression_bar;
-    public float music_progression;
+    private Timer progression_bar;
+    private float music_progression;
 
     private SongListSubPanel song1;
     private SongListSubPanel song2;
@@ -51,9 +51,9 @@ public class MusicPlayerPanelSM extends ContainerSM implements NegotiablePanel {
 
     private GlowButton expand;
 
-    int mode;
+    private int mode;
 
-    public static SongList active_songlist = music.Resources.songlists[2];
+    private static SongList active_songlist = music.Resources.songlists[2];
 
     public MusicPlayerPanelSM () {
 

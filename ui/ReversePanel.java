@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Created by Ann on 2018-03-01.
  */
-public class ReversePanel extends JPanel {
+class ReversePanel extends JPanel {
 
     public ReversePanel() {
         super();

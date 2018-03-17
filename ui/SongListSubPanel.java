@@ -10,14 +10,14 @@ import java.text.DecimalFormat;
 /**
  * Created by freddeng on 2018-03-07.
  */
-public class SongListSubPanel extends JPanel {
+class SongListSubPanel extends JPanel {
 
-    Music music;
-    String music_name;
+    private Music music;
+    private String music_name;
 
-    String music_length;
+    private String music_length;
 
-    int padding;
+    private int padding;
 
     public SongListSubPanel (int x, int y, Music music) {
 

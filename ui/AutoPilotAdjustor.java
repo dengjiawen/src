@@ -32,7 +32,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class AutoPilotAdjustor extends JPanel {
+class AutoPilotAdjustor extends JPanel {
 
     private GlowButton decrease;    // decrease the speed/follow dist
     private GlowButton increase;    // increase the speed/follow dist

@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Created by Ann on 2018-03-01.
  */
-public class NeutralPanel extends JPanel {
+class NeutralPanel extends JPanel {
 
     public NeutralPanel() {
         super();

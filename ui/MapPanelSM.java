@@ -1,21 +1,43 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * Q: "Whats the object-oriented way to become wealthy?"
+ * A: Inheritance
+ *
+ *-----------------------------------------------------------------------------
+ * MapPanelSM.java
+ *-----------------------------------------------------------------------------
+ * A small, non-functional map panel.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
+import information.Console;
 import resources.AdditionalResources;
 import resources.Constants;
 import resources.Resources;
-
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-/**
- * Created by freddeng on 2018-03-13.
- */
 public class MapPanelSM extends ContainerSM implements NegotiablePanel {
 
-    GlowButton zoom_in;
-    GlowButton zoom_out;
+    private GlowButton zoom_in;     // zoom in button
+    private GlowButton zoom_out;    // zoom out button
 
-    public MapPanelSM () {
+    /**
+     * Default Constructor
+     */
+    MapPanelSM () {
+
+        Console.printGeneralMessage("Initializing small map panel");
 
         setLayout(null);
 
@@ -25,9 +47,13 @@ public class MapPanelSM extends ContainerSM implements NegotiablePanel {
         add(zoom_in);
         add(zoom_out);
 
-
     }
 
+    /**
+     * Overriden paintComponent method
+     * @param g Abstract Graphics
+     */
+    @Override
     protected void paintComponent (Graphics g) {
 
         Graphics2D g2d = (Graphics2D) g;
@@ -40,6 +66,7 @@ public class MapPanelSM extends ContainerSM implements NegotiablePanel {
         g2d.drawImage(AdditionalResources.map_compass, 647, 33, 58, 58, null);
     }
 
+    // overriden methods for NegotiablePanel interface
     @Override
     public void updateInvoker() {
 

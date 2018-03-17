@@ -12,14 +12,14 @@ import java.awt.event.MouseMotionAdapter;
 /**
  * Created by freddeng on 2018-03-12.
  */
-public class SlideTemperatureAdjustor extends JPanel {
+class SlideTemperatureAdjustor extends JPanel {
 
-    MouseEvent initial_event = null;
+    private MouseEvent initial_event = null;
 
-    Timer increase_timer;
-    Timer decrease_timer;
+    private Timer increase_timer;
+    private Timer decrease_timer;
 
-    InformationService.ImmutableInt target_temp;
+    private InformationService.ImmutableInt target_temp;
 
     public SlideTemperatureAdjustor(int x, int y, InformationService.ImmutableInt modifier) {
 

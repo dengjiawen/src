@@ -14,18 +14,18 @@ import java.awt.*;
 
 public class GearAPFrame extends JFrame {
 
-    JPanel autopilot;
-    JPanel gearshifter;
+    private JPanel autopilot;
+    private JPanel gearshifter;
 
-    JButton left_indicator;
-    JButton right_indicator;
+    private JButton left_indicator;
+    private JButton right_indicator;
 
-    JButton cruise_control_button;
-    JButton autopilot_button;
-    JButton stop_autonomous_button;
+    private JButton cruise_control_button;
+    private JButton autopilot_button;
+    private JButton stop_autonomous_button;
 
-    JButton gear_up_button;
-    JButton gear_down_button;
+    private JButton gear_up_button;
+    private JButton gear_down_button;
 
     public GearAPFrame () {
 

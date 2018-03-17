@@ -32,7 +32,7 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.Timer;
 
-public class FlashButton extends GlowButton {
+class FlashButton extends GlowButton {
 
     private Timer flash_timer;      // timer for regulating button flash
 

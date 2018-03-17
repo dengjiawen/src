@@ -16,9 +16,9 @@ import java.awt.geom.RoundRectangle2D;
 
 public class WarningPanelSM extends ContainerSM implements NegotiablePanel {
 
-    MouseEvent initial_event = null;
+    private MouseEvent initial_event = null;
 
-    boolean dismissed;
+    private boolean dismissed;
 
     public WarningPanelSM() {
 
@@ -66,7 +66,7 @@ public class WarningPanelSM extends ContainerSM implements NegotiablePanel {
 
     }
 
-    void dismiss () {
+    private void dismiss() {
         MainWindow.window.negotiateSpace(Constants.WindowConstants.STATE_IDLE, this);
     }
 

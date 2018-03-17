@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 /**
  * Created by freddeng on 2018-03-05.
  */
-public class ModifiedToggleButton extends ToggleButton {
+class ModifiedToggleButton extends ToggleButton {
 
     public ModifiedToggleButton(BufferedImage[] icon, int num_states, int x, int y, int width, int height) {
 

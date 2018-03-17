@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 /**
  * Created by freddeng on 2018-03-13.
  */
-public class ModernSlider extends JPanel {
+class ModernSlider extends JPanel {
 
     BufferedImage slider_background;
 
@@ -21,9 +21,9 @@ public class ModernSlider extends JPanel {
     int current_state;
     int slider_location_x;
 
-    String slider_percentage;
+    private String slider_percentage;
 
-    public ModernSlider () {
+    ModernSlider() {
 
     }
 
@@ -63,7 +63,7 @@ public class ModernSlider extends JPanel {
 
     }
 
-    public ModernSlider (int x, int y, BufferedImage slider_background, BufferedImage[] slider_states) {
+    ModernSlider(int x, int y, BufferedImage slider_background, BufferedImage[] slider_states) {
 
         setBounds(x, y, 210, 33);
 

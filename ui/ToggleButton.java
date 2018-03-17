@@ -12,14 +12,14 @@ import java.awt.image.BufferedImage;
  */
 public class ToggleButton extends JPanel {
 
-    protected BufferedImage[] states;
-    protected BufferedImage active_state;
+    private BufferedImage[] states;
+    private BufferedImage active_state;
 
-    protected int active_state_num;
+    private int active_state_num;
 
-    protected boolean is_disabled;
+    private boolean is_disabled;
 
-    public ToggleButton () {
+    ToggleButton() {
 
     }
 

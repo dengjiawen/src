@@ -14,25 +14,34 @@ import java.awt.event.*;
 
 public class TestProgram {
 
-        JFrame SpeedFrame, BatteryFrame;
-        JButton Acceleration, Brakes, Recharge;
-        JLabel BPLabel; // This is the label that displays the battery percentage of the car (Can be removed afterwards)
-        Timer tAccel, tDecel, tBrake, tBat, tCharge;
+        private JFrame SpeedFrame;
+    private JFrame BatteryFrame;
+        private JButton Acceleration;
+    private JButton Brakes;
+    private JButton Recharge;
+        private JLabel BPLabel; // This is the label that displays the battery percentage of the car (Can be removed afterwards)
+        private Timer tAccel;
+    private Timer tDecel;
+    private Timer tBrake;
+    private Timer tBat;
+    private Timer tCharge;
             // tAccel is the timer used to time the acceleration, tDecel for deceleration, tBrake for brakes
             // tBat is the one used to calculate how much battery is used while the car is running
             // tCharge is the timer used to keep track of the energy charging
-        int intSpeed, intCount1, intCount2;
+            private int intSpeed;
+    int intCount1;
+    int intCount2;
             // intDistance is used to calculate the distance travelled in that second
             // intCount1 is used to keep track of whether the warning message was previously displayed
             // intCount2 is used for the charging message
             // Perhaps we can make the car stop after a certain percentage
-        float fltDistance;
-        float flPercent = 100.0f;
+            private float fltDistance;
+        private float flPercent = 100.0f;
             // This float represents the battery percentage. Starts at 100%
         boolean charging = false;
             // The same button is used for starting and stopping charging, so a boolean is used to keep track of it
 
-        Timer ambient_power_depletion;
+        private Timer ambient_power_depletion;
 
     public static void main (String [] args) {
         TestProgram BuildTest = new TestProgram();
@@ -52,7 +61,7 @@ public class TestProgram {
         return intSpeed;
     } */
 
-    public void GUI(){
+    private void GUI(){
         SpeedFrame = new JFrame("Speed");
         SpeedFrame.setSize(220, 250);
         SpeedFrame.setLayout(null);
@@ -236,7 +245,7 @@ public class TestProgram {
         });
     }
 
-    public void calculateTime() {
+    private void calculateTime() {
         fltDistance = ((intSpeed / 3600f));
 
         if (intSpeed > 100) {
@@ -249,7 +258,7 @@ public class TestProgram {
 
     }
 
-    public void regenerativeBraking() {
+    private void regenerativeBraking() {
         if (InformationService.battery == 0) {
             return;
         }
