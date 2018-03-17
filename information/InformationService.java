@@ -44,6 +44,7 @@ public class InformationService {
     public static TestProgram test_program_reference;
     public static WarningPanelSM battery_warning_reference;
     public static ParkedPanel parked_panel_reference;
+    public static BackupCameraXL camera_reference;
 
     private static boolean warning_20_given;
     private static boolean warning_critical_given;
@@ -270,6 +271,12 @@ public class InformationService {
         drive_gear = new_gear;
 
         speed = 0;
+
+        if (drive_gear == Constants.GEAR_REVERSE) {
+            MainWindow.window.requestXLPrivilage(camera_reference, true);
+        } else if (camera_reference.isVisible()) {
+            MainWindow.window.requestXLPrivilage(camera_reference, false);
+        }
 
         instrument_panel_reference.shiftGear(new_gear);
         status_bar_reference.shiftGear(new_gear);

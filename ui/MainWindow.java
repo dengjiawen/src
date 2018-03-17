@@ -27,6 +27,7 @@ public class MainWindow extends JFrame {
 
     private VolumePanelSM volume_sm;
     private WarningPanelSM battery_warning;
+    private BackupCameraXL backup_camera_XL;
 
     private MapPanelSM map_sm;
     private MapPanelLG map_lg;
@@ -58,6 +59,7 @@ public class MainWindow extends JFrame {
 
         volume_sm = new VolumePanelSM();
         battery_warning = new WarningPanelSM();
+        backup_camera_XL = new BackupCameraXL();
 
         control_sm.setVisible(false);
         weather_sm.setVisible(false);
@@ -67,6 +69,7 @@ public class MainWindow extends JFrame {
 
         volume_sm.setVisible(false);
         battery_warning.setVisible(false);
+        backup_camera_XL.setVisible(false);
 
         map_sm = new MapPanelSM();
         map_sm.setVisible(false);
@@ -96,6 +99,7 @@ public class MainWindow extends JFrame {
 
         add(volume_sm);
         add(battery_warning);
+        add(backup_camera_XL);
 
         add(map_lg);
         add(map_xl);
@@ -127,6 +131,47 @@ public class MainWindow extends JFrame {
         panel.setVisible(true);
         panel.setActive(true);
         current_SM = panel;
+
+    }
+
+    public void requestXLPrivilage (NegotiablePanel panel, boolean b) {
+
+        if (b) {
+            if (current_SM != null) {
+                current_SM.setActive(false);
+                current_SM.setVisible(false);
+            }
+            if (current_LG != null) {
+                current_LG.setActive(false);
+                current_LG.setVisible(false);
+            }
+            if (current_XL != null) {
+                current_XL.setActive(false);
+                current_XL.setVisible(false);
+            }
+
+            panel.setVisible(true);
+            panel.setActive(true);
+        } else {
+
+            panel.setActive(false);
+            panel.setVisible(false);
+            panel.updateInvoker();
+
+            if (current_SM != null) {
+                current_SM.setActive(true);
+                current_SM.setVisible(true);
+            }
+            if (current_LG != null) {
+                current_LG.setActive(true);
+                current_LG.setVisible(true);
+            }
+            if (current_XL != null) {
+                current_XL.setActive(true);
+                current_XL.setVisible(true);
+            }
+
+        }
 
     }
 
@@ -162,6 +207,8 @@ public class MainWindow extends JFrame {
 
                 current_LG = map_lg;
             }
+
+            current_XL = null;
 
             panel.setVisible(true);
             panel.setActive(true);
