@@ -165,6 +165,8 @@ public class MusicController {
             if (timing == sequence[current_index].getLength()) {
                 if (next(repeat_1) == MUSIC_UNAVAILABLE) {
                     pause();
+                    reset();
+                    pause();
                 } else {
                     if (!isPaused()) {
                         sequence[current_index].play();
@@ -238,9 +240,6 @@ public class MusicController {
     private static int next(boolean repeat_1) {
 
         sequence[current_index].stop();
-
-        System.out.println("state 1: " + shuffle);
-        System.out.println("state 2: " + repeat);
 
         int temp = current_index + 1;
 

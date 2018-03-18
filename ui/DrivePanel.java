@@ -38,7 +38,7 @@ public class DrivePanel extends JPanel {
     /**
      * Default Constructor
      */
-    public DrivePanel() {
+    DrivePanel() {
         super();
 
         Console.printGeneralMessage("Initializing drive panel module");

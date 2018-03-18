@@ -68,13 +68,9 @@ public class MapPanelSM extends ContainerSM implements NegotiablePanel {
 
     // overriden methods for NegotiablePanel interface
     @Override
-    public void updateInvoker() {
-
-    }
+    public void updateInvoker() {}
 
     @Override
-    public void setActive(boolean is_active) {
-
-    }
+    public void setActive(boolean is_active) {}
 
 }

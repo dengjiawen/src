@@ -34,7 +34,7 @@ import java.awt.geom.RoundRectangle2D;
 
 public class ControlPanelSM extends ContainerSM implements NegotiablePanel {
 
-    public static ToggleButton invoker;     // Reference of the button that invokes this panel (for updateInvoker())
+    static ToggleButton invoker;     // Reference of the button that invokes this panel (for updateInvoker())
 
     private ToggleButton door_lock_left_front;  // lock door
     private ToggleButton door_lock_left_back;   // lock door

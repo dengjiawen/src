@@ -48,7 +48,7 @@ class FlashButton extends GlowButton {
      * @param height    button height
      * @param flash_interval    flashing speed
      */
-    public FlashButton (BufferedImage[] icon, int x, int y, int width, int height, int flash_interval) {
+    FlashButton (BufferedImage[] icon, int x, int y, int width, int height, int flash_interval) {
 
         // instantiate the object using the
         // constructor for GlowButton
@@ -93,7 +93,7 @@ class FlashButton extends GlowButton {
     /**
      * Method that simulates a "click" using an artificial mouseEvent.
      */
-    public void click () {
+    void click () {
 
         MouseEvent artificial_mouseevent = new MouseEvent(this, MouseEvent.MOUSE_RELEASED,
                 System.currentTimeMillis() + 10, MouseEvent.NOBUTTON, 0, 0, 0, false);

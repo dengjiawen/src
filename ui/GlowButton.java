@@ -30,6 +30,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 class GlowButton extends JPanel {
@@ -47,7 +48,7 @@ class GlowButton extends JPanel {
      * @param width     button width
      * @param height    button height
      */
-    public GlowButton (BufferedImage[] icon, int x, int y, int width, int height) {
+    GlowButton (BufferedImage[] icon, int x, int y, int width, int height) {
 
         Console.printGeneralMessage("Initializing GlowButton object");
 
@@ -111,7 +112,7 @@ class GlowButton extends JPanel {
      * Method for disabling the button
      * @param disable
      */
-    public void setDisable (boolean disable) {
+    void setDisable (boolean disable) {
         is_disabled = disable;
 
         changeIcon(states);
@@ -121,8 +122,21 @@ class GlowButton extends JPanel {
      * Method that returns a boolean of whether it is disabled
      * @return
      */
-    public boolean isDisabled () {
+    boolean isDisabled () {
         return is_disabled;
+    }
+
+    /**
+     * Method that simualtes a clicking event
+     */
+    void click () {
+
+        MouseEvent artificial_mouseevent = new MouseEvent(this, MouseEvent.MOUSE_RELEASED,
+                System.currentTimeMillis() + 10, MouseEvent.NOBUTTON, 0, 0, 0, false);
+
+        for (MouseListener listener : getMouseListeners()) {
+            listener.mouseReleased(artificial_mouseevent);
+        }
     }
 
 }

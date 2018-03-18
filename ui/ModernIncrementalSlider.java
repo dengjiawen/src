@@ -20,6 +20,7 @@
 
 package ui;
 
+import information.Console;
 import information.InformationService;
 import resources.Constants;
 import resources.Resources;
@@ -44,6 +45,8 @@ public class ModernIncrementalSlider extends ModernSlider {
 
         // call on parent constructor
         super(x, y, Resources.control_mirror_slider, Resources.control_mirror);
+
+        Console.printGeneralMessage("Initializing incremental controller object");
 
         // set mouse listeners to "stick" slider at increments
         addMouseMotionListener(new MouseAdapter() {

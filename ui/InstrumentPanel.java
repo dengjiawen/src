@@ -63,7 +63,7 @@ public class InstrumentPanel extends JPanel {
     /**
      * Default Constructor
      */
-    public InstrumentPanel () {
+    InstrumentPanel () {
         super();
 
         Console.printGeneralMessage("Initializing instrument side panel");

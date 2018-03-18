@@ -1,3 +1,22 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ *
+ *
+ *-----------------------------------------------------------------------------
+ * MusicPlayerPanelSM.java
+ *-----------------------------------------------------------------------------
+ * The smaller version of the music player panel (mini player)
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
 import music.Music;
@@ -13,47 +32,44 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by freddeng on 2018-03-05.
- */
-
 public class MusicPlayerPanelSM extends ContainerSM implements NegotiablePanel {
 
+    // various UI constants
     private static int music_track_control_width = (int)(0.25 * Resources.music_rewind[0].getWidth());
     private static int music_track_control_height = (int)(0.25 * Resources.music_rewind[0].getHeight());
 
     private static int music_control_play_width = (int)(0.25 * Resources.music_control_play[0].getWidth());
     private static int music_control_play_height = (int)(0.25 * Resources.music_control_play[0].getHeight());
 
-    public static MusicPlayerPanelLG panel_lg;
+    public static MusicPlayerPanelLG panel_lg;  // reference of the larger music panel
 
-    public static ToggleButton invoker;
+    public static ToggleButton invoker;     // reference of the invoker of the panel
 
-    private boolean is_active;
+    private static SongList active_songlist = music.Resources.songlists[2]; // the songlist/album that is currently active
 
-    private JLabel song_name;
-    private JLabel album_artist_name;
+    private boolean is_active;          // whether the smaller panel is active
 
-    private ToggleButton shuffle;
-    private ToggleButton repeat;
+    private JLabel song_name;           // JLabel showing the song name
+    private JLabel album_artist_name;   // JLabel showing the artist name
 
-    private Timer progression_bar;
-    private float music_progression;
+    private ToggleButton shuffle;       // shuffle button
+    private ToggleButton repeat;        // repeat button
 
-    private SongListSubPanel song1;
+    private Timer progression_bar;      // progression bar animation timer
+    private float music_progression;    // float representing % percentage of music played
+
+    private SongListSubPanel song1;     // a SongList subpanel for each song in the album
     private SongListSubPanel song2;
     private SongListSubPanel song3;
     private SongListSubPanel song4;
 
-    private GlowButton pause;
-    private GlowButton rewind;
-    private GlowButton forward;
+    private GlowButton pause;       // pause/play button
+    private GlowButton rewind;      // rewind button
+    private GlowButton forward;     // forward button
 
-    private GlowButton expand;
+    private GlowButton expand;      // expand button to change into MusicPanelLG
 
-    private int mode;
-
-    private static SongList active_songlist = music.Resources.songlists[2];
+    private int mode;               // current window mode
 
     public MusicPlayerPanelSM () {
 
@@ -204,9 +220,16 @@ public class MusicPlayerPanelSM extends ContainerSM implements NegotiablePanel {
         music_progression = 0f;
         if (!MusicController.isPaused()) {
             progression_bar.start();
+        } else {
+            progression_bar.stop();
+            pause.changeIcon(Resources.music_control_play);
         }
 
         RenderingService.invokeRepaint();
+    }
+
+    public void artificialPause () {
+        pause.click();
     }
 
     public void disableShuffle () {

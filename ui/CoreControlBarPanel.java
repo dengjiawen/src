@@ -31,9 +31,9 @@ import java.awt.event.MouseEvent;
 class CoreControlBarPanel extends JPanel {
 
     // reference of various objects needed for proper functions
-    public static MusicPlayerPanelSM music_panel;
-    public static ControlPanelSM control_panel;
-    public static ACPanelSM ac_panel;
+    static MusicPlayerPanelSM music_panel;
+    static ControlPanelSM control_panel;
+    static ACPanelSM ac_panel;
 
     private ToggleButton media;         // toggle for MusicPlayerPanelSM
     private ToggleButton control;       // toggle for ControlPanelSM
@@ -48,7 +48,7 @@ class CoreControlBarPanel extends JPanel {
     /**
      * Default Constructor
      */
-    public CoreControlBarPanel () {
+    CoreControlBarPanel () {
 
         Console.printGeneralMessage("Initializing core control strip");
 

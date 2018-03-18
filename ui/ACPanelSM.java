@@ -58,7 +58,7 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
     /**
      * Default Constructor
      */
-    public ACPanelSM() {
+    ACPanelSM() {
 
         super();
 
@@ -265,7 +265,7 @@ public class ACPanelSM extends ContainerSM implements NegotiablePanel {
     /**
      * Force power on the AC
      */
-    public void forcePowerOn () {
+    void forcePowerOn () {
         if (InformationService.ac_is_on) return;
         power.click();
     }

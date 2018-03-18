@@ -40,7 +40,7 @@ class AutoPilotAdjustor extends JPanel {
     /**
      * Default Constructor
      */
-    public AutoPilotAdjustor () {
+    AutoPilotAdjustor () {
 
         setBounds(131, 30, 87, 16);
         setBackground(new Color(0,0,0,0));

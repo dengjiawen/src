@@ -144,7 +144,7 @@ public class MainWindow extends JFrame {
      * @param desired_state the desired state (SM/LG)
      * @param panel the target panel
      */
-    public void negotiateTransition (int desired_state, NegotiablePanel panel) {
+    void negotiateTransition (int desired_state, NegotiablePanel panel) {
 
         // set current SM zone 3 as invisible, place the target panel in zone 3.
         // put zone 2 version of the map in zone 2.

@@ -40,7 +40,7 @@ public class MapPanelLG extends ContainerLG implements NegotiablePanel {
     /**
      * Default Constructor
      */
-    public MapPanelLG () {
+    MapPanelLG () {
 
         Console.printGeneralMessage("Initializing large map panel");
 

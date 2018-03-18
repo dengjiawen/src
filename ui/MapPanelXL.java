@@ -35,7 +35,7 @@ public class MapPanelXL extends ContainerXL implements NegotiablePanel {
     /**
      * Default Constructor
      */
-    public MapPanelXL () {
+    MapPanelXL () {
 
         Console.printGeneralMessage("Initializing full screen map panel");
 
@@ -70,12 +70,8 @@ public class MapPanelXL extends ContainerXL implements NegotiablePanel {
 
     // overriden methods for NegotiablePanel interface
     @Override
-    public void setActive(boolean is_active) {
-
-    }
+    public void setActive(boolean is_active) {}
 
     @Override
-    public void updateInvoker() {
-
-    }
+    public void updateInvoker() {}
 }

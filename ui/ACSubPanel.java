@@ -38,7 +38,7 @@ class ACSubPanel extends JPanel {
      * @param x initial x pos
      * @param y initial y pos
      */
-    public ACSubPanel (int x, int y) {
+    ACSubPanel (int x, int y) {
 
         setBounds(x, y, 236, 175);
         setBackground(new Color(0,0,0,0));

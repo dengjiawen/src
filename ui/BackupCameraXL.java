@@ -34,7 +34,7 @@ public class BackupCameraXL extends ContainerXL implements NegotiablePanel {
     /**
      * Default Constructor
      */
-    public BackupCameraXL () {
+    BackupCameraXL () {
         Console.printGeneralMessage("Initializing back up camera");
         Console.printGeneralMessage("Linking back up camera to InformationService");
         InformationService.camera_reference = this;
