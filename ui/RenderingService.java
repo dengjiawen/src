@@ -1,13 +1,31 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * A guy walks into a bar and asks for 1.4 root beers.
+ * The bartender says "I'll have to charge you extra,
+ * that's a root beer float".
+ * The guy says "In that case, better make it a double."
+ *
+ *-----------------------------------------------------------------------------
+ * RenderingService.java
+ *-----------------------------------------------------------------------------
+ * A method that controls all repaint events.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
 import information.Console;
-
 import java.lang.ref.WeakReference;
 import javax.swing.*;
 
-/**
- * Created by freddeng on 2018-03-06.
- */
 public class RenderingService {
 
     private static WeakReference<MainWindow> window;

@@ -1,36 +1,59 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * What's the best part about TCP jokes?
+ * I get to keep telling them until you get them. (Damn TC Protocols)
+ *
+ *-----------------------------------------------------------------------------
+ * ParkedPanel.java
+ *-----------------------------------------------------------------------------
+ * A panel that is displayed in InstrumentPanel when the car is parked.
+ *-----------------------------------------------------------------------------
+ */
+
 package ui;
 
+import information.Console;
 import information.InformationService;
 import resources.AdditionalResources;
 import resources.Constants;
 import resources.Resources;
 import test.TestProgram;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * Created by Ann on 2018-03-01.
- */
 public class ParkedPanel extends JPanel {
 
-    public static TestProgram test_program_reference;
+    public static TestProgram test_program_reference;   // reference to the test program
 
-    private ToggleButton fronk;
-    private ToggleButton mirror;
+    private ToggleButton fronk;     // toggle button for opening fronk, extending mirror,
+    private ToggleButton mirror;    // opening charge port, and opening trunk.
     private ToggleButton charge;
     private ToggleButton trunk;
 
-    private Timer charging_animation_controller;
+    private Timer charging_animation_controller;    // timer and int for controlling charging animation
     private int charging_animation_framecount;
 
+    // hard coded UI constants
     private static final int button_width = (int)(0.25 * Resources.button_fronk[0].getWidth());
     private static final int button_height = (int)(0.25 * Resources.button_fronk[0].getHeight());
 
-    public ParkedPanel () {
+    /**
+     * Default Constructor
+     */
+    ParkedPanel () {
         super();
+
+        Console.printGeneralMessage("Initializing park panel");
 
         setBounds(5, 65, 340, 500);
         setBackground(new Color(0, 0, 0, 0));
@@ -38,6 +61,7 @@ public class ParkedPanel extends JPanel {
 
         charging_animation_framecount = 0;
 
+        // instantiate objects (update InformationService when toggles are pressed)
         fronk = new ToggleButton(Resources.button_fronk, 2, (getWidth() - button_width)/2, 130 - button_height + 2,
                 button_width, button_height);
 
@@ -63,6 +87,7 @@ public class ParkedPanel extends JPanel {
         trunk = new ToggleButton(Resources.button_trunk, 2, (getWidth() - button_width)/2, 370,
                 button_width, button_height);
 
+        // instantiate timer to play charging animation.
         charging_animation_controller = new Timer(1000/24, e -> {
 
             if (InformationService.battery == 100) {
@@ -80,10 +105,18 @@ public class ParkedPanel extends JPanel {
         add(charge);
         add(trunk);
 
+        Console.printGeneralMessage("Linking park panel to InformationService");
         InformationService.parked_panel_reference = this;
+        Console.printGeneralMessage("Linkage successful.");
 
     }
 
+    /**
+     * Overriden setVisible method
+     * (if set invisible, reset fronk trunk and charge icons, as well as disable charging)
+     * @param b
+     */
+    @Override
     public void setVisible (boolean b) {
         super.setVisible(b);
 
@@ -96,7 +129,17 @@ public class ParkedPanel extends JPanel {
         }
     }
 
+    /**
+     * Overriden paintComponent method
+     * @param g Abstract Graphics
+     */
+    @Override
     protected void paintComponent (Graphics g) {
+
+        Graphics2D g2d = (Graphics2D)g;
+
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (InformationService.mirror_state == Constants.MIRROR_RETRACTED && mirror.getState() != 0) {
             mirror.forceState(0);
@@ -104,18 +147,19 @@ public class ParkedPanel extends JPanel {
             mirror.forceState(1);
         }
 
-        Graphics2D g2d = (Graphics2D) g;
-
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.drawImage(Resources.car_icon_fronk[0], (getWidth() - (int)(0.13 * Resources.car_icon_fronk[0].getWidth()))/2, 130,
+        g2d.drawImage(Resources.car_icon_fronk[0], (getWidth() - (int)(0.13 * Resources.car_icon_fronk[0].getWidth()))/2, 130,
                 (int)(0.13 * Resources.car_icon_fronk[0].getWidth()), (int)(0.13 * Resources.car_icon_fronk[0].getHeight()), null);
 
         if (charging_animation_controller.isRunning()) {
-            ((Graphics2D) g).drawImage(AdditionalResources.charging_animation[charging_animation_framecount], 253, 225, 41, 41, null);
+            g2d.drawImage(AdditionalResources.charging_animation[charging_animation_framecount], 253, 225, 41, 41, null);
         }
 
     }
 
+    /**
+     * Method that starts and stops the charging animation.
+     * @param b
+     */
     public void setCharging (boolean b) {
         if (b) charging_animation_controller.start();
         else {
