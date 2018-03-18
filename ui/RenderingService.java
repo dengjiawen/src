@@ -16,7 +16,7 @@
  *-----------------------------------------------------------------------------
  * RenderingService.java
  *-----------------------------------------------------------------------------
- * A method that controls all repaint events.
+ * A method that handles all repaint events.
  *-----------------------------------------------------------------------------
  */
 
@@ -28,15 +28,22 @@ import javax.swing.*;
 
 public class RenderingService {
 
-    private static WeakReference<MainWindow> window;
-    private static Timer rendering_service;
+    private static WeakReference<MainWindow> window;    // a weak reference of the MainWindow
+    private static Timer rendering_service;             // a timer that periodically repaints if necessary
 
-    private static boolean doRepaint = false;
-    private static int refreshRate = 35;
+    private static boolean doRepaint = false;       // whether a repaint should be triggered
+    private static int refreshRate = 35;            // time interval between repaints (35 fps)
 
+    /**
+     * Initializes RenderingService
+     * @param window_reference  provides a reference of MainWindow
+     */
     public static void init (MainWindow window_reference) {
         window = new WeakReference<>(window_reference);
 
+        Console.printGeneralMessage("Starting RenderingService with hook onto " + window_reference.toString());
+
+        // if doRepaint = true, repaint
         rendering_service = new Timer(1000/refreshRate, e -> {
 
             if (doRepaint) {
@@ -52,6 +59,9 @@ public class RenderingService {
         rendering_service.start();
     }
 
+    /**
+     * Tells the RendeirngService to repaint by setting doRepaint to true
+     */
     public static void invokeRepaint () {
         doRepaint = true;
     }
