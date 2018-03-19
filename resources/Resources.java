@@ -1,5 +1,27 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng.
+ *
+ * From the Random Shack Data Processing Dictionary:
+ * Endless Loop: n., see Loop, Endless.
+ * Loop, Endless: n., see Endless Loop.
+ *
+ *-----------------------------------------------------------------------------
+ * Resources.java
+ *-----------------------------------------------------------------------------
+ * This class hosts resources such as fonts and images.
+ *-----------------------------------------------------------------------------
+ */
+
 package resources;
 
+import information.Console;
 import ui.LoadFrame;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,25 +31,25 @@ import java.io.File;
 import java.io.IOException;
 import dependencies.fred.emma.BigBufferedImage;
 
-/**
- * Created by freddeng on 2018-03-01.
- */
 public class Resources {
 
+    // for debugging purposes only;
+    // because it takes a long time to load weather assets
+    // it is disabled during debugging
     private static final boolean DO_LOAD_WEATHER_ASSETS = true;
 
-    private static final String font_directory = "/resources/resources/fonts/";
+    // resource directories
+    public static final String font_directory = "/resources/resources/fonts/";
     public static final String icon_directory = "/resources/resources/icons/";
     public static final String panel_overlay_directory = "/resources/resources/panel_overlay/";
     public static final String animation_directory = "/resources/resources/animation/";
+    public static final String toggle_directory = "/resources/resources/music_control/";
 
-    private static final String toggle_directory = "/resources/resources/music_control/";
-
+    // names should be self explainatory. All resources here are font.
     private static Font system_bold;
     private static Font system_regular;
     private static Font system_light;
 
-    private static Font oval_button_font;
     public static Font speedometer_font;
     public static Font speed_font;
     public static Font speed_unit_font;
@@ -63,6 +85,9 @@ public class Resources {
 
     public static Font ap_cruise_font;
 
+    /**
+     * Initiates all fonts
+     */
     public static void initFont () {
 
         try{
@@ -72,7 +97,6 @@ public class Resources {
 
             ap_cruise_font = system_bold.deriveFont(11f);
 
-            oval_button_font = system_bold.deriveFont(14.5f);
             speedometer_font = system_bold.deriveFont(100f);
             speed_font = system_bold.deriveFont(75f);
             speed_unit_font = system_bold.deriveFont(20f);
@@ -111,6 +135,7 @@ public class Resources {
 
     }
 
+    // names should be self explainatory. All resources here are images.
     public static BufferedImage map_LG;
     public static BufferedImage shadow;
     public static BufferedImage tesla_logo;
@@ -224,6 +249,9 @@ public class Resources {
 
     public static BufferedImage[] snow_loop;
 
+    /**
+     * Initiates all image resources
+     */
     public static void initImage () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png"};
@@ -466,10 +494,20 @@ public class Resources {
 
     }
 
+    /**
+     * Method that loads an image from a String path
+     * @param res_path  the path to the image data
+     * @return  the corresponding, parsed BufferedImage
+     */
     private static BufferedImage loadImage (String res_path) {
+
+        Console.printGeneralMessage("Importing and reading image from " + res_path);
 
         try {
             SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path));
+
+            Console.printGeneralMessage("Image " + res_path + " read successfully.");
+
             return ImageIO.read(Resources.class.getResource(res_path));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Resources are missing. " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -480,18 +518,28 @@ public class Resources {
         return null;
     }
 
+    /**
+     * Method that loads an image and buffers it into a temporary file
+     * to decrease RAM usage (for weather animation only)
+     * @param res_path  the path to the image data
+     * @return  the corresponding, parsed BufferedImage (that is cached in file)
+     */
     private static BufferedImage loadImageNotStoredInRam (String res_path) {
 
         try {
 
+            // create temp file
             File temp_file = File.createTempFile(String.valueOf(res_path.hashCode()), ".tmp");
             temp_file.deleteOnExit();
 
+            // copy it to the temp file
             BufferedImage image = loadImage(res_path);
             ImageIO.write(image, "jpg", temp_file);
 
             SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path));
 
+            // create a "BigBufferedImage" from the temporary file,
+            // which is a cached version of BufferedImage
             return BigBufferedImage.create(temp_file, BufferedImage.TYPE_INT_RGB);
 
         } catch (IOException e) {
@@ -501,6 +549,11 @@ public class Resources {
 
     }
 
+    /**
+     * Method that changes all elements on the status bar to white, in order
+     * for the status bar to enter dark mode.
+     * @param do_invoke whether dark mode should be invoked
+     */
     public static void invokeStatusBarDarkMode (boolean do_invoke) {
 
         if (do_invoke) {

@@ -159,6 +159,8 @@ class SlideTemperatureAdjustor extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // if increase timer is running, highlight up arrow
+        // if decrease timer is running, highlight down arrow
         if (increase_timer.isRunning()) {
             g2d.drawImage(Resources.core_up_temp_arrow[1], 0, 0, 49, 20, null);
         } else {

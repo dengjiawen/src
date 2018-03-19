@@ -1,27 +1,57 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * Why don't keyboards sleep?
+ * Because they have two shifts...
+ *
+ *-----------------------------------------------------------------------------
+ * Resources.java
+ *-----------------------------------------------------------------------------
+ * Keeps track of all music/songlist objects.
+ *-----------------------------------------------------------------------------
+ */
+
 package music;
+
+import information.Console;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * Created by freddeng on 2018-03-05.
- */
 public class Resources {
 
+    // music resource directory
     private static final String MUSIC_PATH = "/music/resources/";
 
+    // boolean of whether thread had finished importing music objects
     private static boolean pool_1_done = false;
     private static boolean pool_2_done = false;
     private static boolean pool_3_done = false;
 
+    // arraylist of all Music objects
     public static final music.Music[] music = new music.Music[12];
+    // arraylist of all SongList/Album objects
     public static final SongList[] songlists = new SongList[3];
 
+    /**
+     * Method that initiates/imports all music files
+     */
     public static void init () {
+        // initialize ExecutorService to import music in parallel
         ExecutorService import_pool_1 = Executors.newSingleThreadExecutor();
         ExecutorService import_pool_2 = Executors.newSingleThreadExecutor();
         ExecutorService import_pool_3 = Executors.newSingleThreadExecutor();
 
+        Console.printGeneralMessage("Importing Music Objects...");
+
+        // import 4 music/Thread
         import_pool_1.submit(() -> {
             music[0] = new music.Music(MUSIC_PATH + "love_is_an_open_door.mp3");
             music[1] = new music.Music(MUSIC_PATH + "do_you_want_to_build_a_snowman.mp3");
@@ -49,8 +79,14 @@ public class Resources {
             songlists[2] = new SongList(new int[]{8,11,9,10});
             pool_3_done = true;
         });
+
+        Console.printGeneralMessage("Music import requests submitted.");
     }
 
+    /**
+     * Returns a boolean of whether all music had been imported
+     * @return
+     */
     public static boolean isInit() {
         return pool_1_done && pool_2_done && pool_3_done;
     }

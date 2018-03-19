@@ -1,15 +1,32 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng.
+ *
+ * The generation of random numbers is too important to be left to chance.
+ *
+ *-----------------------------------------------------------------------------
+ * Constants.java
+ *-----------------------------------------------------------------------------
+ * This class hosts a bunch of constants that are necessary for program
+ * functions.
+ *-----------------------------------------------------------------------------
+ */
+
 package resources;
 
 import java.awt.*;
 
-/**
- * Created by freddeng on 2018-03-01.
- */
 public class Constants {
 
+    // COLORS
     public static final Color BACKGROUND_GREY = Color.decode("#141414");
     public static final Color PANEL_BRIGHT = Color.decode("#f0f0f0");
-    public static final Color BUTTON_BRIGHT = Color.decode("#d7d7d7");
 
     public static final Color MUSIC_PROGRESS_STOP_0 = Color.decode("#12b5de");
     public static final Color MUSIC_PROGRESS_STOP_1 = Color.decode("#d1dde0");
@@ -52,6 +69,7 @@ public class Constants {
 
     public static Color STATUS_BAR_TEXT_COLOR = Color.decode("#000000");
 
+    // INTEGER MODIFIERS
     public static final int ROUNDNESS = 25;
 
     public static final int MIRROR_RETRACTED = 0;
@@ -74,6 +92,7 @@ public class Constants {
     public final static int AC_MANUAL = 0;
     public final static int AC_AUTO = 1;
 
+    // CONSTANTS REPRESENTING WINDOW STATES
     public class WindowConstants {
 
         public static final int STATE_SM = 0;

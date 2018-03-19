@@ -1,15 +1,33 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng.
+ *
+ * The generation of random numbers is too important to be left to chance.
+ *
+ *-----------------------------------------------------------------------------
+ * AdditionalResources.java
+ *-----------------------------------------------------------------------------
+ * This class hosts additional image resources.
+ *-----------------------------------------------------------------------------
+ */
+
 package resources;
 
+import information.Console;
 import ui.LoadFrame;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by freddeng on 2018-03-15.
- */
 public class AdditionalResources {
+
+    // names should be self explainatory. All resources here are graphic data.
 
     public static BufferedImage parking_brake;
 
@@ -46,6 +64,9 @@ public class AdditionalResources {
     public static BufferedImage[] map_zoom_in;
     public static BufferedImage[] map_zoom_out;
 
+    /**
+     * Initializes/imports all of the necessary image data
+     */
     public static void init () {
 
         String[] toggle_assignment = new String[] {"_inactive.png", "_active.png", "_disabled.png"};
@@ -143,10 +164,20 @@ public class AdditionalResources {
 
     }
 
+    /**
+     * Method that loads an image from a String path
+     * @param res_path  the path to the image data
+     * @return  the corresponding, parsed BufferedImage
+     */
     private static BufferedImage loadImage (String res_path) {
+
+        Console.printGeneralMessage("Importing and reading image from " + res_path);
 
         try {
             SwingUtilities.invokeLater(() -> LoadFrame.requestLoadPanelReference().updateLoadedAsset(res_path));
+
+            Console.printGeneralMessage("Image " + res_path + " read successfully.");
+
             return ImageIO.read(AdditionalResources.class.getResource(res_path));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Resources are missing. " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

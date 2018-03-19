@@ -1,10 +1,11 @@
+/**
+ * A class that plays sound effects (primarily the turning signal sounds)
+ */
+
 package sound;
 
 import javax.swing.Timer;
 
-/**
- * Created by freddeng on 2018-03-07.
- */
 public class SoundService {
 
     private static Timer signal_timing_controller = new Timer(295 * 2, e -> {

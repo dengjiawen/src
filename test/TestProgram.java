@@ -1,5 +1,20 @@
 /**
- * Created by Ann on 2018-03-05.
+ * Copyright 2018 (C) Ann J.S. All rights reserved.
+ *
+ * This document is the property of Ann J.S.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Ann J.S.
+ *
+ *-----------------------------------------------------------------------------
+ * TestProgram.java
+ *-----------------------------------------------------------------------------
+ * This class hosts the acceleration, braking panel, and is in charge of
+ * monitoring battery conditions.
+ * Created, designed and commented by Ann J.S.
+ *-----------------------------------------------------------------------------
  */
 
 package test;
@@ -7,7 +22,6 @@ package test;
 import information.InformationService;
 import resources.Constants;
 import ui.ParkedPanel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

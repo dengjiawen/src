@@ -1,35 +1,60 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng, Ann J.S. and Kareem D. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng, Ann J.S. and Kareem D. (I-LU-V-EH)
+ *
+ * There are 10 kinds of people in this world. Those who dont know binary, those who do, and those who didnt expect this to be in base 3.
+ * There are 10 kinds of people in this world. Those who dont know binary, those who do, those that thought that this would be in base 3, and those who didnt expect this to be in base 4.
+ * There are 10 kinds of people in this world: Those who know hexadecimal, and F the rest.
+ *
+ *-----------------------------------------------------------------------------
+ * MusicController.java
+ *-----------------------------------------------------------------------------
+ * Controls the overall music playing function.
+ *-----------------------------------------------------------------------------
+ */
+
 package music;
 
 import kuusisto.tinysound.TinySound;
 import ui.MusicPlayerPanelSM;
-
 import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Created by freddeng on 2018-03-05.
- */
-
 public class MusicController {
 
+    // Modifier; whether next music is available
     private final static int MUSIC_AVAILABLE = 1;
     private final static int MUSIC_UNAVAILABLE = 0;
 
+    // boolean of whether to repeat, repeat single song, or shuffle
     private static boolean repeat = false;
     private static boolean repeat_1 = false;
     private static boolean shuffle = false;
 
+    // boolean of whether music is paused
+    // SongList reference of current SongList
     private static boolean isPaused = true;
     private static SongList current_songlist;
 
+    // Timer that controls music playback.
     private static Timer timing_controller;
     private static int timing = 0;
 
+    // sequence at which the music will be played.
     public static Music[] sequence = new Music[4];
     public static int current_index;
 
+    // reference to the mini player
     public static MusicPlayerPanelSM panel;
 
+    // turn on repeat
+    // if triggered twice, turn on repeat single song
     public static void setRepeat () {
         if (shuffle && !repeat) {
             repeat = true;
@@ -51,6 +76,7 @@ public class MusicController {
         }
     }
 
+    // turn on shuffle
     public static void setShuffle () {
         shuffle = !(shuffle);
         if (!shuffle) {
@@ -61,6 +87,7 @@ public class MusicController {
         }
     }
 
+    // partial shuffle the remaining music using a random number generator
     private static void partialShuffle() {
 
         sequence[0] = sequence[current_index];
@@ -86,6 +113,7 @@ public class MusicController {
         current_index = 0;
     }
 
+    // partial repeats the remaining music
     private static void partialRepeat() {
 
         sequence[0] = sequence[current_index];
@@ -112,6 +140,7 @@ public class MusicController {
         current_index = 0;
     }
 
+    // orders the sequence the same as the ordering in the SongList
     private static void partialReorder() {
         current_index = current_songlist.getIndex(sequence[current_index]);
         for (int i = 0; i < sequence.length; i ++) {
@@ -119,6 +148,8 @@ public class MusicController {
         }
     }
 
+
+    // shuffle all music
     private static void fullShuffle() {
         int num_0 = -1;
         int num_1 = -1;
@@ -146,12 +177,14 @@ public class MusicController {
         sequence[3] = current_songlist.getMusic(num_3);
     }
 
+    // repeat all music
     private static void fullRepeat() {
         for (int i = 0; i < sequence.length; i ++) {
             sequence[i] = current_songlist.getMusic(i);
         }
     }
 
+    // initialize controller
     public static void init () {
         TinySound.init();
 
@@ -177,22 +210,26 @@ public class MusicController {
         });
     }
 
+    // returns a boolean of whether the music is paused
     public static boolean isPaused () {
         return isPaused;
     }
 
+    // method that pauses the currently playing music
     public static void pause () {
         sequence[current_index].pause();
         timing_controller.stop();
         isPaused = true;
     }
 
+    // method that resumes the currently playing music
     public static void resume () {
         sequence[current_index].resume();
         timing_controller.start();
         isPaused = false;
     }
 
+    // method that rewinds (or go to the last music)
     public static void rewind () {
         sequence[current_index].stop();
         if (timing <= 10) {
@@ -200,8 +237,6 @@ public class MusicController {
                 if (!isPaused()) {
                     sequence[current_index].play();
                 }
-            } else {
-                //TODO
             }
         } else {
             sequence[current_index].rewind();
@@ -210,6 +245,7 @@ public class MusicController {
         reset();
     }
 
+    // method that moves on to the next piece of music
     public static void forward () {
         sequence[current_index].stop();
         if (next(false) == MUSIC_AVAILABLE) {
@@ -221,6 +257,7 @@ public class MusicController {
         reset();
     }
 
+    // method that go back to the previous music
     private static int previous() {
         sequence[current_index].stop();
 
@@ -237,6 +274,7 @@ public class MusicController {
         return MUSIC_AVAILABLE;
     }
 
+    // method that brings up the next music
     private static int next(boolean repeat_1) {
 
         sequence[current_index].stop();
@@ -277,6 +315,7 @@ public class MusicController {
         }
     }
 
+    //resets the controller
     private static void reset() {
         timing_controller.restart();
         timing = 0;
@@ -284,6 +323,10 @@ public class MusicController {
         panel.reset(sequence[current_index]);
     }
 
+    /**
+     * Switches to a new SongList
+     * @param list  target SongList
+     */
     public static void changeSongList (SongList list) {
 
         for (Music music : sequence) {
@@ -307,6 +350,9 @@ public class MusicController {
 
     }
 
+    /**
+     * Changes the volume
+     */
     public static void updateVolume () {
         sequence[current_index].updateVolume();
     }

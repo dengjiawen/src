@@ -1,5 +1,27 @@
+/**
+ * Copyright 2018 (C) Jiawen Deng. All rights reserved.
+ *
+ * This document is the property of Jiawen Deng.
+ * It is considered confidential and proprietary.
+ *
+ * This document may not be reproduced or transmitted in any form,
+ * in whole or in part, without the express written permission of
+ * Jiawen Deng.
+ *
+ * Why does Donald Trump have in common with OOP?
+ * He's like an interface and has no class and can't implement anything.
+ * He derives everything from inheriterce.
+ *
+ *-----------------------------------------------------------------------------
+ * GearAPFrame.java
+ *-----------------------------------------------------------------------------
+ * This class hosts the indicator stalk, autopilot and cruise control buttons.
+ *-----------------------------------------------------------------------------
+ */
+
 package test;
 
+import information.Console;
 import information.InformationService;
 import resources.Constants;
 import ui.TurningSignal;
@@ -8,26 +30,27 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-/**
- * Created by freddeng on 2018-03-16.
- */
-
 public class GearAPFrame extends JFrame {
 
-    private JPanel autopilot;
-    private JPanel gearshifter;
+    private JPanel autopilot;           // panel hosting autopilot and cruise button
+    private JPanel gearshifter;         // panel hosting gear buttons
 
-    private JButton left_indicator;
+    private JButton left_indicator;     // left and right indicator triggers
     private JButton right_indicator;
 
-    private JButton cruise_control_button;
+    private JButton cruise_control_button;  // button for cruise control, AP, and stop auto
     private JButton autopilot_button;
     private JButton stop_autonomous_button;
 
-    private JButton gear_up_button;
+    private JButton gear_up_button;     // gear up and down button
     private JButton gear_down_button;
 
+    /**
+     * Default Constructor
+     */
     public GearAPFrame () {
+
+        Console.printGeneralMessage("Initializing GearAP Window");
 
         setSize(220, 260);
         getContentPane().setLayout(new GridLayout(2, 1));
@@ -40,6 +63,7 @@ public class GearAPFrame extends JFrame {
         Dimension gear_dim = new Dimension(200, 100);
         Dimension ap_dim = new Dimension(200,100);
 
+        // instantiate gear shifter and AP panels
         gearshifter = new JPanel();
         gearshifter.setPreferredSize(gear_dim);
         gearshifter.setMaximumSize(gear_dim);
@@ -56,6 +80,7 @@ public class GearAPFrame extends JFrame {
         autopilot.setLayout(new GridLayout(3, 1));
         getContentPane().add(autopilot);
 
+        // instantiate buttons
         cruise_control_button = new JButton("Cruise Control");
         cruise_control_button.addActionListener(e -> {
 
@@ -65,6 +90,8 @@ public class GearAPFrame extends JFrame {
             cruise_control_button.setEnabled(false);
             autopilot_button.setEnabled(true);
             stop_autonomous_button.setEnabled(true);
+
+            Console.printGeneralMessage("Cruise Control activated.");
         });
         cruise_control_button.setEnabled(false);
 
@@ -77,6 +104,8 @@ public class GearAPFrame extends JFrame {
             cruise_control_button.setEnabled(true);
             autopilot_button.setEnabled(false);
             stop_autonomous_button.setEnabled(true);
+
+            Console.printGeneralMessage("Autopilot activated.");
         });
         autopilot_button.setEnabled(false);
 
@@ -86,6 +115,8 @@ public class GearAPFrame extends JFrame {
             cruise_control_button.setEnabled(true);
             autopilot_button.setEnabled(true);
             stop_autonomous_button.setEnabled(false);
+
+            Console.printGeneralMessage("All autonomous functions stopped.");
         });
         stop_autonomous_button.setEnabled(false);
 
@@ -116,10 +147,15 @@ public class GearAPFrame extends JFrame {
         gearshifter.add(gear_down_button);
         gearshifter.add(gear_up_button);
 
+        // leave reference for InformationService
         InformationService.ap_frame_reference = this;
 
     }
 
+    /**
+     * Whether to enable/disable Autonomous Functions
+     * @param b whether to enable/disable autonomous functions
+     */
     public void setAutonomousFunctions (boolean b) {
         if (b) {
             stop_autonomous_button.setEnabled(false);
